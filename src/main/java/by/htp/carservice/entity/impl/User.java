@@ -1,6 +1,8 @@
-package by.htp.carservice.entity;
+package by.htp.carservice.entity.impl;
 
-public class User {
+import by.htp.carservice.entity.Entity;
+
+public class User extends Entity {
     private long idUser;
     private String login;
     private String password;

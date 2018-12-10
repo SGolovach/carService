@@ -1,6 +1,8 @@
-package by.htp.carservice.entity;
+package by.htp.carservice.entity.impl;
 
-public class Invoice {
+import by.htp.carservice.entity.Entity;
+
+public class Invoice extends Entity {
     private long idInvoice;
     private long numberInvoice;
     private double cost;

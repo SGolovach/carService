@@ -1,6 +1,8 @@
-package by.htp.carservice.entity;
+package by.htp.carservice.entity.impl;
 
-public class Role {
+import by.htp.carservice.entity.Entity;
+
+public class Role extends Entity {
     private long idRole;
     private String role;
 

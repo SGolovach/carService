@@ -1,8 +1,10 @@
-package by.htp.carservice.entity;
+package by.htp.carservice.entity.impl;
+
+import by.htp.carservice.entity.Entity;
 
 import java.sql.Timestamp;
 
-public class Order {
+public class Order extends Entity {
     private long idOrder;
     private Timestamp timeRegister;
     private long description;

@@ -1,6 +1,8 @@
-package by.htp.carservice.entity;
+package by.htp.carservice.entity.impl;
 
-public class Comment {
+import by.htp.carservice.entity.Entity;
+
+public class Comment extends Entity {
     private long idComment;
     private String description;
     private long user_id;
