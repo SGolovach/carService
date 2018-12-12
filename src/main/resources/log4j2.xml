@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<Configuration status = "INFO" monitorInterval="3600">
+
+    <Properties>
+        <property name="pathFile">
+            logs/text.log
+        </property>
+        <property name="pattern_file">
+            %d{dd.MM.yyyy HH:mm:ss.SSS} [%t] %-5level %logger{5}:%msg%n
+        </property>
+        <property name="pattern_console">
+            %d{ABSOLUTE} %-5level %logger{1}:%msg%n
+        </property>
+    </Properties>
+
+    <Appenders>
+        <RollingFile name="FileLogAppender" fileName="${pathFile}" append="true"
+                     filePattern = "logs/${date:yyyy-MM-dd}/%d{yyyy-MM-dd_HH-mm}_%i.log">
+            <PatternLayout pattern="${pattern_file}"/>
+            <Policies>
+                <TimeBasedTriggeringPolicy interval="11" modulate="true"/>
+                <SizeBasedtriggeringPolicy size="1024 KB"/>
+            </Policies>
+            <DefaultRolloverStrategy max = "11"/>
+        </RollingFile>
+        <Console name="ConsoleLogAppender" >
+            <PatternLayout pattern="${pattern_console}"/>
+        </Console>
+    </Appenders>
+
+    <Loggers>
+        <Root level = "debug">
+            <Appender-ref ref="FileLogAppender" level="debug"/>
+            <Appender-ref ref="ConsoleLogAppender" level="error"/>
+        </Root>
+    </Loggers>
+
+</Configuration>
