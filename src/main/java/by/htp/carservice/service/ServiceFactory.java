@@ -3,54 +3,66 @@ package by.htp.carservice.service;
 import by.htp.carservice.entity.impl.*;
 import by.htp.carservice.service.impl.*;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class ServiceFactory {
+    private static ServiceFactory instance;
+    private static ReentrantLock lockServiceFactory = new ReentrantLock();
+    private static AtomicBoolean createServiceFactory = new AtomicBoolean(false);
+    private final QueryReceiverService<Car> carQueryReceiverService =
+            new CarReceiverService();
+    private final QueryReceiverService<Comment> commentQueryReceiverService =
+            new CommentReceiverService();
+    private final QueryReceiverService<Department> departmentQueryReceiverService =
+            new DepartmentReceiverService();
+    private final QueryReceiverService<Invoice> invoiceQueryReceiverService =
+            new InvoiceReceiverService();
+    private final QueryReceiverService<Order> orderQueryReceiverService =
+            new OrderReceiverService();
+    private final QueryReceiverService<Role> roleQueryReceiverService =
+            new RoleReceiverService();
+    private final QueryReceiverService<UserDetail> userDetailQueryReceiverService =
+            new UserDetailReceiverService();
+    private final QueryReceiverService<User> userQueryReceiverService =
+            new UserReceiverService();
 
-    private final DaoService<Car> carDaoService = new CarDaoService();
-    private final DaoService<Comment> commentDaoService = new CommentDaoService();
-    private final DaoService<Department> departmentDaoService = new DepartmentDaoService();
-    private final DaoService<Invoice> invoiceDaoService = new InvoiceDaoService();
-    private final DaoService<Order> orderDaoService = new OrderDaoService();
-    private final DaoService<Role> roleDaoService = new RoleDaoService();
-    private final DaoService<User> userDaoService = new UserDaoService();
-    private final DaoService<UserDetail> userDetailDaoService = new UserDetailDaoService();
+    public static ServiceFactory getInstance() {
 
-    private static class  ServiceFactoryHolder{
-        private final static ServiceFactory INSTANCE = new ServiceFactory();
+                    instance = new ServiceFactory();
+
+        return instance;
     }
 
-    public static ServiceFactory getInstance(){
-        return ServiceFactoryHolder.INSTANCE;
+    public QueryReceiverService<Car> getCarQueryReceiverService() {
+        return carQueryReceiverService;
     }
 
-    public DaoService<Car> getCarDaoService() {
-        return carDaoService;
+    public QueryReceiverService<Comment> getCommentQueryReceiverService() {
+        return commentQueryReceiverService;
     }
 
-    public DaoService<Comment> getCommentDaoService() {
-        return commentDaoService;
+    public QueryReceiverService<Department> getDepartmentQueryReceiverService() {
+        return departmentQueryReceiverService;
     }
 
-    public DaoService<Department> getDepartmentDaoService() {
-        return departmentDaoService;
+    public QueryReceiverService<Invoice> getInvoiceQueryReceiverService() {
+        return invoiceQueryReceiverService;
     }
 
-    public DaoService<Invoice> getInvoiceDaoService() {
-        return invoiceDaoService;
+    public QueryReceiverService<Order> getOrderQueryReceiverService() {
+        return orderQueryReceiverService;
     }
 
-    public DaoService<Order> getOrderDaoService() {
-        return orderDaoService;
+    public QueryReceiverService<Role> getRoleQueryReceiverService() {
+        return roleQueryReceiverService;
     }
 
-    public DaoService<Role> getRoleDaoService() {
-        return roleDaoService;
+    public QueryReceiverService<UserDetail> getUserDetailQueryReceiverService() {
+        return userDetailQueryReceiverService;
     }
 
-    public DaoService<User> getUserDaoService() {
-        return userDaoService;
-    }
-
-    public DaoService<UserDetail> getUserDetailDaoService() {
-        return userDetailDaoService;
+    public QueryReceiverService<User> getUserQueryReceiverService() {
+        return userQueryReceiverService;
     }
 }

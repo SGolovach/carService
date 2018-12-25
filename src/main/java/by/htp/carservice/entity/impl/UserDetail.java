@@ -7,17 +7,17 @@ public class UserDetail extends Entity {
     private String name;
     private String phone;
     private String email;
-    private long user_id;
+    private long userId;
 
     public UserDetail() {
     }
 
-    public UserDetail(long idUserDetail, String name, String phone, String email, long user_id) {
+    public UserDetail(long idUserDetail, String name, String phone, String email, long userId) {
         this.idUserDetail = idUserDetail;
         this.name = name;
         this.phone = phone;
         this.email = email;
-        this.user_id = user_id;
+        this.userId = userId;
     }
 
     public long getIdUserDetail() {
@@ -52,12 +52,12 @@ public class UserDetail extends Entity {
         this.email = email;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -65,13 +65,13 @@ public class UserDetail extends Entity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
 
-        UserDetail userDetail = (UserDetail) o;
+        UserDetail that = (UserDetail) o;
 
-        if (idUserDetail != userDetail.idUserDetail) return false;
-        if (user_id != userDetail.user_id) return false;
-        if (name != null ? !name.equals(userDetail.name) : userDetail.name != null) return false;
-        if (phone != null ? !phone.equals(userDetail.phone) : userDetail.phone != null) return false;
-        return email != null ? email.equals(userDetail.email) : userDetail.email == null;
+        if (idUserDetail != that.idUserDetail) return false;
+        if (userId != that.userId) return false;
+        if (name != null ? !name.equals(that.name) : that.name != null) return false;
+        if (phone != null ? !phone.equals(that.phone) : that.phone != null) return false;
+        return email != null ? email.equals(that.email) : that.email == null;
     }
 
     @Override
@@ -80,18 +80,18 @@ public class UserDetail extends Entity {
         result = 31 * result + (name != null ? name.hashCode() : 0);
         result = 31 * result + (phone != null ? phone.hashCode() : 0);
         result = 31 * result + (email != null ? email.hashCode() : 0);
-        result = 31 * result + (int) (user_id ^ (user_id >>> 32));
+        result = 31 * result + (int) (userId ^ (userId >>> 32));
         return result;
     }
 
     @Override
     public String toString() {
         return "UserDetail{" +
-                "idUserdetail=" + idUserDetail +
+                "idUserDetail=" + idUserDetail +
                 ", name='" + name + '\'' +
                 ", phone='" + phone + '\'' +
                 ", email='" + email + '\'' +
-                ", user_id=" + user_id +
+                ", userId=" + userId +
                 '}';
     }
 }

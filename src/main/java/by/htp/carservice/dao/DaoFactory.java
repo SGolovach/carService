@@ -1,55 +1,68 @@
 package by.htp.carservice.dao;
 
-import by.htp.carservice.dao.impl.*;
+import by.htp.carservice.dao.impldao.*;
 import by.htp.carservice.entity.impl.*;
 
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
+
 public class DaoFactory {
-    private final BaseDao<UserDetail> userDetailDao = new UserDetailDao();
-    private final BaseDao<User> userDao = new UserDao();
-    private final BaseDao<Role> roleDao = new RoleDao();
-    private final BaseDao<Order> orderDao = new OrderDao();
-    private final BaseDao<Invoice> invoiceDao = new InvoiceDao();
-    private final BaseDao<Department> departmentDao = new DepartmentDao();
-    private final BaseDao<Comment> commentDao = new CommentDao();
-    private final BaseDao<Car> carDao = new CarDao();
+    private static DaoFactory instance;
+    private static ReentrantLock lockDaoFactory = new ReentrantLock();
+    private static AtomicBoolean createDaoFactory = new AtomicBoolean(false);
+    private final AbstractDao<UserDetail> userDetailDao = new UserDetailDao();
+    private final AbstractDao<User> userDao = new UserDao();
+    private final AbstractDao<Role> roleDao = new RoleDao();
+    private final AbstractDao<Order> orderDao = new OrderDao();
+    private final AbstractDao<Invoice> invoiceDao = new InvoiceDao();
+    private final AbstractDao<Department> departmentDao = new DepartmentDao();
+    private final AbstractDao<Comment> commentDao = new CommentDao();
+    private final AbstractDao<Car> carDao = new CarDao();
 
-    private static class DaoFactoryHolder{
-        private static final DaoFactory INSTANCE = new DaoFactory();
+    public static DaoFactory getInstance() {
+        if (!createDaoFactory.get()) {
+            try {
+                lockDaoFactory.lock();
+                if (instance == null) {
+                    instance = new DaoFactory();
+                    createDaoFactory.set(true);
+                }
+            } finally {
+                lockDaoFactory.unlock();
+            }
+        }
+        return instance;
     }
 
-    public static DaoFactory getInstance(){
-        return DaoFactoryHolder.INSTANCE;
-    }
-
-    public BaseDao<UserDetail> getUserDetailDao() {
+    public AbstractDao<UserDetail> getUserDetailDao() {
         return userDetailDao;
     }
 
-    public BaseDao<User> getUserDao() {
+    public AbstractDao<User> getUserDao() {
         return userDao;
     }
 
-    public BaseDao<Role> getRoleDao() {
+    public AbstractDao<Role> getRoleDao() {
         return roleDao;
     }
 
-    public BaseDao<Order> getOrderDao() {
+    public AbstractDao<Order> getOrderDao() {
         return orderDao;
     }
 
-    public BaseDao<Invoice> getInvoiceDao() {
+    public AbstractDao<Invoice> getInvoiceDao() {
         return invoiceDao;
     }
 
-    public BaseDao<Department> getDepartmentDao() {
+    public AbstractDao<Department> getDepartmentDao() {
         return departmentDao;
     }
 
-    public BaseDao<Comment> getCommentDao() {
+    public AbstractDao<Comment> getCommentDao() {
         return commentDao;
     }
 
-    public BaseDao<Car> getCarDao() {
+    public AbstractDao<Car> getCarDao() {
         return carDao;
     }
 }

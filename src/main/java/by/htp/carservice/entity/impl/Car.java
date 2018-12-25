@@ -9,19 +9,19 @@ public class Car extends Entity {
     private int year;
     private String codeVIN;
     private String fuel;
-    private long user_id;
+    private long userId;
 
     public Car() {
     }
 
-    public Car(long idCar, String brand, String model, int year, String codeVIN, String fuel, long user_id) {
+    public Car(long idCar, String brand, String model, int year, String codeVIN, String fuel, long userId) {
         this.idCar = idCar;
         this.brand = brand;
         this.model = model;
         this.year = year;
         this.codeVIN = codeVIN;
         this.fuel = fuel;
-        this.user_id = user_id;
+        this.userId = userId;
     }
 
     public long getIdCar() {
@@ -72,12 +72,12 @@ public class Car extends Entity {
         this.fuel = fuel;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -89,7 +89,7 @@ public class Car extends Entity {
 
         if (idCar != car.idCar) return false;
         if (year != car.year) return false;
-        if (user_id != car.user_id) return false;
+        if (userId != car.userId) return false;
         if (brand != null ? !brand.equals(car.brand) : car.brand != null) return false;
         if (model != null ? !model.equals(car.model) : car.model != null) return false;
         if (codeVIN != null ? !codeVIN.equals(car.codeVIN) : car.codeVIN != null) return false;
@@ -104,7 +104,7 @@ public class Car extends Entity {
         result = 31 * result + year;
         result = 31 * result + (codeVIN != null ? codeVIN.hashCode() : 0);
         result = 31 * result + (fuel != null ? fuel.hashCode() : 0);
-        result = 31 * result + (int) (user_id ^ (user_id >>> 32));
+        result = 31 * result + (int) (userId ^ (userId >>> 32));
         return result;
     }
 
@@ -117,7 +117,7 @@ public class Car extends Entity {
                 ", year=" + year +
                 ", codeVIN='" + codeVIN + '\'' +
                 ", fuel='" + fuel + '\'' +
-                ", user_id=" + user_id +
+                ", userId=" + userId +
                 '}';
     }
 }

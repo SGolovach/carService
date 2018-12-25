@@ -1,7 +1,5 @@
 package by.htp.carservice.dao;
 
-import by.htp.carservice.exception.ConnectionPoolException;
-
 import java.sql.*;
 import java.util.Map;
 import java.util.Properties;
@@ -10,7 +8,7 @@ import java.util.concurrent.Executor;
 public class ProxyConnection implements Connection {
     private Connection connection;
 
-    ProxyConnection(Connection connection){
+    ProxyConnection(Connection connection) {
         this.connection = connection;
     }
 
@@ -55,16 +53,11 @@ public class ProxyConnection implements Connection {
     }
 
     @Override
-    public void close()  {
-        try {
-            ConnectionPool.getInstance().releaseConnection(this);
-        } catch (ConnectionPoolException e) {
-            //TODO think about exception
-            e.printStackTrace();
-        }
+    public void close() {
+        ConnectionPool.getInstance().releaseConnection(this);
     }
 
-    public void realClose()throws SQLException{
+    void realClose() throws SQLException {
         connection.close();
     }
 

@@ -5,15 +5,15 @@ import by.htp.carservice.entity.Entity;
 public class Comment extends Entity {
     private long idComment;
     private String description;
-    private long user_id;
+    private long userId;
 
     public Comment() {
     }
 
-    public Comment(long idComment, String description, long user_id) {
+    public Comment(long idComment, String description, long userId) {
         this.idComment = idComment;
         this.description = description;
-        this.user_id = user_id;
+        this.userId = userId;
     }
 
     public long getIdComment() {
@@ -32,12 +32,12 @@ public class Comment extends Entity {
         this.description = description;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
     @Override
@@ -48,7 +48,7 @@ public class Comment extends Entity {
         Comment comment = (Comment) o;
 
         if (idComment != comment.idComment) return false;
-        if (user_id != comment.user_id) return false;
+        if (userId != comment.userId) return false;
         return description != null ? description.equals(comment.description) : comment.description == null;
     }
 
@@ -56,7 +56,7 @@ public class Comment extends Entity {
     public int hashCode() {
         int result = (int) (idComment ^ (idComment >>> 32));
         result = 31 * result + (description != null ? description.hashCode() : 0);
-        result = 31 * result + (int) (user_id ^ (user_id >>> 32));
+        result = 31 * result + (int) (userId ^ (userId >>> 32));
         return result;
     }
 
@@ -65,7 +65,7 @@ public class Comment extends Entity {
         return "Comment{" +
                 "idComment=" + idComment +
                 ", description='" + description + '\'' +
-                ", user_id=" + user_id +
+                ", userId=" + userId +
                 '}';
     }
 }

@@ -2,76 +2,109 @@ package by.htp.carservice.dao;
 
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.ProjectException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
-import java.sql.*;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+import java.util.Enumeration;
 import java.util.Locale;
+import java.util.Properties;
 import java.util.concurrent.BlockingQueue;
 import java.util.concurrent.LinkedBlockingQueue;
+import java.util.concurrent.atomic.AtomicBoolean;
+import java.util.concurrent.locks.ReentrantLock;
 
 public class ConnectionPool {
+    private static Logger logger = LogManager.getLogger();
+    private static ConnectionPool instance;
     private BlockingQueue<ProxyConnection> availableConnections;
     private BlockingQueue<ProxyConnection> usedConnections;
-    private String driverName;
-    private String url;
-    private String user;
-    private String password;
-    private int poolSize;
+    private static ReentrantLock lockConnectionPool = new ReentrantLock();
+    private static AtomicBoolean createConnectionPool = new AtomicBoolean(false);
+    private static final String USER = "user";
+    private static final String PASSWORD = "password";
+    private static final String AUTO_RECONNECT = "autoReconnect";
+    private static final String CHARACTER_ENCODING = "characterEncoding";
+    private static final String USE_UNICODE = "useUnicode";
     private static final int STANDARD_POOLSIZE = 5;
 
     private ConnectionPool() {
         try {
-            initConnectionPool();
-        } catch (ConnectionPoolException e) {
-            //TODO ask about RuntimeException
-            throw new RuntimeException("Can not create ConnectionPool", e);
+            DriverManager.registerDriver(new com.mysql.jdbc.Driver());
+        } catch (SQLException e) {
+            throw new RuntimeException("Can not register Driver in DriverManager", e);
         }
-    }
-
-    private static class ConnectionPoolHolder {
-        private static final ConnectionPool INSTANCE = new ConnectionPool();
+        initConnectionPool();
     }
 
     public static ConnectionPool getInstance() {
-        return ConnectionPoolHolder.INSTANCE;
+        if (!createConnectionPool.get()) {
+            try {
+                lockConnectionPool.lock();
+                if (instance == null) {
+                    instance = new ConnectionPool();
+                    createConnectionPool.set(true);
+                }
+            } finally {
+                lockConnectionPool.unlock();
+            }
+        }
+        return instance;
     }
 
-    public int sizeQueue(){
-       return availableConnections.size();
-    }
-
-    private void initConnectionPool() throws ConnectionPoolException {
+    private void initConnectionPool() {
         Locale.setDefault(Locale.ENGLISH);
         DbResourceManager dbResourceManager = DbResourceManager.getInstance();
-        this.driverName = dbResourceManager.getValue(DbParameter.DB_DRIVER);
-        this.url = dbResourceManager.getValue(DbParameter.DB_URL);
-        this.user = dbResourceManager.getValue(DbParameter.DB_USER);
-        this.password = dbResourceManager.getValue(DbParameter.DB_PASSWORD);
+        Properties properties = new Properties();
+        int poolSize;
+        String url = getDataDb(properties);
         try {
-            this.poolSize = Integer.parseInt(dbResourceManager.getValue(DbParameter.DB_POOLSIZE));
+            poolSize = Integer.parseInt(dbResourceManager.getValue(DbParameter.DB_POOLSIZE));
         } catch (NumberFormatException e) {
-            this.poolSize = STANDARD_POOLSIZE;
+            poolSize = STANDARD_POOLSIZE;
         }
-
+        availableConnections = new LinkedBlockingQueue<>(poolSize);
+        usedConnections = new LinkedBlockingQueue<>(poolSize);
         try {
-            Class.forName(driverName);
-            availableConnections = new LinkedBlockingQueue<>(poolSize);
-            usedConnections = new LinkedBlockingQueue<>(poolSize);
             for (int i = 0; i < poolSize; i++) {
-                Connection connection = DriverManager.getConnection(url, user, password);
+                Connection connection = DriverManager.getConnection(url, properties);
                 ProxyConnection proxyConnection = new ProxyConnection(connection);
-                //TODO offer or add
                 availableConnections.offer(proxyConnection);
             }
-        } catch (ClassNotFoundException e) {
-            throw new ConnectionPoolException("Can not find database driver class", e);
         } catch (SQLException e) {
             //TODO reapete create connection?
-            throw new ConnectionPoolException("Can not getConnection in DriverManager", e);
+            throw new RuntimeException("Can not getConnection in DriverManager", e);
         }
-
     }
 
-    public Connection takeConnection() throws ConnectionPoolException {
+    private String getDataDb(Properties properties) {
+        Locale.setDefault(Locale.ENGLISH);
+        DbResourceManager dbResourceManager = DbResourceManager.getInstance();
+        properties.put(USER, dbResourceManager.getValue(DbParameter.DB_USER));
+        properties.put(PASSWORD, dbResourceManager.getValue(DbParameter.DB_PASSWORD));
+        properties.put(AUTO_RECONNECT, dbResourceManager.getValue(DbParameter.DB_AUTORECONNECT));
+        properties.put(CHARACTER_ENCODING, dbResourceManager.getValue(DbParameter.DB_CHARACTERENCODING));
+        properties.put(USE_UNICODE, dbResourceManager.getValue(DbParameter.DB_USEUNICODE));
+        return dbResourceManager.getValue(DbParameter.DB_URL);
+    }
+
+    private Connection restoreConnection() throws ConnectionPoolException {
+        Connection connection;
+        Properties properties = new Properties();
+        String url = getDataDb(properties);
+        try {
+            connection = DriverManager.getConnection(url, properties);
+        } catch (SQLException e) {
+            throw new ConnectionPoolException(e);
+        }
+        return connection;
+    }
+
+    Connection takeConnection() throws ConnectionPoolException {
         ProxyConnection connection;
         try {
             connection = availableConnections.take();
@@ -82,17 +115,47 @@ public class ConnectionPool {
         return connection;
     }
 
-    public void releaseConnection(Connection connection) throws ConnectionPoolException {
+    void releaseConnection(Connection connection) {
         if (connection instanceof ProxyConnection) {
             usedConnections.remove(connection);
+            try {
+                if (!connection.getAutoCommit()) {
+                    connection.setAutoCommit(true);
+                }
+            } catch (SQLException e) {
+                logger.log(Level.ERROR, connection.getClass() + " does not setAutoCommit(true)");
+                try {
+                    ((ProxyConnection) connection).realClose();
+                } catch (SQLException excepSQL) {
+                    logger.log(Level.ERROR, connection.getClass() + " does not close", excepSQL);
+                }
+                try {
+                    connection = restoreConnection();
+                } catch (ConnectionPoolException excepPool) {
+                    logger.log(Level.ERROR, "does not restorConnection", excepPool);
+                }
+            }
             availableConnections.offer((ProxyConnection) connection);
         } else {
-            //TODO logic throw ConnectionPoolException right?
-            throw new ConnectionPoolException("This is not our connection");
+            logger.log(Level.ERROR, connection.getClass() + " this is not our connection");
+            try {
+                connection.close();
+            } catch (SQLException e) {
+                logger.log(Level.ERROR, connection.getClass() + " does not close", e);
+            }
         }
     }
 
     public void closeConnectionPool() throws ProjectException {
+        try {
+            Enumeration<Driver> drivers = DriverManager.getDrivers();
+            while (drivers.hasMoreElements()){
+                Driver driver = drivers.nextElement();
+                DriverManager.deregisterDriver(driver);
+            }
+        } catch (SQLException e) {
+            logger.log(Level.ERROR,"Can not deregister driver DriverManager");
+        }
         try {
             closeConnectionQueue(availableConnections);
             closeConnectionQueue(usedConnections);
@@ -114,35 +177,6 @@ public class ConnectionPool {
                 throw new ConnectionPoolException("Can not close connection", e);
             }
         }
-    }
-
-    public void closeConnection(Connection connection, Statement statement, ResultSet resultSet) {
-        closeConnection(connection, statement);
-        try {
-            resultSet.close();
-        } catch (SQLException e) {
-            //TODO Exception
-            e.printStackTrace();
-        }
-
-    }
-
-    public void closeConnection(Connection connection, Statement statement) {
-        try {
-            connection.close();
-        } catch (SQLException e) {
-            //TODO Exception
-            e.printStackTrace();
-        }
-
-        try {
-            statement.close();
-        } catch (SQLException e) {
-            //TODO Exception
-            e.printStackTrace();
-        }
-
-
     }
 
 }

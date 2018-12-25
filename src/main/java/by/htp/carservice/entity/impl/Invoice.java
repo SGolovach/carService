@@ -2,20 +2,22 @@ package by.htp.carservice.entity.impl;
 
 import by.htp.carservice.entity.Entity;
 
+import java.math.BigDecimal;
+
 public class Invoice extends Entity {
     private long idInvoice;
     private long numberInvoice;
-    private double cost;
-    private long order_id;
+    private BigDecimal cost;
+    private long orderId;
 
     public Invoice() {
     }
 
-    public Invoice(long idInvoice, long numberInvoice, double cost, long order_id) {
+    public Invoice(long idInvoice, long numberInvoice, BigDecimal cost, long orderId) {
         this.idInvoice = idInvoice;
         this.numberInvoice = numberInvoice;
         this.cost = cost;
-        this.order_id = order_id;
+        this.orderId = orderId;
     }
 
     public long getIdInvoice() {
@@ -34,20 +36,20 @@ public class Invoice extends Entity {
         this.numberInvoice = numberInvoice;
     }
 
-    public double getCost() {
+    public BigDecimal getCost() {
         return cost;
     }
 
-    public void setCost(double cost) {
+    public void setCost(BigDecimal cost) {
         this.cost = cost;
     }
 
-    public long getOrder_id() {
-        return order_id;
+    public long getOrderId() {
+        return orderId;
     }
 
-    public void setOrder_id(long order_id) {
-        this.order_id = order_id;
+    public void setOrderId(long orderId) {
+        this.orderId = orderId;
     }
 
     @Override
@@ -59,19 +61,16 @@ public class Invoice extends Entity {
 
         if (idInvoice != invoice.idInvoice) return false;
         if (numberInvoice != invoice.numberInvoice) return false;
-        if (Double.compare(invoice.cost, cost) != 0) return false;
-        return order_id == invoice.order_id;
+        if (orderId != invoice.orderId) return false;
+        return cost != null ? cost.equals(invoice.cost) : invoice.cost == null;
     }
 
     @Override
     public int hashCode() {
-        int result;
-        long temp;
-        result = (int) (idInvoice ^ (idInvoice >>> 32));
+        int result = (int) (idInvoice ^ (idInvoice >>> 32));
         result = 31 * result + (int) (numberInvoice ^ (numberInvoice >>> 32));
-        temp = Double.doubleToLongBits(cost);
-        result = 31 * result + (int) (temp ^ (temp >>> 32));
-        result = 31 * result + (int) (order_id ^ (order_id >>> 32));
+        result = 31 * result + (cost != null ? cost.hashCode() : 0);
+        result = 31 * result + (int) (orderId ^ (orderId >>> 32));
         return result;
     }
 
@@ -81,7 +80,7 @@ public class Invoice extends Entity {
                 "idInvoice=" + idInvoice +
                 ", numberInvoice=" + numberInvoice +
                 ", cost=" + cost +
-                ", order_id=" + order_id +
+                ", orderId=" + orderId +
                 '}';
     }
 }

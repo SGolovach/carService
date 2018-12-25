@@ -6,16 +6,16 @@ public class User extends Entity {
     private long idUser;
     private String login;
     private String password;
-    private long role_id;
+    private long roleId;
 
     public User() {
     }
 
-    public User(long idUser, String login, String password, long role_id) {
+    public User(long idUser, String login, String password, long roleId) {
         this.idUser = idUser;
         this.login = login;
         this.password = password;
-        this.role_id = role_id;
+        this.roleId = roleId;
     }
 
     public long getIdUser() {
@@ -42,12 +42,12 @@ public class User extends Entity {
         this.password = password;
     }
 
-    public long getRole_id() {
-        return role_id;
+    public long getRoleId() {
+        return roleId;
     }
 
-    public void setRole_id(long role_id) {
-        this.role_id = role_id;
+    public void setRoleId(long roleId) {
+        this.roleId = roleId;
     }
 
     @Override
@@ -58,7 +58,7 @@ public class User extends Entity {
         User user = (User) o;
 
         if (idUser != user.idUser) return false;
-        if (role_id != user.role_id) return false;
+        if (roleId != user.roleId) return false;
         if (login != null ? !login.equals(user.login) : user.login != null) return false;
         return password != null ? password.equals(user.password) : user.password == null;
     }
@@ -68,7 +68,7 @@ public class User extends Entity {
         int result = (int) (idUser ^ (idUser >>> 32));
         result = 31 * result + (login != null ? login.hashCode() : 0);
         result = 31 * result + (password != null ? password.hashCode() : 0);
-        result = 31 * result + (int) (role_id ^ (role_id >>> 32));
+        result = 31 * result + (int) (roleId ^ (roleId >>> 32));
         return result;
     }
 
@@ -78,7 +78,7 @@ public class User extends Entity {
                 "idUser=" + idUser +
                 ", login='" + login + '\'' +
                 ", password='" + password + '\'' +
-                ", role_id=" + role_id +
+                ", roleId=" + roleId +
                 '}';
     }
 }

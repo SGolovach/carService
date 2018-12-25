@@ -4,27 +4,28 @@ import by.htp.carservice.entity.Entity;
 
 import java.sql.Timestamp;
 
+
 public class Order extends Entity {
     private long idOrder;
     private Timestamp timeRegister;
-    private long description;
+    private String description;
     private String status;
-    private long user_id;
-    private long department;
-    private long car_id;
+    private long userId;
+    private long departmentId;
+    private long carId;
 
     public Order() {
     }
 
     public Order(long idOrder, Timestamp timeRegister,
-                 long description, String status, long user_id, long department, long car_id) {
+                 String description, String status, long userId, long departmentId, long carId) {
         this.idOrder = idOrder;
         this.timeRegister = timeRegister;
         this.description = description;
         this.status = status;
-        this.user_id = user_id;
-        this.department = department;
-        this.car_id = car_id;
+        this.userId = userId;
+        this.departmentId = departmentId;
+        this.carId = carId;
     }
 
     public long getIdOrder() {
@@ -43,11 +44,11 @@ public class Order extends Entity {
         this.timeRegister = timeRegister;
     }
 
-    public long getDescription() {
+    public String getDescription() {
         return description;
     }
 
-    public void setDescription(long description) {
+    public void setDescription(String description) {
         this.description = description;
     }
 
@@ -59,28 +60,28 @@ public class Order extends Entity {
         this.status = status;
     }
 
-    public long getUser_id() {
-        return user_id;
+    public long getUserId() {
+        return userId;
     }
 
-    public void setUser_id(long user_id) {
-        this.user_id = user_id;
+    public void setUserId(long userId) {
+        this.userId = userId;
     }
 
-    public long getDepartment() {
-        return department;
+    public long getDepartmentId() {
+        return departmentId;
     }
 
-    public void setDepartment(long department) {
-        this.department = department;
+    public void setDepartmentId(long departmentId) {
+        this.departmentId = departmentId;
     }
 
-    public long getCar_id() {
-        return car_id;
+    public long getCarId() {
+        return carId;
     }
 
-    public void setCar_id(long car_id) {
-        this.car_id = car_id;
+    public void setCarId(long carId) {
+        this.carId = carId;
     }
 
     @Override
@@ -91,11 +92,11 @@ public class Order extends Entity {
         Order order = (Order) o;
 
         if (idOrder != order.idOrder) return false;
-        if (description != order.description) return false;
-        if (user_id != order.user_id) return false;
-        if (department != order.department) return false;
-        if (car_id != order.car_id) return false;
+        if (userId != order.userId) return false;
+        if (departmentId != order.departmentId) return false;
+        if (carId != order.carId) return false;
         if (timeRegister != null ? !timeRegister.equals(order.timeRegister) : order.timeRegister != null) return false;
+        if (description != null ? !description.equals(order.description) : order.description != null) return false;
         return status != null ? status.equals(order.status) : order.status == null;
     }
 
@@ -103,11 +104,11 @@ public class Order extends Entity {
     public int hashCode() {
         int result = (int) (idOrder ^ (idOrder >>> 32));
         result = 31 * result + (timeRegister != null ? timeRegister.hashCode() : 0);
-        result = 31 * result + (int) (description ^ (description >>> 32));
+        result = 31 * result + (description != null ? description.hashCode() : 0);
         result = 31 * result + (status != null ? status.hashCode() : 0);
-        result = 31 * result + (int) (user_id ^ (user_id >>> 32));
-        result = 31 * result + (int) (department ^ (department >>> 32));
-        result = 31 * result + (int) (car_id ^ (car_id >>> 32));
+        result = 31 * result + (int) (userId ^ (userId >>> 32));
+        result = 31 * result + (int) (departmentId ^ (departmentId >>> 32));
+        result = 31 * result + (int) (carId ^ (carId >>> 32));
         return result;
     }
 
@@ -116,11 +117,11 @@ public class Order extends Entity {
         return "Order{" +
                 "idOrder=" + idOrder +
                 ", timeRegister=" + timeRegister +
-                ", description=" + description +
+                ", description='" + description + '\'' +
                 ", status='" + status + '\'' +
-                ", user_id=" + user_id +
-                ", department=" + department +
-                ", car_id=" + car_id +
+                ", userId=" + userId +
+                ", departmentId=" + departmentId +
+                ", carId=" + carId +
                 '}';
     }
 }

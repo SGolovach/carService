@@ -1,0 +1,155 @@
+-- -----------------------------------------------------
+-- Schema carservice
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `carservice` ;
+
+-- -----------------------------------------------------
+-- Schema carservice
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `carservice` DEFAULT CHARACTER SET utf8 ;
+USE `carservice` ;
+
+-- -----------------------------------------------------
+-- Table `carservice`.`Roles`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carservice`.`Roles` (
+  `idRole` BIGINT(4) NOT NULL AUTO_INCREMENT,
+  `role` VARCHAR(45) NULL,
+  PRIMARY KEY (`idRole`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `carservice`.`Users`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carservice`.`Users` (
+  `idUsers` BIGINT(4) NOT NULL AUTO_INCREMENT,
+  `login` VARCHAR(45) NULL,
+  `password` VARCHAR(45) NULL,
+  `Roles_id` BIGINT(4) NOT NULL,
+  PRIMARY KEY (`idUsers`),
+  INDEX `fk_Users_Roles_idx` (`Roles_id` ASC),
+  CONSTRAINT `fk_Users_Roles`
+    FOREIGN KEY (`Roles_id`)
+    REFERENCES `carservice`.`Roles` (`idRole`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `carservice`.`UserDetails`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carservice`.`UserDetails` (
+  `idUserDetail` BIGINT(4) NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(45) NULL,
+  `phone` VARCHAR(90) NULL,
+  `email` VARCHAR(45) NULL,
+  `Users_id` BIGINT(4) NOT NULL,
+  PRIMARY KEY (`idUserDetail`),
+  INDEX `fk_UserDetails_Users1_idx` (`Users_id` ASC),
+  CONSTRAINT `fk_UserDetails_Users1`
+    FOREIGN KEY (`Users_id`)
+    REFERENCES `carservice`.`Users` (`idUsers`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `carservice`.`Departments`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carservice`.`Departments` (
+  `idDepartment` BIGINT(4) NOT NULL AUTO_INCREMENT,
+  `nameDepartment` VARCHAR(45) NULL,
+  PRIMARY KEY (`idDepartment`))
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `carservice`.`Cars`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carservice`.`Cars` (
+  `idCars` BIGINT(4) NOT NULL AUTO_INCREMENT,
+  `brand` VARCHAR(45) NULL,
+  `model` VARCHAR(45) NULL,
+  `year` INT NULL,
+  `codeVIN` VARCHAR(45) NULL,
+  `fuel` VARCHAR(45) NULL,
+  `Users_id` BIGINT(4) NOT NULL,
+  PRIMARY KEY (`idCars`),
+  INDEX `fk_Cars_Users1_idx` (`Users_id` ASC),
+  CONSTRAINT `fk_Cars_Users1`
+    FOREIGN KEY (`Users_id`)
+    REFERENCES `carservice`.`Users` (`idUsers`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `carservice`.`Orders`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carservice`.`Orders` (
+  `idOrder` BIGINT(4) NOT NULL AUTO_INCREMENT,
+  `timeRegister` TIMESTAMP NULL,
+  `Description` VARCHAR(45) NULL,
+  `status` VARCHAR(50) NULL,
+  `Users_id` BIGINT(4) NOT NULL,
+  `Departments_id` BIGINT(4) NOT NULL,
+  `Cars_id` BIGINT(4) NOT NULL,
+  PRIMARY KEY (`idOrder`),
+  INDEX `fk_Orders_Users1_idx` (`Users_id` ASC),
+  INDEX `fk_Orders_Departments1_idx` (`Departments_id` ASC),
+  INDEX `fk_Orders_Cars1_idx` (`Cars_id` ASC),
+  CONSTRAINT `fk_Orders_Users1`
+    FOREIGN KEY (`Users_id`)
+    REFERENCES `carservice`.`Users` (`idUsers`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_Orders_Departments1`
+    FOREIGN KEY (`Departments_id`)
+    REFERENCES `carservice`.`Departments` (`idDepartment`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE,
+  CONSTRAINT `fk_Orders_Cars1`
+    FOREIGN KEY (`Cars_id`)
+    REFERENCES `carservice`.`Cars` (`idCars`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `carservice`.`Invoices`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carservice`.`Invoices` (
+  `idInvoice` BIGINT(4) NOT NULL AUTO_INCREMENT,
+  `numberInvoice` BIGINT(4) NULL,
+  `cost` DECIMAL(6,4) NULL,
+  `Orders_id` BIGINT(4) NOT NULL,
+  PRIMARY KEY (`idInvoice`),
+  INDEX `fk_Invoices_Orders1_idx` (`Orders_id` ASC),
+  CONSTRAINT `fk_Invoices_Orders1`
+    FOREIGN KEY (`Orders_id`)
+    REFERENCES `carservice`.`Orders` (`idOrder`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
+
+
+-- -----------------------------------------------------
+-- Table `carservice`.`Comments`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `carservice`.`Comments` (
+  `idComment` BIGINT(4) NOT NULL AUTO_INCREMENT,
+  `description` VARCHAR(45) NULL,
+  `Users_id` BIGINT(4) NOT NULL,
+  PRIMARY KEY (`idComment`),
+  INDEX `fk_Comments_Users1_idx` (`Users_id` ASC),
+  CONSTRAINT `fk_Comments_Users1`
+    FOREIGN KEY (`Users_id`)
+    REFERENCES `carservice`.`Users` (`idUsers`)
+    ON DELETE CASCADE
+    ON UPDATE CASCADE)
+ENGINE = InnoDB;
