@@ -114,12 +114,12 @@ public class CommentDao extends AbstractDao<Comment> {
     }
 
     @Override
-    public List<Comment> takeAll() throws DaoException {
+    public List<Comment> takeAll(String condition) throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<Comment> listComment = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL);
+            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listComment.add(new Comment(

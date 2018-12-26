@@ -2,8 +2,11 @@ package by.htp.carservice.controller;
 
 import by.htp.carservice.command.ActionFactory;
 import by.htp.carservice.command.Command;
-import by.htp.carservice.dao.ConnectionPool;
+import by.htp.carservice.connectiondb.ConnectionPool;
 import by.htp.carservice.exception.ProjectException;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
@@ -13,31 +16,33 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class FrontController extends HttpServlet {
+    private static Logger logger = LogManager.getLogger();
+    private static final String COMMAND_NAME = "command";
 
     @Override
     public void init() throws ServletException {
+        ConnectionPool.getInstance();
         super.init();
     }
 
     @Override
-    protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-
-        super.doGet(req, resp);
+    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+        String commandName = doProcess(request);
+        RequestDispatcher dispatcher = request.getRequestDispatcher(commandName);
+        dispatcher.forward(request, response);
     }
 
     @Override
-    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException {
-        Command command = ActionFactory.defineCommand(req.getParameter("command"));
-        String page = command.execute(req);
+    protected void doPost(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
+        String commandName = doProcess(request);
+        response.sendRedirect(commandName);
+    }
 
-        if(page!=null){
-            RequestDispatcher dispatcher = req.getRequestDispatcher(page);
-            dispatcher.forward(req,resp);
-        } else {
-            resp.sendRedirect("/index.jsp");
-        }
-
-        super.doPost(req, resp);
+    private String doProcess(HttpServletRequest request) {
+        Command command =
+                ActionFactory.defineCommand(request.getParameter(COMMAND_NAME));
+        return command.execute(request);
     }
 
     @Override
@@ -45,9 +50,8 @@ public class FrontController extends HttpServlet {
         try {
             ConnectionPool.getInstance().closeConnectionPool();
         } catch (ProjectException e) {
-            e.printStackTrace();
+            logger.log(Level.ERROR,"ConnectionPool doesn't close",e);
         }
-
         super.destroy();
     }
 }

@@ -131,12 +131,12 @@ public class OrderDao extends AbstractDao<Order> {
     }
 
     @Override
-    public List<Order> takeAll() throws DaoException {
+    public List<Order> takeAll(String condition) throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<Order> listOrder = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL);
+            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listOrder.add(new Order(

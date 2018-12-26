@@ -25,7 +25,7 @@ public abstract class AbstractDao<T extends Entity> implements BaseDao<T> {
         logger.log(Level.INFO,"Finish method close statement");
     }
 
-    void setConnection(Connection connection){
+    public void setConnection(Connection connection){
         logger.log(Level.INFO,"Start method setConnection class AbstractDao");
         this.connection = connection;
     }

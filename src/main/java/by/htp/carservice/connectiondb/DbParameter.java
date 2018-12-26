@@ -1,4 +1,4 @@
-package by.htp.carservice.dao;
+package by.htp.carservice.connectiondb;
 
 public enum DbParameter {
     DB_DRIVER,
@@ -8,5 +8,6 @@ public enum DbParameter {
     DB_POOLSIZE,
     DB_AUTORECONNECT,
     DB_CHARACTERENCODING,
-    DB_USEUNICODE
+    DB_USEUNICODE,
+    DB_USESSL
 }

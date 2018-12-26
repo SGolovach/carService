@@ -107,12 +107,12 @@ public class RoleDao extends AbstractDao<Role> {
     }
 
     @Override
-    public List<Role> takeAll() throws DaoException {
+    public List<Role> takeAll(String condition) throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<Role> listRole = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL);
+            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listRole.add(new Role(

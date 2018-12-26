@@ -1,10 +1,10 @@
-package by.htp.carservice.dao.imlpreceiver;
+package by.htp.carservice.transaction.imlpreceiver;
 
 import by.htp.carservice.dao.AbstractDao;
 import by.htp.carservice.dao.DaoFactory;
-import by.htp.carservice.dao.EntityTransaction;
-import by.htp.carservice.dao.QueryReceiver;
-import by.htp.carservice.entity.impl.Comment;
+import by.htp.carservice.transaction.EntityTransaction;
+import by.htp.carservice.transaction.QueryReceiver;
+import by.htp.carservice.entity.impl.Department;
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.DaoException;
 import by.htp.carservice.exception.ServiceException;
@@ -15,13 +15,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class CommentReceiver implements QueryReceiver<Comment> {
+public class DepartmentReceiver implements QueryReceiver<Department> {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public boolean saveQuery(Comment entity) throws ServiceException {
-        logger.log(Level.INFO,"Start method saveQuery entity:" + entity);
-        AbstractDao<Comment> commentDao = DaoFactory.getInstance().getCommentDao();
+    public boolean saveQuery(Department entity) throws ServiceException {
+        logger.log(Level.INFO, "Start method saveQuery entity:" + entity);
+        AbstractDao<Department> departmentDao = DaoFactory.getInstance().getDepartmentDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -30,8 +30,8 @@ public class CommentReceiver implements QueryReceiver<Comment> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(commentDao);
-            flagResult = commentDao.save(entity);
+            transaction.beginTransaction(departmentDao);
+            flagResult = departmentDao.save(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
             transaction.rollback();
@@ -39,14 +39,14 @@ public class CommentReceiver implements QueryReceiver<Comment> {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method saveQuery result:" + flagResult);
+        logger.log(Level.INFO, "Finish method saveQuery result:" + flagResult);
         return flagResult;
     }
 
     @Override
-    public boolean updateQuery(Comment entity) throws ServiceException {
-        logger.log(Level.INFO,"Start method updateQuery entity:" + entity);
-        AbstractDao<Comment> commentDao = DaoFactory.getInstance().getCommentDao();
+    public boolean updateQuery(Department entity) throws ServiceException {
+        logger.log(Level.INFO, "Start method updateQuery entity:" + entity);
+        AbstractDao<Department> departmentDao = DaoFactory.getInstance().getDepartmentDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -55,8 +55,8 @@ public class CommentReceiver implements QueryReceiver<Comment> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(commentDao);
-            flagResult = commentDao.update(entity);
+            transaction.beginTransaction(departmentDao);
+            flagResult = departmentDao.update(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
             transaction.rollback();
@@ -64,14 +64,14 @@ public class CommentReceiver implements QueryReceiver<Comment> {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method updateQuery result:" + flagResult);
+        logger.log(Level.INFO, "Finish method updateQuery result:" + flagResult);
         return flagResult;
     }
 
     @Override
-    public boolean deleteQuery(Comment entity) throws ServiceException {
-        logger.log(Level.INFO,"Start method deleteQuery entity:" + entity);
-        AbstractDao<Comment> commentDao = DaoFactory.getInstance().getCommentDao();
+    public boolean deleteQuery(Department entity) throws ServiceException {
+        logger.log(Level.INFO, "Start method deleteQuery entity:" + entity);
+        AbstractDao<Department> departmentDao = DaoFactory.getInstance().getDepartmentDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -80,8 +80,8 @@ public class CommentReceiver implements QueryReceiver<Comment> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(commentDao);
-            flagResult = commentDao.delete(entity);
+            transaction.beginTransaction(departmentDao);
+            flagResult = departmentDao.delete(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
             transaction.rollback();
@@ -89,15 +89,15 @@ public class CommentReceiver implements QueryReceiver<Comment> {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method deleteQuery result:" + flagResult);
+        logger.log(Level.INFO, "Finish method deleteQuery result:" + flagResult);
         return flagResult;
     }
 
     @Override
-    public Comment takeQuery(long id) throws ServiceException {
-        logger.log(Level.INFO,"Start method takeQuery entity by id:" + id);
-        AbstractDao<Comment> commentDao = DaoFactory.getInstance().getCommentDao();
-        Comment comment;
+    public Department takeQuery(long id) throws ServiceException {
+        logger.log(Level.INFO, "Start method takeQuery entity by id:" + id);
+        AbstractDao<Department> departmentDao = DaoFactory.getInstance().getDepartmentDao();
+        Department department;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -105,22 +105,22 @@ public class CommentReceiver implements QueryReceiver<Comment> {
             throw new ServiceException(e);
         }
         try {
-            transaction.begin(commentDao);
-            comment = commentDao.take(id);
+            transaction.begin(departmentDao);
+            department = departmentDao.take(id);
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method takeQuery result:" + comment);
-        return comment;
+        logger.log(Level.INFO, "Finish method takeQuery result:" + department);
+        return department;
     }
 
     @Override
-    public List<Comment> takeAllQuery() throws ServiceException {
-        logger.log(Level.INFO,"Start method takeAllQuery");
-        AbstractDao<Comment> commentDao = DaoFactory.getInstance().getCommentDao();
-        List<Comment> commentList;
+    public List<Department> takeAllQuery(String condition) throws ServiceException {
+        logger.log(Level.INFO, "Start method takeAllQuery");
+        AbstractDao<Department> departmentDao = DaoFactory.getInstance().getDepartmentDao();
+        List<Department> departmentList;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -128,14 +128,14 @@ public class CommentReceiver implements QueryReceiver<Comment> {
             throw new ServiceException(e);
         }
         try {
-            transaction.begin(commentDao);
-            commentList = commentDao.takeAll();
+            transaction.begin(departmentDao);
+            departmentList = departmentDao.takeAll(condition);
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method takeAllQuery result:" + commentList);
-        return commentList;
+        logger.log(Level.INFO, "Finish method takeAllQuery result:" + departmentList);
+        return departmentList;
     }
 }

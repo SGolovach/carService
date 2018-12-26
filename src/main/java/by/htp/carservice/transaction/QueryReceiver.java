@@ -1,4 +1,4 @@
-package by.htp.carservice.dao;
+package by.htp.carservice.transaction;
 
 import by.htp.carservice.entity.Entity;
 import by.htp.carservice.exception.ServiceException;
@@ -15,5 +15,5 @@ public interface QueryReceiver<T extends Entity> {
 
     T takeQuery(long id) throws ServiceException;
 
-    List<T> takeAllQuery() throws ServiceException;
+    List<T> takeAllQuery(String condition) throws ServiceException;
 }

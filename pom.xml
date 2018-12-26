@@ -111,7 +111,7 @@
                 <configuration>
                     <url>http://localhost:8081/manager/text</url>
                     <server>TomcatServer</server>
-                    <path>/bookingby</path>
+                    <path>/carservice</path>
                 </configuration>
             </plugin>
         </plugins>

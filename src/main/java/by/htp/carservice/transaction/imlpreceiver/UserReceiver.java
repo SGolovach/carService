@@ -1,10 +1,10 @@
-package by.htp.carservice.dao.imlpreceiver;
+package by.htp.carservice.transaction.imlpreceiver;
 
 import by.htp.carservice.dao.AbstractDao;
 import by.htp.carservice.dao.DaoFactory;
-import by.htp.carservice.dao.EntityTransaction;
-import by.htp.carservice.dao.QueryReceiver;
-import by.htp.carservice.entity.impl.Car;
+import by.htp.carservice.transaction.EntityTransaction;
+import by.htp.carservice.transaction.QueryReceiver;
+import by.htp.carservice.entity.impl.User;
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.DaoException;
 import by.htp.carservice.exception.ServiceException;
@@ -15,13 +15,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class CarReceiver implements QueryReceiver<Car> {
+public class UserReceiver implements QueryReceiver<User> {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public boolean saveQuery(Car entity) throws ServiceException {
-        logger.log(Level.INFO,"Start method saveQuery entity:" + entity);
-        AbstractDao<Car> carDao = DaoFactory.getInstance().getCarDao();
+    public boolean saveQuery(User entity) throws ServiceException {
+        logger.log(Level.INFO, "Start method saveQuery entity:" + entity);
+        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -30,8 +30,8 @@ public class CarReceiver implements QueryReceiver<Car> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(carDao);
-            flagResult = carDao.save(entity);
+            transaction.beginTransaction(userDao);
+            flagResult = userDao.save(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
             transaction.rollback();
@@ -39,14 +39,14 @@ public class CarReceiver implements QueryReceiver<Car> {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method saveQuery result:" + flagResult);
+        logger.log(Level.INFO, "Finish method saveQuery result:" + flagResult);
         return flagResult;
     }
 
     @Override
-    public boolean updateQuery(Car entity) throws ServiceException {
-        logger.log(Level.INFO,"Start method updateQuery entity:" + entity);
-        AbstractDao<Car> carDao = DaoFactory.getInstance().getCarDao();
+    public boolean updateQuery(User entity) throws ServiceException {
+        logger.log(Level.INFO, "Start method updateQuery entity:" + entity);
+        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -55,8 +55,8 @@ public class CarReceiver implements QueryReceiver<Car> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(carDao);
-            flagResult = carDao.update(entity);
+            transaction.beginTransaction(userDao);
+            flagResult = userDao.update(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
             transaction.rollback();
@@ -64,14 +64,14 @@ public class CarReceiver implements QueryReceiver<Car> {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method updateQuery result:" + flagResult);
+        logger.log(Level.INFO, "Finish method updateQuery result:" + flagResult);
         return flagResult;
     }
 
     @Override
-    public boolean deleteQuery(Car entity) throws ServiceException {
-        logger.log(Level.INFO,"Start method deleteQuery entity:" + entity);
-        AbstractDao<Car> carDao = DaoFactory.getInstance().getCarDao();
+    public boolean deleteQuery(User entity) throws ServiceException {
+        logger.log(Level.INFO, "Start method deleteQuery entity:" + entity);
+        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -80,8 +80,8 @@ public class CarReceiver implements QueryReceiver<Car> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(carDao);
-            flagResult = carDao.delete(entity);
+            transaction.beginTransaction(userDao);
+            flagResult = userDao.delete(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
             transaction.rollback();
@@ -89,15 +89,15 @@ public class CarReceiver implements QueryReceiver<Car> {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method deleteQuery result:" + flagResult);
+        logger.log(Level.INFO, "Finish method deleteQuery result:" + flagResult);
         return flagResult;
     }
 
     @Override
-    public Car takeQuery(long id) throws ServiceException {
-        logger.log(Level.INFO,"Start method takeQuery entity by id:" + id);
-        AbstractDao<Car> carDao = DaoFactory.getInstance().getCarDao();
-        Car car;
+    public User takeQuery(long id) throws ServiceException {
+        logger.log(Level.INFO, "Start method takeQuery entity by id:" + id);
+        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
+        User user;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -105,22 +105,22 @@ public class CarReceiver implements QueryReceiver<Car> {
             throw new ServiceException(e);
         }
         try {
-            transaction.begin(carDao);
-            car = carDao.take(id);
+            transaction.begin(userDao);
+            user = userDao.take(id);
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method takeQuery result:" + car);
-        return car;
+        logger.log(Level.INFO, "Finish method takeQuery result:" + user);
+        return user;
     }
 
     @Override
-    public List<Car> takeAllQuery() throws ServiceException {
-        logger.log(Level.INFO,"Start method takeAllQuery");
-        AbstractDao<Car> carDao = DaoFactory.getInstance().getCarDao();
-        List<Car> carList;
+    public List<User> takeAllQuery(String condition) throws ServiceException {
+        logger.log(Level.INFO, "Start method takeAllQuery");
+        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
+        List<User> userList;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -128,14 +128,14 @@ public class CarReceiver implements QueryReceiver<Car> {
             throw new ServiceException(e);
         }
         try {
-            transaction.begin(carDao);
-            carList = carDao.takeAll();
+            transaction.begin(userDao);
+            userList = userDao.takeAll(condition);
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO,"Finish method takeAllQuery result:" + carList);
-        return carList;
+        logger.log(Level.INFO, "Finish method takeAllQuery result:" + userList);
+        return userList;
     }
 }

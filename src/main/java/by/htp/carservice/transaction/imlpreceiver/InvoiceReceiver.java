@@ -1,10 +1,10 @@
-package by.htp.carservice.dao.imlpreceiver;
+package by.htp.carservice.transaction.imlpreceiver;
 
 import by.htp.carservice.dao.AbstractDao;
 import by.htp.carservice.dao.DaoFactory;
-import by.htp.carservice.dao.EntityTransaction;
-import by.htp.carservice.dao.QueryReceiver;
-import by.htp.carservice.entity.impl.User;
+import by.htp.carservice.transaction.EntityTransaction;
+import by.htp.carservice.transaction.QueryReceiver;
+import by.htp.carservice.entity.impl.Invoice;
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.DaoException;
 import by.htp.carservice.exception.ServiceException;
@@ -15,13 +15,13 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class UserReceiver implements QueryReceiver<User> {
+public class InvoiceReceiver implements QueryReceiver<Invoice> {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public boolean saveQuery(User entity) throws ServiceException {
+    public boolean saveQuery(Invoice entity) throws ServiceException {
         logger.log(Level.INFO, "Start method saveQuery entity:" + entity);
-        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
+        AbstractDao<Invoice> invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -30,8 +30,8 @@ public class UserReceiver implements QueryReceiver<User> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(userDao);
-            flagResult = userDao.save(entity);
+            transaction.beginTransaction(invoiceDao);
+            flagResult = invoiceDao.save(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
             transaction.rollback();
@@ -44,9 +44,9 @@ public class UserReceiver implements QueryReceiver<User> {
     }
 
     @Override
-    public boolean updateQuery(User entity) throws ServiceException {
+    public boolean updateQuery(Invoice entity) throws ServiceException {
         logger.log(Level.INFO, "Start method updateQuery entity:" + entity);
-        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
+        AbstractDao<Invoice> invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -55,8 +55,8 @@ public class UserReceiver implements QueryReceiver<User> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(userDao);
-            flagResult = userDao.update(entity);
+            transaction.beginTransaction(invoiceDao);
+            flagResult = invoiceDao.update(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
             transaction.rollback();
@@ -69,9 +69,9 @@ public class UserReceiver implements QueryReceiver<User> {
     }
 
     @Override
-    public boolean deleteQuery(User entity) throws ServiceException {
+    public boolean deleteQuery(Invoice entity) throws ServiceException {
         logger.log(Level.INFO, "Start method deleteQuery entity:" + entity);
-        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
+        AbstractDao<Invoice> invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -80,8 +80,8 @@ public class UserReceiver implements QueryReceiver<User> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(userDao);
-            flagResult = userDao.delete(entity);
+            transaction.beginTransaction(invoiceDao);
+            flagResult = invoiceDao.delete(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
             transaction.rollback();
@@ -94,10 +94,10 @@ public class UserReceiver implements QueryReceiver<User> {
     }
 
     @Override
-    public User takeQuery(long id) throws ServiceException {
+    public Invoice takeQuery(long id) throws ServiceException {
         logger.log(Level.INFO, "Start method takeQuery entity by id:" + id);
-        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
-        User user;
+        AbstractDao<Invoice> invoiceDao = DaoFactory.getInstance().getInvoiceDao();
+        Invoice invoice;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -105,22 +105,22 @@ public class UserReceiver implements QueryReceiver<User> {
             throw new ServiceException(e);
         }
         try {
-            transaction.begin(userDao);
-            user = userDao.take(id);
+            transaction.begin(invoiceDao);
+            invoice = invoiceDao.take(id);
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method takeQuery result:" + user);
-        return user;
+        logger.log(Level.INFO, "Finish method takeQuery result:" + invoice);
+        return invoice;
     }
 
     @Override
-    public List<User> takeAllQuery() throws ServiceException {
+    public List<Invoice> takeAllQuery(String condition) throws ServiceException {
         logger.log(Level.INFO, "Start method takeAllQuery");
-        AbstractDao<User> userDao = DaoFactory.getInstance().getUserDao();
-        List<User> userList;
+        AbstractDao<Invoice> invoiceDao = DaoFactory.getInstance().getInvoiceDao();
+        List<Invoice> invoiceList;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -128,14 +128,14 @@ public class UserReceiver implements QueryReceiver<User> {
             throw new ServiceException(e);
         }
         try {
-            transaction.begin(userDao);
-            userList = userDao.takeAll();
+            transaction.begin(invoiceDao);
+            invoiceList = invoiceDao.takeAll(condition);
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method takeAllQuery result:" + userList);
-        return userList;
+        logger.log(Level.INFO, "Finish method takeAllQuery result:" + invoiceList);
+        return invoiceList;
     }
 }

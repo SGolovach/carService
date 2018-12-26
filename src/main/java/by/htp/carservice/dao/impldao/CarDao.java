@@ -35,7 +35,7 @@ public class CarDao extends AbstractDao<Car> {
 
     @Override
     public boolean save(Car entity) throws DaoException {
-        logger.log(Level.INFO,"Start save entity: " + entity);
+        logger.log(Level.INFO, "Start save entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -57,13 +57,13 @@ public class CarDao extends AbstractDao<Car> {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO,"Finish save entity, result: " + (flagResult>=1));
+        logger.log(Level.INFO, "Finish save entity, result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
     @Override
     public boolean update(Car entity) throws DaoException {
-        logger.log(Level.INFO,"Start update entity: " + entity);
+        logger.log(Level.INFO, "Start update entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -81,13 +81,13 @@ public class CarDao extends AbstractDao<Car> {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO,"Finish update entity, result: " + (flagResult>=1));
+        logger.log(Level.INFO, "Finish update entity, result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
     @Override
     public boolean delete(Car entity) throws DaoException {
-        logger.log(Level.INFO,"Start delete entity: " + entity);
+        logger.log(Level.INFO, "Start delete entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -99,13 +99,13 @@ public class CarDao extends AbstractDao<Car> {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO,"Finish delete entity, result: " + (flagResult>=1));
+        logger.log(Level.INFO, "Finish delete entity, result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
     @Override
     public Car take(long id) throws DaoException {
-        logger.log(Level.INFO,"Start take entity by id: " + id);
+        logger.log(Level.INFO, "Start take entity by id: " + id);
         Car car = new Car();
         PreparedStatement statement = null;
         try {
@@ -126,17 +126,17 @@ public class CarDao extends AbstractDao<Car> {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO,"Finish take entity: " + car);
+        logger.log(Level.INFO, "Finish take entity: " + car);
         return car;
     }
 
     @Override
-    public List<Car> takeAll() throws DaoException {
-        logger.log(Level.INFO,"Start takeAll");
+    public List<Car> takeAll(String condition) throws DaoException {
+        logger.log(Level.INFO, "Start takeAll");
         List<Car> listCar = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL);
+            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listCar.add(new Car(
@@ -154,7 +154,7 @@ public class CarDao extends AbstractDao<Car> {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO,"Finish takeAll. listCar: " + listCar);
+        logger.log(Level.INFO, "Finish takeAll. listCar: " + listCar);
         return listCar;
     }
 }

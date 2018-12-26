@@ -1,6 +1,6 @@
-package by.htp.carservice.dao;
+package by.htp.carservice.transaction;
 
-import by.htp.carservice.dao.imlpreceiver.*;
+import by.htp.carservice.transaction.imlpreceiver.*;
 import by.htp.carservice.entity.impl.*;
 
 import java.util.concurrent.atomic.AtomicBoolean;

@@ -14,6 +14,6 @@ public interface BaseDao<T> {
 
     T take(long id) throws DaoException;
 
-    List<T> takeAll() throws DaoException;
+    List<T> takeAll(String condition) throws DaoException;
 
 }

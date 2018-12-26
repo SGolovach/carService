@@ -1,4 +1,4 @@
-package by.htp.carservice.dao;
+package by.htp.carservice.connectiondb;
 
 import java.sql.*;
 import java.util.Map;

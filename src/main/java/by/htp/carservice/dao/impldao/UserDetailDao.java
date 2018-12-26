@@ -121,12 +121,12 @@ public class UserDetailDao extends AbstractDao<UserDetail> {
     }
 
     @Override
-    public List<UserDetail> takeAll() throws DaoException {
+    public List<UserDetail> takeAll(String condition) throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<UserDetail> listUserDetail = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL);
+            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listUserDetail.add(new UserDetail(

@@ -13,13 +13,10 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link disabled" href="do?command=Index">Все объявления</a>
+                <a class="nav-link" href="action?command=login">login</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="do?command=Login">login</a>
-            </li>
-            <li class="nav-item">
-                <a class="nav-link" href="do?command=SignUp">sign-up</a>
+                <a class="nav-link" href="action?command=signup">sign-up</a>
             </li>
         </ul>
     </div>

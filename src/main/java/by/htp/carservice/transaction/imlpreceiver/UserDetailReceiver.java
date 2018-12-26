@@ -1,9 +1,9 @@
-package by.htp.carservice.dao.imlpreceiver;
+package by.htp.carservice.transaction.imlpreceiver;
 
 import by.htp.carservice.dao.AbstractDao;
 import by.htp.carservice.dao.DaoFactory;
-import by.htp.carservice.dao.EntityTransaction;
-import by.htp.carservice.dao.QueryReceiver;
+import by.htp.carservice.transaction.EntityTransaction;
+import by.htp.carservice.transaction.QueryReceiver;
 import by.htp.carservice.entity.impl.UserDetail;
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.DaoException;
@@ -117,7 +117,7 @@ public class UserDetailReceiver implements QueryReceiver<UserDetail> {
     }
 
     @Override
-    public List<UserDetail> takeAllQuery() throws ServiceException {
+    public List<UserDetail> takeAllQuery(String condition) throws ServiceException {
         logger.log(Level.INFO, "Start method takeAllQuery");
         AbstractDao<UserDetail> userDetailDao = DaoFactory.getInstance().getUserDetailDao();
         List<UserDetail> userDetailList;
@@ -129,7 +129,7 @@ public class UserDetailReceiver implements QueryReceiver<UserDetail> {
         }
         try {
             transaction.begin(userDetailDao);
-            userDetailList = userDetailDao.takeAll();
+            userDetailList = userDetailDao.takeAll(condition);
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
         } finally {

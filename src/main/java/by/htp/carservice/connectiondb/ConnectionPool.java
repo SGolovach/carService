@@ -1,4 +1,4 @@
-package by.htp.carservice.dao;
+package by.htp.carservice.connectiondb;
 
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.ProjectException;
@@ -30,6 +30,7 @@ public class ConnectionPool {
     private static final String AUTO_RECONNECT = "autoReconnect";
     private static final String CHARACTER_ENCODING = "characterEncoding";
     private static final String USE_UNICODE = "useUnicode";
+    private static final String USE_SSL = "useSSL";
     private static final int STANDARD_POOLSIZE = 5;
 
     private ConnectionPool() {
@@ -89,6 +90,7 @@ public class ConnectionPool {
         properties.put(AUTO_RECONNECT, dbResourceManager.getValue(DbParameter.DB_AUTORECONNECT));
         properties.put(CHARACTER_ENCODING, dbResourceManager.getValue(DbParameter.DB_CHARACTERENCODING));
         properties.put(USE_UNICODE, dbResourceManager.getValue(DbParameter.DB_USEUNICODE));
+        properties.put(USE_SSL, dbResourceManager.getValue(DbParameter.DB_USESSL));
         return dbResourceManager.getValue(DbParameter.DB_URL);
     }
 
@@ -104,7 +106,7 @@ public class ConnectionPool {
         return connection;
     }
 
-    Connection takeConnection() throws ConnectionPoolException {
+    public Connection takeConnection() throws ConnectionPoolException {
         ProxyConnection connection;
         try {
             connection = availableConnections.take();
@@ -149,12 +151,12 @@ public class ConnectionPool {
     public void closeConnectionPool() throws ProjectException {
         try {
             Enumeration<Driver> drivers = DriverManager.getDrivers();
-            while (drivers.hasMoreElements()){
+            while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
                 DriverManager.deregisterDriver(driver);
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR,"Can not deregister driver DriverManager");
+            logger.log(Level.ERROR, "Can not deregister driver DriverManager");
         }
         try {
             closeConnectionQueue(availableConnections);

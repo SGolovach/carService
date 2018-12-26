@@ -109,12 +109,12 @@ public class DepartmentDao extends AbstractDao<Department> {
     }
 
     @Override
-    public List<Department> takeAll() throws DaoException {
+    public List<Department> takeAll(String condition) throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<Department> listDepartment = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL);
+            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listDepartment.add(new Department(

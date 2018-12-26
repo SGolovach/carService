@@ -1,7 +1,7 @@
 package by.htp.carservice.service.impl;
 
-import by.htp.carservice.dao.QueryReceiver;
-import by.htp.carservice.dao.QueryReceiverFactory;
+import by.htp.carservice.transaction.QueryReceiver;
+import by.htp.carservice.transaction.QueryReceiverFactory;
 import by.htp.carservice.entity.impl.Comment;
 import by.htp.carservice.exception.ProjectException;
 import by.htp.carservice.exception.ServiceException;
@@ -58,10 +58,10 @@ public class CommentReceiverService implements QueryReceiverService<Comment> {
     }
 
     @Override
-    public List<Comment> takeAllQuery() throws ProjectException {
+    public List<Comment> takeAllQuery(String condition) throws ProjectException {
         List<Comment> listComment;
         try {
-            listComment = receiver.takeAllQuery();
+            listComment = receiver.takeAllQuery(condition);
         } catch (ServiceException e) {
             throw new ProjectException(e);
         }
