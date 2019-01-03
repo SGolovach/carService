@@ -1,0 +1,9 @@
+submit.login=Подтвердить
+submit.signup=Регистрация
+msg.locale.en=Англ
+msg.locale.ru=Рус
+msg.login=Логин
+msg.password=Пароль
+msg.navbar.login=Логин
+msg.navbar.signup=Регистрация
+msg.navbar.userName=Пользователь
