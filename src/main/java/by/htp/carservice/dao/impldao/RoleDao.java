@@ -1,6 +1,7 @@
 package by.htp.carservice.dao.impldao;
 
 import by.htp.carservice.dao.AbstractDao;
+import by.htp.carservice.dao.DaoRole;
 import by.htp.carservice.entity.impl.Role;
 import by.htp.carservice.exception.DaoException;
 import org.apache.logging.log4j.Level;
@@ -14,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class RoleDao extends AbstractDao<Role> {
+public class RoleDao extends AbstractDao<Role> implements DaoRole {
     private static Logger logger = LogManager.getLogger();
     private static final String SQL_SAVE = "INSERT INTO roles(idRole, role) VALUES(? ,?)";
     private static final String SQL_UPDATE = "UPDATE roles SET role = ? WHERE idRole = ?";
@@ -107,12 +108,12 @@ public class RoleDao extends AbstractDao<Role> {
     }
 
     @Override
-    public List<Role> takeAll(String condition) throws DaoException {
+    public List<Role> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<Role> listRole = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
+            statement = connection.prepareStatement(SQL_TAKE_ALL);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listRole.add(new Role(

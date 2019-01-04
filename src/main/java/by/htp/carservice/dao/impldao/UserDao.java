@@ -1,6 +1,7 @@
 package by.htp.carservice.dao.impldao;
 
 import by.htp.carservice.dao.AbstractDao;
+import by.htp.carservice.dao.DaoUser;
 import by.htp.carservice.entity.impl.User;
 import by.htp.carservice.exception.DaoException;
 import org.apache.logging.log4j.Level;
@@ -14,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDao extends AbstractDao<User> {
+public class UserDao extends AbstractDao<User> implements DaoUser {
     private static Logger logger = LogManager.getLogger();
     private static final String SQL_SAVE =
             "INSERT INTO users(idUsers, login, password, Roles_id) VALUES(? ,?, ?, ?)";
@@ -22,6 +23,7 @@ public class UserDao extends AbstractDao<User> {
             "UPDATE users SET login = ?, password = ?, Roles_id = ? WHERE idUsers = ?";
     private static final String SQL_DELETE = "DELETE FROM users WHERE idUsers = ?";
     private static final String SQL_TAKE = " WHERE idUsers = ?";
+    private static final String SQL_CHECK_LOGIN = " WHERE login = ? AND password = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM users";
     private static final String ID_USER = "idUsers";
     private static final String LOGIN = "login";
@@ -118,12 +120,12 @@ public class UserDao extends AbstractDao<User> {
     }
 
     @Override
-    public List<User> takeAll(String condition) throws DaoException {
+    public List<User> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<User> listUser = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
+            statement = connection.prepareStatement(SQL_TAKE_ALL );
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listUser.add(new User(
@@ -138,7 +140,34 @@ public class UserDao extends AbstractDao<User> {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish takeAll. listCar: " + listUser);
+        logger.log(Level.INFO, "Finish takeAll. listUser: " + listUser);
+        return listUser;
+    }
+
+    @Override
+    public List<User> checkLogin(String login,String password) throws DaoException {
+        logger.log(Level.INFO, "Start checkLogin");
+        List<User> listUser = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_TAKE_ALL + SQL_CHECK_LOGIN);
+            statement.setString(1, login);
+            statement.setString(2, password);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listUser.add(new User(
+                        resultSet.getLong(ID_USER),
+                        resultSet.getString(LOGIN),
+                        resultSet.getString(PASSWORD),
+                        resultSet.getLong(ROLE_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkLogin. listUser: " + listUser);
         return listUser;
     }
 }

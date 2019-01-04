@@ -1,19 +1,19 @@
 package by.htp.carservice.service;
 
 import by.htp.carservice.entity.Entity;
-import by.htp.carservice.exception.ProjectException;
+import by.htp.carservice.exception.CommandException;
 
 import java.util.List;
 
 public interface QueryReceiverService<T extends Entity> {
 
-    boolean saveQuery(T entity) throws ProjectException;
+    boolean saveQuery(T entity) throws CommandException;
 
-    boolean updateQuery(T entity) throws ProjectException;
+    boolean updateQuery(T entity) throws CommandException;
 
-    boolean deleteQuery(T entity) throws ProjectException;
+    boolean deleteQuery(T entity) throws CommandException;
 
-    T takeQuery(long id) throws ProjectException;
+    T takeQuery(long id) throws CommandException;
 
-    List<T> takeAllQuery(String condition) throws ProjectException;
+    List<T> takeAllQuery() throws CommandException;
 }

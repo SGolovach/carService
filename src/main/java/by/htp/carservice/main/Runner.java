@@ -1,19 +1,19 @@
 package by.htp.carservice.main;
 
 import by.htp.carservice.connectiondb.ConnectionPool;
-import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.ProjectException;
+import by.htp.carservice.exception.CommandException;
+import by.htp.carservice.exception.ServiceException;
 import by.htp.carservice.service.ServiceFactory;
+import by.htp.carservice.transaction.imlpreceiver.UserReceiver;
 
 public class Runner {
-    public static void main(String[] args) throws ProjectException {
-//        User user  =new User();
-//        user.setLogin("dddd");
-//        user.setPassword("ffff");
-//        user.setRoleId(2);
-//        ServiceFactory factory = ServiceFactory.getInstance();
-//        factory.getUserQueryReceiverService().saveQuery(user);
-//        ConnectionPool.getInstance().closeConnectionPool();
+    public static void main(String[] args) throws CommandException, ServiceException {
+
+        ServiceFactory factory = ServiceFactory.getInstance();
+
+        System.out.println(factory.getUserQueryReceiverService().takeAllQuery());
+
+        ConnectionPool.getInstance().closeConnectionPool();
 
 
     }

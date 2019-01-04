@@ -2,26 +2,27 @@ package by.htp.carservice.transaction.imlpreceiver;
 
 import by.htp.carservice.dao.AbstractDao;
 import by.htp.carservice.dao.DaoFactory;
+import by.htp.carservice.dao.DaoRole;
 import by.htp.carservice.transaction.EntityTransaction;
-import by.htp.carservice.transaction.QueryReceiver;
 import by.htp.carservice.entity.impl.Role;
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.DaoException;
 import by.htp.carservice.exception.ServiceException;
 import by.htp.carservice.exception.TransactionException;
+import by.htp.carservice.transaction.QueryReceiverRole;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
-public class RoleReceiver implements QueryReceiver<Role> {
+public class RoleReceiver implements QueryReceiverRole {
     private static Logger logger = LogManager.getLogger();
 
     @Override
     public boolean saveQuery(Role entity) throws ServiceException {
         logger.log(Level.INFO, "Start method saveQuery entity:" + entity);
-        AbstractDao<Role> roleDao = DaoFactory.getInstance().getRoleDao();
+        DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -30,7 +31,7 @@ public class RoleReceiver implements QueryReceiver<Role> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(roleDao);
+            transaction.beginTransaction((AbstractDao) roleDao);
             flagResult = roleDao.save(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
@@ -46,7 +47,7 @@ public class RoleReceiver implements QueryReceiver<Role> {
     @Override
     public boolean updateQuery(Role entity) throws ServiceException {
         logger.log(Level.INFO, "Start method updateQuery entity:" + entity);
-        AbstractDao<Role> roleDao = DaoFactory.getInstance().getRoleDao();
+        DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -55,7 +56,7 @@ public class RoleReceiver implements QueryReceiver<Role> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(roleDao);
+            transaction.beginTransaction((AbstractDao) roleDao);
             flagResult = roleDao.update(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
@@ -71,7 +72,7 @@ public class RoleReceiver implements QueryReceiver<Role> {
     @Override
     public boolean deleteQuery(Role entity) throws ServiceException {
         logger.log(Level.INFO, "Start method deleteQuery entity:" + entity);
-        AbstractDao<Role> roleDao = DaoFactory.getInstance().getRoleDao();
+        DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         boolean flagResult;
         EntityTransaction transaction;
         try {
@@ -80,7 +81,7 @@ public class RoleReceiver implements QueryReceiver<Role> {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction(roleDao);
+            transaction.beginTransaction((AbstractDao) roleDao);
             flagResult = roleDao.delete(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
@@ -96,7 +97,7 @@ public class RoleReceiver implements QueryReceiver<Role> {
     @Override
     public Role takeQuery(long id) throws ServiceException {
         logger.log(Level.INFO, "Start method takeQuery entity by id:" + id);
-        AbstractDao<Role> roleDao = DaoFactory.getInstance().getRoleDao();
+        DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         Role role;
         EntityTransaction transaction;
         try {
@@ -105,7 +106,7 @@ public class RoleReceiver implements QueryReceiver<Role> {
             throw new ServiceException(e);
         }
         try {
-            transaction.begin(roleDao);
+            transaction.begin((AbstractDao) roleDao);
             role = roleDao.take(id);
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
@@ -117,9 +118,9 @@ public class RoleReceiver implements QueryReceiver<Role> {
     }
 
     @Override
-    public List<Role> takeAllQuery(String condition) throws ServiceException {
+    public List<Role> takeAllQuery() throws ServiceException {
         logger.log(Level.INFO, "Start method takeAllQuery");
-        AbstractDao<Role> roleDao = DaoFactory.getInstance().getRoleDao();
+        DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         List<Role> roleList;
         EntityTransaction transaction;
         try {
@@ -128,8 +129,8 @@ public class RoleReceiver implements QueryReceiver<Role> {
             throw new ServiceException(e);
         }
         try {
-            transaction.begin(roleDao);
-            roleList = roleDao.takeAll(condition);
+            transaction.begin((AbstractDao) roleDao);
+            roleList = roleDao.takeAll();
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
         } finally {

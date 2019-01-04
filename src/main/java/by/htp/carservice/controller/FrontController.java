@@ -3,7 +3,7 @@ package by.htp.carservice.controller;
 import by.htp.carservice.command.ActionFactory;
 import by.htp.carservice.command.Command;
 import by.htp.carservice.connectiondb.ConnectionPool;
-import by.htp.carservice.exception.ProjectException;
+import by.htp.carservice.exception.CommandException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -26,7 +26,8 @@ public class FrontController extends HttpServlet {
     }
 
     @Override
-    protected void doGet(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+    protected void doGet(HttpServletRequest request, HttpServletResponse response)
+            throws ServletException, IOException {
         String commandName = doProcess(request);
         RequestDispatcher dispatcher = request.getRequestDispatcher(commandName);
         dispatcher.forward(request, response);
@@ -49,7 +50,7 @@ public class FrontController extends HttpServlet {
     public void destroy() {
         try {
             ConnectionPool.getInstance().closeConnectionPool();
-        } catch (ProjectException e) {
+        } catch (CommandException e) {
             logger.log(Level.ERROR,"ConnectionPool doesn't close",e);
         }
         super.destroy();

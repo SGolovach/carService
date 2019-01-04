@@ -15,5 +15,5 @@ public interface QueryReceiver<T extends Entity> {
 
     T takeQuery(long id) throws ServiceException;
 
-    List<T> takeAllQuery(String condition) throws ServiceException;
+    List<T> takeAllQuery() throws ServiceException;
 }

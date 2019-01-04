@@ -1,6 +1,7 @@
 package by.htp.carservice.dao.impldao;
 
 import by.htp.carservice.dao.AbstractDao;
+import by.htp.carservice.dao.DaoCar;
 import by.htp.carservice.entity.impl.Car;
 import by.htp.carservice.exception.DaoException;
 import org.apache.logging.log4j.Level;
@@ -14,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CarDao extends AbstractDao<Car> {
+public class CarDao extends AbstractDao<Car> implements DaoCar {
     private static Logger logger = LogManager.getLogger();
     private static final String SQL_SAVE =
             "INSERT INTO cars(idCars, brand, model, year, codeVIN, fuel, Users_id)" +
@@ -131,12 +132,12 @@ public class CarDao extends AbstractDao<Car> {
     }
 
     @Override
-    public List<Car> takeAll(String condition) throws DaoException {
+    public List<Car> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<Car> listCar = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
+            statement = connection.prepareStatement(SQL_TAKE_ALL);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listCar.add(new Car(

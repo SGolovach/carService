@@ -1,6 +1,7 @@
 package by.htp.carservice.dao.impldao;
 
 import by.htp.carservice.dao.AbstractDao;
+import by.htp.carservice.dao.DaoUserDetail;
 import by.htp.carservice.entity.impl.UserDetail;
 import by.htp.carservice.exception.DaoException;
 import org.apache.logging.log4j.Level;
@@ -14,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class UserDetailDao extends AbstractDao<UserDetail> {
+public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDetail {
     private static Logger logger = LogManager.getLogger();
     private static final String SQL_SAVE =
             "INSERT INTO userdetails(idUserDetail, name, phone, email, Users_id) VALUES(? ,? ,? ,? ,?)";
@@ -121,12 +122,12 @@ public class UserDetailDao extends AbstractDao<UserDetail> {
     }
 
     @Override
-    public List<UserDetail> takeAll(String condition) throws DaoException {
+    public List<UserDetail> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<UserDetail> listUserDetail = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
+            statement = connection.prepareStatement(SQL_TAKE_ALL);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listUserDetail.add(new UserDetail(

@@ -1,7 +1,7 @@
 package by.htp.carservice.connectiondb;
 
 import by.htp.carservice.exception.ConnectionPoolException;
-import by.htp.carservice.exception.ProjectException;
+import by.htp.carservice.exception.CommandException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -148,7 +148,8 @@ public class ConnectionPool {
         }
     }
 
-    public void closeConnectionPool() throws ProjectException {
+    public void closeConnectionPool() throws CommandException {
+        logger.log(Level.INFO,"Start closeConnectionPool");
         try {
             Enumeration<Driver> drivers = DriverManager.getDrivers();
             while (drivers.hasMoreElements()) {
@@ -162,8 +163,8 @@ public class ConnectionPool {
             closeConnectionQueue(availableConnections);
             closeConnectionQueue(usedConnections);
         } catch (ConnectionPoolException e) {
-            //TODO can throw ProjectException here?
-            throw new ProjectException("Error in close ConnectionPool", e);
+            //TODO can throw CommandException here?
+            throw new CommandException("Error in close ConnectionPool", e);
         }
     }
 

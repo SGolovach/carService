@@ -9,7 +9,7 @@ import java.sql.Connection;
 import java.sql.SQLException;
 import java.sql.Statement;
 
-public abstract class AbstractDao<T extends Entity> implements BaseDao<T> {
+public abstract class AbstractDao<T extends Entity>{
     private static Logger logger = LogManager.getLogger();
     protected Connection connection;
 

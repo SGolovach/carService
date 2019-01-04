@@ -1,6 +1,7 @@
 package by.htp.carservice.dao.impldao;
 
 import by.htp.carservice.dao.AbstractDao;
+import by.htp.carservice.dao.DaoComment;
 import by.htp.carservice.entity.impl.Comment;
 import by.htp.carservice.exception.DaoException;
 import org.apache.logging.log4j.Level;
@@ -14,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class CommentDao extends AbstractDao<Comment> {
+public class CommentDao extends AbstractDao<Comment> implements DaoComment {
     private static Logger logger = LogManager.getLogger();
     private static final String SQL_SAVE =
             "INSERT INTO comments(idComment, description, Users_id)" +
@@ -114,12 +115,12 @@ public class CommentDao extends AbstractDao<Comment> {
     }
 
     @Override
-    public List<Comment> takeAll(String condition) throws DaoException {
+    public List<Comment> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<Comment> listComment = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
+            statement = connection.prepareStatement(SQL_TAKE_ALL);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listComment.add(new Comment(

@@ -2,7 +2,7 @@ package by.htp.carservice.command.impl;
 
 import by.htp.carservice.command.AbstractCommand;
 import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.ProjectException;
+import by.htp.carservice.exception.CommandException;
 import by.htp.carservice.hashpass.PasswordHash;
 import by.htp.carservice.service.ServiceFactory;
 
@@ -18,13 +18,12 @@ public class LoginCommand extends AbstractCommand {
             PasswordHash hash = new PasswordHash();
             String login = request.getParameter("login");
             String password = hash.getHashPAss(request.getParameter("password"));
-            String where = String.format("WHERE login='%s' AND password='%s'", login, password);
             ServiceFactory factory = ServiceFactory.getInstance();
             User user;
             List<User> users = new ArrayList<>();
             try {
-                users = factory.getUserQueryReceiverService().takeAllQuery(where);
-            } catch (ProjectException e) {
+                users = factory.getUserQueryReceiverService().checkLoginQuery(login,password);
+            } catch (CommandException e) {
                 e.printStackTrace();
             }
 

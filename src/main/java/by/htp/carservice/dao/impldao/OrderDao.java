@@ -1,6 +1,7 @@
 package by.htp.carservice.dao.impldao;
 
 import by.htp.carservice.dao.AbstractDao;
+import by.htp.carservice.dao.DaoOrder;
 import by.htp.carservice.entity.impl.Order;
 import by.htp.carservice.exception.DaoException;
 import org.apache.logging.log4j.Level;
@@ -14,7 +15,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderDao extends AbstractDao<Order> {
+public class OrderDao extends AbstractDao<Order> implements DaoOrder {
     private static Logger logger = LogManager.getLogger();
     private static final String SQL_SAVE =
             "INSERT INTO orders(idOrder, timeRegister, Description, status, Users_id, Departments_id, Cars_id)" +
@@ -131,12 +132,12 @@ public class OrderDao extends AbstractDao<Order> {
     }
 
     @Override
-    public List<Order> takeAll(String condition) throws DaoException {
+    public List<Order> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
         List<Order> listOrder = new ArrayList<>();
         PreparedStatement statement = null;
         try {
-            statement = connection.prepareStatement(SQL_TAKE_ALL + condition);
+            statement = connection.prepareStatement(SQL_TAKE_ALL);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listOrder.add(new Order(

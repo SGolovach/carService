@@ -2,7 +2,7 @@ package by.htp.carservice.command.impl;
 
 import by.htp.carservice.command.AbstractCommand;
 import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.ProjectException;
+import by.htp.carservice.exception.CommandException;
 import by.htp.carservice.hashpass.PasswordHash;
 import by.htp.carservice.service.ServiceFactory;
 
@@ -22,7 +22,7 @@ public class SignupCommand extends AbstractCommand {
             ServiceFactory factory = ServiceFactory.getInstance();
             try {
                 factory.getUserQueryReceiverService().saveQuery(user);
-            } catch (ProjectException e) {
+            } catch (CommandException e) {
                 e.printStackTrace();
             }
 

@@ -1,68 +1,63 @@
 package by.htp.carservice.service;
 
-import by.htp.carservice.entity.impl.*;
 import by.htp.carservice.service.impl.*;
 
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class ServiceFactory {
-    private static ServiceFactory instance;
-    private static ReentrantLock lockServiceFactory = new ReentrantLock();
-    private static AtomicBoolean createServiceFactory = new AtomicBoolean(false);
-    private final QueryReceiverService<Car> carQueryReceiverService =
+    private final QueryReceiverServiceCar carQueryReceiverService =
             new CarReceiverService();
-    private final QueryReceiverService<Comment> commentQueryReceiverService =
+    private final QueryReceiverServiceComment commentQueryReceiverService =
             new CommentReceiverService();
-    private final QueryReceiverService<Department> departmentQueryReceiverService =
+    private final QueryReceiverServiceDepartment departmentQueryReceiverService =
             new DepartmentReceiverService();
-    private final QueryReceiverService<Invoice> invoiceQueryReceiverService =
+    private final QueryReceiverServiceInvoice invoiceQueryReceiverService =
             new InvoiceReceiverService();
-    private final QueryReceiverService<Order> orderQueryReceiverService =
+    private final QueryReceiverServiceOrder orderQueryReceiverService =
             new OrderReceiverService();
-    private final QueryReceiverService<Role> roleQueryReceiverService =
+    private final QueryReceiverServiceRole roleQueryReceiverService =
             new RoleReceiverService();
-    private final QueryReceiverService<UserDetail> userDetailQueryReceiverService =
+    private final QueryReceiverServiceUserDetail userDetailQueryReceiverService =
             new UserDetailReceiverService();
-    private final QueryReceiverService<User> userQueryReceiverService =
+    private final QueryReceiverServiceUser userQueryReceiverService =
             new UserReceiverService();
 
-    public static ServiceFactory getInstance() {
-
-                    instance = new ServiceFactory();
-
-        return instance;
+    private static class ServiceFactoryHolder {
+        private static final ServiceFactory INSTANCE = new ServiceFactory();
     }
 
-    public QueryReceiverService<Car> getCarQueryReceiverService() {
+    public static ServiceFactory getInstance() {
+        return ServiceFactoryHolder.INSTANCE;
+    }
+
+    public QueryReceiverServiceCar getCarQueryReceiverService() {
         return carQueryReceiverService;
     }
 
-    public QueryReceiverService<Comment> getCommentQueryReceiverService() {
+    public QueryReceiverServiceComment getCommentQueryReceiverService() {
         return commentQueryReceiverService;
     }
 
-    public QueryReceiverService<Department> getDepartmentQueryReceiverService() {
+    public QueryReceiverServiceDepartment getDepartmentQueryReceiverService() {
         return departmentQueryReceiverService;
     }
 
-    public QueryReceiverService<Invoice> getInvoiceQueryReceiverService() {
+    public QueryReceiverServiceInvoice getInvoiceQueryReceiverService() {
         return invoiceQueryReceiverService;
     }
 
-    public QueryReceiverService<Order> getOrderQueryReceiverService() {
+    public QueryReceiverServiceOrder getOrderQueryReceiverService() {
         return orderQueryReceiverService;
     }
 
-    public QueryReceiverService<Role> getRoleQueryReceiverService() {
+    public QueryReceiverServiceRole getRoleQueryReceiverService() {
         return roleQueryReceiverService;
     }
 
-    public QueryReceiverService<UserDetail> getUserDetailQueryReceiverService() {
+    public QueryReceiverServiceUserDetail getUserDetailQueryReceiverService() {
         return userDetailQueryReceiverService;
     }
 
-    public QueryReceiverService<User> getUserQueryReceiverService() {
+    public QueryReceiverServiceUser getUserQueryReceiverService() {
         return userQueryReceiverService;
     }
 }

@@ -1,68 +1,54 @@
 package by.htp.carservice.transaction;
 
 import by.htp.carservice.transaction.imlpreceiver.*;
-import by.htp.carservice.entity.impl.*;
-
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReentrantLock;
 
 public class QueryReceiverFactory {
-    private static QueryReceiverFactory instance;
-    private static ReentrantLock lockQueryReceiverFactory = new ReentrantLock();
-    private static AtomicBoolean createQueryReceiverFactory = new AtomicBoolean(false);
-    private final QueryReceiver<Car> carQueryReceiver = new CarReceiver();
-    private final QueryReceiver<Comment> commentQueryReceiver = new CommentReceiver();
-    private final QueryReceiver<Department> departmentQueryReceiver = new DepartmentReceiver();
-    private final QueryReceiver<Invoice> invoiceQueryReceiver = new InvoiceReceiver();
-    private final QueryReceiver<Order> orderQueryReceiver = new OrderReceiver();
-    private final QueryReceiver<Role> roleQueryReceiver = new RoleReceiver();
-    private final QueryReceiver<UserDetail> userDetailQueryReceiver = new UserDetailReceiver();
-    private final QueryReceiver<User> userQueryReceiver = new UserReceiver();
+    private final QueryReceiverCar carQueryReceiver = new CarReceiver();
+    private final QueryReceiverComment commentQueryReceiver = new CommentReceiver();
+    private final QueryReceiverDepartment departmentQueryReceiver = new DepartmentReceiver();
+    private final QueryReceiverInvoice invoiceQueryReceiver = new InvoiceReceiver();
+    private final QueryReceiverOrder orderQueryReceiver = new OrderReceiver();
+    private final QueryReceiverRole roleQueryReceiver = new RoleReceiver();
+    private final QueryReceiverUserDetail userDetailQueryReceiver = new UserDetailReceiver();
+    private final QueryReceiverUser userQueryReceiver = new UserReceiver();
 
-    public static QueryReceiverFactory getInstance() {
-        if (!createQueryReceiverFactory.get()) {
-            try {
-                lockQueryReceiverFactory.lock();
-                if (instance == null) {
-                    instance = new QueryReceiverFactory();
-                    createQueryReceiverFactory.set(true);
-                }
-            } finally {
-                lockQueryReceiverFactory.unlock();
-            }
-        }
-        return instance;
+    private static class QueryReceiverFactoryHolder {
+        private static final QueryReceiverFactory INSTANCE = new QueryReceiverFactory();
     }
 
-    public QueryReceiver<Car> getCarQueryReceiver() {
+    public static QueryReceiverFactory getInstance() {
+        return QueryReceiverFactoryHolder.INSTANCE;
+    }
+
+    public QueryReceiverCar getCarQueryReceiver() {
         return carQueryReceiver;
     }
 
-    public QueryReceiver<Comment> getCommentQueryReceiver() {
+    public QueryReceiverComment getCommentQueryReceiver() {
         return commentQueryReceiver;
     }
 
-    public QueryReceiver<Department> getDepartmentQueryReceiver() {
+    public QueryReceiverDepartment getDepartmentQueryReceiver() {
         return departmentQueryReceiver;
     }
 
-    public QueryReceiver<Invoice> getInvoiceQueryReceiver() {
+    public QueryReceiverInvoice getInvoiceQueryReceiver() {
         return invoiceQueryReceiver;
     }
 
-    public QueryReceiver<Order> getOrderQueryReceiver() {
+    public QueryReceiverOrder getOrderQueryReceiver() {
         return orderQueryReceiver;
     }
 
-    public QueryReceiver<Role> getRoleQueryReceiver() {
+    public QueryReceiverRole getRoleQueryReceiver() {
         return roleQueryReceiver;
     }
 
-    public QueryReceiver<UserDetail> getUserDetailQueryReceiver() {
+    public QueryReceiverUserDetail getUserDetailQueryReceiver() {
         return userDetailQueryReceiver;
     }
 
-    public QueryReceiver<User> getUserQueryReceiver() {
+    public QueryReceiverUser getUserQueryReceiver() {
         return userQueryReceiver;
     }
 }

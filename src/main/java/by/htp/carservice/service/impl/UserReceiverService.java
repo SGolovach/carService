@@ -1,69 +1,80 @@
 package by.htp.carservice.service.impl;
 
-import by.htp.carservice.transaction.QueryReceiver;
+import by.htp.carservice.exception.CommandException;
+import by.htp.carservice.service.QueryReceiverServiceUser;
 import by.htp.carservice.transaction.QueryReceiverFactory;
 import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.ProjectException;
 import by.htp.carservice.exception.ServiceException;
-import by.htp.carservice.service.QueryReceiverService;
+import by.htp.carservice.transaction.QueryReceiverUser;
 
 import java.util.List;
 
-public class UserReceiverService implements QueryReceiverService<User> {
-    private final QueryReceiver<User> receiver =
+public class UserReceiverService implements QueryReceiverServiceUser {
+    private final QueryReceiverUser receiver =
             QueryReceiverFactory.getInstance().getUserQueryReceiver();
 
     @Override
-    public boolean saveQuery(User entity) throws ProjectException {
+    public boolean saveQuery(User entity) throws CommandException {
         boolean flagResult;
         try {
             flagResult = receiver.saveQuery(entity);
         } catch (ServiceException e) {
-            throw new ProjectException(e);
+            throw new CommandException(e);
         }
         return flagResult;
     }
 
     @Override
-    public boolean updateQuery(User entity) throws ProjectException {
+    public boolean updateQuery(User entity) throws CommandException {
         boolean flagResult;
         try {
             flagResult = receiver.updateQuery(entity);
         } catch (ServiceException e) {
-            throw new ProjectException(e);
+            throw new CommandException(e);
         }
         return flagResult;
     }
 
     @Override
-    public boolean deleteQuery(User entity) throws ProjectException {
+    public boolean deleteQuery(User entity) throws CommandException {
         boolean flagResult;
         try {
             flagResult = receiver.deleteQuery(entity);
         } catch (ServiceException e) {
-            throw new ProjectException(e);
+            throw new CommandException(e);
         }
         return flagResult;
     }
 
     @Override
-    public User takeQuery(long id) throws ProjectException {
+    public User takeQuery(long id) throws CommandException {
         User user;
         try {
             user = receiver.takeQuery(id);
         } catch (ServiceException e) {
-            throw new ProjectException(e);
+            throw new CommandException(e);
         }
         return user;
     }
 
     @Override
-    public List<User> takeAllQuery(String condition) throws ProjectException {
+    public List<User> takeAllQuery() throws CommandException {
         List<User> listUser;
         try {
-            listUser = receiver.takeAllQuery(condition);
+            listUser = receiver.takeAllQuery();
         } catch (ServiceException e) {
-            throw new ProjectException(e);
+            throw new CommandException(e);
+        }
+        return listUser;
+    }
+
+    @Override
+    public List<User> checkLoginQuery(String login,String password) throws CommandException {
+        List<User> listUser;
+        try {
+            listUser = receiver.checkLoginQuery(login,password);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
         }
         return listUser;
     }
