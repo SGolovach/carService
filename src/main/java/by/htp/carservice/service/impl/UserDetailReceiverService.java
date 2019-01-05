@@ -67,4 +67,15 @@ public class UserDetailReceiverService implements QueryReceiverServiceUserDetail
         }
         return listUserDetail;
     }
+
+    @Override
+    public boolean checkRecordQuery(long userId) throws CommandException {
+        boolean flagResult;
+        try {
+            flagResult = receiver.checkRecordQuery(userId);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return flagResult;
+    }
 }

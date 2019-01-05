@@ -10,7 +10,7 @@
     <br/><fmt:message key="msg.password"/>:<br/>
     <input type="password" name="password" value=""/>
     <br/>
-    <input type="submit" value=<fmt:message key="submit.signup"/>/>
+    <input type="submit" value="<fmt:message key="submit.signup"/>"/>
 </form>
 </body>
 </html>

@@ -4,7 +4,6 @@ import by.htp.carservice.dao.AbstractDao;
 import by.htp.carservice.dao.DaoFactory;
 import by.htp.carservice.dao.DaoUserDetail;
 import by.htp.carservice.transaction.EntityTransaction;
-import by.htp.carservice.transaction.QueryReceiver;
 import by.htp.carservice.entity.impl.UserDetail;
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.DaoException;
@@ -139,5 +138,28 @@ public class UserDetailReceiver implements QueryReceiverUserDetail {
         }
         logger.log(Level.INFO, "Finish method takeAllQuery result:" + userDetailList);
         return userDetailList;
+    }
+
+    @Override
+    public boolean checkRecordQuery(long userId) throws ServiceException {
+        logger.log(Level.INFO, "Start method checkRecordQuery :" + userId);
+        DaoUserDetail userDetailDao = DaoFactory.getInstance().getUserDetailDao();
+        boolean flagResult;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao)userDetailDao);
+            flagResult = userDetailDao.checkRecord(userId);
+        } catch (DaoException | TransactionException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method checkRecordQuery result:" + flagResult);
+        return flagResult;
     }
 }

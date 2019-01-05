@@ -1,14 +1,19 @@
 package by.htp.carservice.command;
 
-import by.htp.carservice.command.impl.EmptyCommand;
-import by.htp.carservice.command.impl.LoginCommand;
-import by.htp.carservice.command.impl.MainCommand;
-import by.htp.carservice.command.impl.SignupCommand;
+import by.htp.carservice.command.impl.*;
 
 public enum CommandType {
     LOGIN(new LoginCommand()),
     SIGNUP(new SignupCommand()),
     MAIN(new MainCommand()),
+    LOGOUT(new LogOutCommand()),
+    USERDETAIL(new UserDetailCommand()),
+    COMMENT(new CommentCommand()),
+    WRITECOMMENT(new WriteCommentCommand()),
+    SERVICE(new ServiceCommand()),
+    CHECKOUTSERVICE(new CheckOutServiceCommand()),
+    ERROR(new ErrorCommand()),
+    CHANGELOCALE(new ChangeLocaleCommand()),
     EMPTY(new EmptyCommand());
 
     private Command command;

@@ -6,18 +6,18 @@
     <div class="collapse navbar-collapse" id="navbarNav">
         <ul class="navbar-nav">
             <li class="nav-item">
-                <a class="nav-link" href="action?command=login">
-                    <fmt:message key="msg.navbar.login"/>
+                <a class="nav-link" href="action?command=service">
+                    <fmt:message key="msg.navbar.service"/>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="action?command=signup">
-                    <fmt:message key="msg.navbar.signup"/>
+                <a class="nav-link" href="action?command=comment">
+                    <fmt:message key="msg.navbar.comment"/>
                 </a>
             </li>
             <li class="nav-item">
-                <a class="nav-link" href="action?command=signup">
-                    <fmt:message key="msg.navbar.signup"/>
+                <a class="nav-link" href="action?command=writecomment">
+                    <fmt:message key="msg.navbar.createcomment"/>
                 </a>
             </li>
             <li class="nav-item">
@@ -25,7 +25,12 @@
                     <fmt:message key="msg.navbar.userName"/>:${userName}
                 </a>
             </li>
-            <%@include file="changeLocale.jsp"%>
+            <li class="nav-item">
+                <a class="nav-link" href="action?command=logout">
+                    <fmt:message key="msg.navbar.logOut"/>
+                </a>
+            </li>
+            <%@include file="changeLocale.jsp" %>
         </ul>
     </div>
 </nav>

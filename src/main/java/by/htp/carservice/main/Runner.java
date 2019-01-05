@@ -1,20 +1,15 @@
 package by.htp.carservice.main;
 
-import by.htp.carservice.connectiondb.ConnectionPool;
-import by.htp.carservice.exception.CommandException;
-import by.htp.carservice.exception.ServiceException;
-import by.htp.carservice.service.ServiceFactory;
-import by.htp.carservice.transaction.imlpreceiver.UserReceiver;
+
+import by.htp.carservice.hashpass.PasswordHash;
+
 
 public class Runner {
-    public static void main(String[] args) throws CommandException, ServiceException {
+    public static void main(String[] args) {
 
-        ServiceFactory factory = ServiceFactory.getInstance();
+        PasswordHash hash = new PasswordHash();
 
-        System.out.println(factory.getUserQueryReceiverService().takeAllQuery());
-
-        ConnectionPool.getInstance().closeConnectionPool();
-
+        System.out.println(hash.getHashPAss("admin"));
 
     }
 }

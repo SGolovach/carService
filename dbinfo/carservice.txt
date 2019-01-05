@@ -25,7 +25,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `carservice`.`Users` (
   `idUsers` BIGINT(4) NOT NULL AUTO_INCREMENT,
   `login` VARCHAR(45) NULL,
-  `password` VARCHAR(45) NULL,
+  `password` VARCHAR(120) NULL,
   `Roles_id` BIGINT(4) NOT NULL,
   PRIMARY KEY (`idUsers`),
   INDEX `fk_Users_Roles_idx` (`Roles_id` ASC),
@@ -153,3 +153,25 @@ CREATE TABLE IF NOT EXISTS `carservice`.`Comments` (
     ON DELETE CASCADE
     ON UPDATE CASCADE)
 ENGINE = InnoDB;
+
+-- -----------------------------------------------------
+-- Data for table `carservice`.`Roles`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `carservice`;
+INSERT INTO `carservice`.`Roles` (`idRole`, `role`) VALUES (Default, 'admin');
+INSERT INTO `carservice`.`Roles` (`idRole`, `role`) VALUES (Default, 'user');
+
+COMMIT;
+
+
+-- -----------------------------------------------------
+-- Data for table `carservice`.`Users`
+-- -----------------------------------------------------
+START TRANSACTION;
+USE `carservice`;
+INSERT INTO `carservice`.`Users` (`idUsers`, `login`, `password`, `Roles_id`) VALUES (Default, 'admin', '79584cf9c4b7118dd5feb956c3c00e363e04183d6a2a66a99fc3b7064541c395', 1);
+INSERT INTO `carservice`.`Users` (`idUsers`, `login`, `password`, `Roles_id`) VALUES (Default, 'user', 'ba0b45476aa7c884f6de17ceb824aab6e87a7a99ecb0abe71ae358427e4c0bc9', 2);
+
+COMMIT;
+

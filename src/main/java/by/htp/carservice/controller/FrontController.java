@@ -2,6 +2,7 @@ package by.htp.carservice.controller;
 
 import by.htp.carservice.command.ActionFactory;
 import by.htp.carservice.command.Command;
+import by.htp.carservice.command.impl.ErrorCommand;
 import by.htp.carservice.connectiondb.ConnectionPool;
 import by.htp.carservice.exception.CommandException;
 import org.apache.logging.log4j.Level;
@@ -28,16 +29,30 @@ public class FrontController extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
         String commandName = doProcess(request);
         RequestDispatcher dispatcher = request.getRequestDispatcher(commandName);
-        dispatcher.forward(request, response);
+            dispatcher.forward(request, response);
+        } catch (Exception e) {
+            logger.log(Level.ERROR, "Error in frontController", e);
+            RequestDispatcher dispatcherError =
+                    request.getRequestDispatcher(new ErrorCommand().getPathJsp());
+            dispatcherError.forward(request, response);
+        }
     }
 
     @Override
     protected void doPost(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
+        try {
         String commandName = doProcess(request);
-        response.sendRedirect(commandName);
+            response.sendRedirect(commandName);
+        } catch (Exception e) {
+            logger.log(Level.ERROR, "Error in frontController", e);
+            RequestDispatcher dispatcherError =
+                    request.getRequestDispatcher(new ErrorCommand().getPathJsp());
+            dispatcherError.forward(request, response);
+        }
     }
 
     private String doProcess(HttpServletRequest request) {
@@ -51,7 +66,7 @@ public class FrontController extends HttpServlet {
         try {
             ConnectionPool.getInstance().closeConnectionPool();
         } catch (CommandException e) {
-            logger.log(Level.ERROR,"ConnectionPool doesn't close",e);
+            logger.log(Level.ERROR, "ConnectionPool doesn't close", e);
         }
         super.destroy();
     }

@@ -15,12 +15,17 @@
                     <fmt:message key="msg.navbar.signup"/>
                 </a>
             </li>
+            <li class="nav-item">
+                <a class="nav-link" href="action?command=service">
+                    <fmt:message key="msg.navbar.service"/>
+                </a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link" href="action?command=comment">
+                    <fmt:message key="msg.navbar.comment"/>
+                </a>
+            </li>
+            <%@include file="changeLocale.jsp" %>
         </ul>
-        <li class="nav-item">
-            <a class="nav-link disabled">
-                <fmt:message key="msg.navbar.userName"/>:${userName}
-            </a>
-        </li>
-        <%@include file="changeLocale.jsp" %>
     </div>
 </nav>

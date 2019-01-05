@@ -5,6 +5,8 @@ import by.htp.carservice.entity.impl.User;
 import by.htp.carservice.exception.CommandException;
 import by.htp.carservice.hashpass.PasswordHash;
 import by.htp.carservice.service.ServiceFactory;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
@@ -12,10 +14,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class LoginCommand extends AbstractCommand {
+    private static Logger logger = LogManager.getLogger();
+
     @Override
     public String execute(HttpServletRequest request) {
+        HttpSession session = request.getSession();
+        PasswordHash hash = new PasswordHash();
         if (request.getMethod().equalsIgnoreCase("post")) {
-            PasswordHash hash = new PasswordHash();
             String login = request.getParameter("login");
             String password = hash.getHashPAss(request.getParameter("password"));
             ServiceFactory factory = ServiceFactory.getInstance();
@@ -29,12 +34,11 @@ public class LoginCommand extends AbstractCommand {
 
             if(users.size()>0){
                 user = users.get(0);
-                HttpSession session = request.getSession();
                 session.setAttribute("user",user);
                 session.setAttribute("userName",user.getLogin());
                 session.setAttribute("roleId",user.getRoleId());
                 session.setMaxInactiveInterval(120);
-                return new MainCommand().getCommandName();
+                return new UserDetailCommand().getCommandName();
             }
 
             return new LoginCommand().getCommandName();

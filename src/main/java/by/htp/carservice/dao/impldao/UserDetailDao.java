@@ -23,6 +23,7 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
             "UPDATE userdetails SET name = ?, phone = ?, email = ?, Users_id = ? WHERE idUserDetail = ?";
     private static final String SQL_DELETE = "DELETE FROM userdetails WHERE idUserDetail = ?";
     private static final String SQL_TAKE = " WHERE idUserDetail = ?";
+    private static final String SQL_CHECK_RECORD = " WHERE Users_id = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM userdetails";
     private static final String ID_USER_DETAIL = "idUserDetail";
     private static final String NAME = "name";
@@ -145,5 +146,24 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
         }
         logger.log(Level.INFO, "Finish takeAll. listCar: " + listUserDetail);
         return listUserDetail;
+    }
+
+    @Override
+    public boolean checkRecord(long userId) throws DaoException {
+        logger.log(Level.INFO, "Start checkRecord by userId: " + userId);
+        boolean result;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_TAKE_ALL + SQL_CHECK_RECORD);
+            statement.setLong(1, userId);
+            ResultSet resultSet = statement.executeQuery();
+            result=resultSet.next();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkRecord result: " + result);
+        return result;
     }
 }
