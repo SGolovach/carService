@@ -162,4 +162,27 @@ public class UserReceiver implements QueryReceiverUser {
         logger.log(Level.INFO, "Finish method takeAllQuery result:" + userList);
         return userList;
     }
+
+    @Override
+    public boolean existLoginQuery(String login) throws ServiceException {
+        logger.log(Level.INFO, "Start method existLoginQuery login:" + login);
+        DaoUser userDao = DaoFactory.getInstance().getUserDao();
+        boolean flagResult;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) userDao);
+            flagResult = userDao.existLogin(login);
+        } catch (DaoException | TransactionException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method existLoginQuery result:" + flagResult);
+        return flagResult;
+    }
 }

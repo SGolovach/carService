@@ -78,4 +78,15 @@ public class UserReceiverService implements QueryReceiverServiceUser {
         }
         return listUser;
     }
+
+    @Override
+    public boolean existLoginQuery(String login) throws CommandException {
+        boolean flagResult;
+        try {
+            flagResult = receiver.existLoginQuery(login);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return flagResult;
+    }
 }

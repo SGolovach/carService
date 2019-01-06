@@ -1,6 +1,7 @@
 package by.htp.carservice.service;
 
 import by.htp.carservice.service.impl.*;
+import by.htp.carservice.validation.ValidationData;
 
 
 public class ServiceFactory {
@@ -20,6 +21,7 @@ public class ServiceFactory {
             new UserDetailReceiverService();
     private final QueryReceiverServiceUser userQueryReceiverService =
             new UserReceiverService();
+    private final ValidationData validationData = new ValidationData();
 
     private static class ServiceFactoryHolder {
         private static final ServiceFactory INSTANCE = new ServiceFactory();
@@ -59,5 +61,9 @@ public class ServiceFactory {
 
     public QueryReceiverServiceUser getUserQueryReceiverService() {
         return userQueryReceiverService;
+    }
+
+    public ValidationData getValidationData() {
+        return validationData;
     }
 }

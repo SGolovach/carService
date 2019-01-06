@@ -24,6 +24,7 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
     private static final String SQL_DELETE = "DELETE FROM users WHERE idUsers = ?";
     private static final String SQL_TAKE = " WHERE idUsers = ?";
     private static final String SQL_CHECK_LOGIN = " WHERE login = ? AND password = ?";
+    private static final String SQL_EXIST_LOGIN = " WHERE login = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM users";
     private static final String ID_USER = "idUsers";
     private static final String LOGIN = "login";
@@ -169,5 +170,24 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         }
         logger.log(Level.INFO, "Finish checkLogin. listUser: " + listUser);
         return listUser;
+    }
+
+    @Override
+    public boolean existLogin(String login) throws DaoException {
+        logger.log(Level.INFO, "Start existLogin by login: " + login);
+        boolean result;
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_TAKE_ALL + SQL_EXIST_LOGIN);
+            statement.setString(1, login);
+            ResultSet resultSet = statement.executeQuery();
+            result=resultSet.next();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish existLogin result: " + result);
+        return result;
     }
 }

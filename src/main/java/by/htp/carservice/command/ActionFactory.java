@@ -17,6 +17,7 @@ public class ActionFactory {
             current = CommandType.valueOf(commandName.toUpperCase()).getCommand();
         } catch (IllegalArgumentException e) {
             logger.log(Level.ERROR, "Command not found", e);
+            current = CommandType.ERROR.getCommand();
         }
         return current;
     }

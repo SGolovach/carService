@@ -7,13 +7,12 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ErrorCommand extends AbstractCommand {
+public class AccountCommand extends AbstractCommand {
     private static Logger logger = LogManager.getLogger();
-    private static final String PAGE_ERROR = "/WEB-INF/jsp/error/error.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
-        logger.log(Level.INFO,"Method ErrorCommand");
-        return PAGE_ERROR;
+        logger.log(Level.INFO,"Start method AccountCommand");
+        return new AccountCommand().getPathJsp();
     }
 }

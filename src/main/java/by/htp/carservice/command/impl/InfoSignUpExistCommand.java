@@ -7,13 +7,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ErrorCommand extends AbstractCommand {
+public class InfoSignUpExistCommand extends AbstractCommand {
     private static Logger logger = LogManager.getLogger();
-    private static final String PAGE_ERROR = "/WEB-INF/jsp/error/error.jsp";
+    private static final String PAGE_EXIST_LOGIN = "/WEB-INF/jsp/info/signupexist.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
-        logger.log(Level.INFO,"Method ErrorCommand");
-        return PAGE_ERROR;
+        logger.log(Level.INFO,"Method InfoSignUpExistCommand");
+        return PAGE_EXIST_LOGIN;
     }
 }

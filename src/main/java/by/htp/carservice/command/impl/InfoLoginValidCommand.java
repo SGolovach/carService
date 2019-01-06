@@ -7,13 +7,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ErrorCommand extends AbstractCommand {
+public class InfoLoginValidCommand extends AbstractCommand {
     private static Logger logger = LogManager.getLogger();
-    private static final String PAGE_ERROR = "/WEB-INF/jsp/error/error.jsp";
+    private static final String PAGE_VALIDATE = "/WEB-INF/jsp/info/loginvalid.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
-        logger.log(Level.INFO,"Method ErrorCommand");
-        return PAGE_ERROR;
+        logger.log(Level.INFO,"Method InfoLoginValidCommand");
+        return PAGE_VALIDATE;
     }
 }

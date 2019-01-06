@@ -7,13 +7,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class ErrorCommand extends AbstractCommand {
+public class InfoCreateCarValidCommand extends AbstractCommand {
     private static Logger logger = LogManager.getLogger();
-    private static final String PAGE_ERROR = "/WEB-INF/jsp/error/error.jsp";
+    private static final String PAGE_VALIDATE = "/WEB-INF/jsp/info/carcreatevalid.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
-        logger.log(Level.INFO,"Method ErrorCommand");
-        return PAGE_ERROR;
+        logger.log(Level.INFO,"Method InfoCreateCarValidCommand");
+        return PAGE_VALIDATE;
     }
 }

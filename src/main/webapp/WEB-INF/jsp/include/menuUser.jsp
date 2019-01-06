@@ -26,11 +26,16 @@
                 </a>
             </li>
             <li class="nav-item">
+                <a class="nav-link" href="action?command=account">
+                    <fmt:message key="msg.navbar.account"/>
+                </a>
+            </li>
+            <li class="nav-item">
                 <a class="nav-link" href="action?command=logout">
                     <fmt:message key="msg.navbar.logOut"/>
                 </a>
             </li>
-            <%@include file="changeLocale.jsp"%>
+            <%@include file="changeLocale.jsp" %>
         </ul>
     </div>
 </nav>

@@ -67,4 +67,15 @@ public class CarReceiverService implements QueryReceiverServiceCar {
         }
         return listCar;
     }
+
+    @Override
+    public List<Car> takeAllByUserIdQuery(long userId) throws CommandException {
+        List<Car> listCar;
+        try {
+            listCar = receiver.takeAllByUserIdQuery(userId);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listCar;
+    }
 }

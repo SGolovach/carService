@@ -6,5 +6,9 @@ import by.htp.carservice.exception.DaoException;
 import java.util.List;
 
 public interface DaoUser extends BaseDao<User> {
+
     List<User> checkLogin(String login,String password) throws DaoException;
+
+    boolean existLogin(String login) throws DaoException;
+
 }

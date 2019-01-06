@@ -4,5 +4,6 @@
 </head>
 <body>
 <%@include file="include/menuBar.jsp"%>
+
 </body>
 </html>

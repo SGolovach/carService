@@ -8,10 +8,9 @@
     <c:forEach items="${departmentList}" var="departmentList">
         <tr>
             <td align="center">
-                <a href="action?command=checkoutservice">
+                <a href="action?command=checkoutservice&serviceId=${departmentList.getIdDepartment()}">
                         ${departmentList.getNameDepartment()}
                 </a>
-                <input type="hidden" name="serviceId" value="${departmentList.getIdDepartment()}"/>
             </td>
         </tr>
     </c:forEach>

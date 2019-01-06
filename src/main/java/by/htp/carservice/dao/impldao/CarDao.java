@@ -26,6 +26,7 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
     private static final String SQL_DELETE = "DELETE FROM cars WHERE idCars = ?";
     private static final String SQL_TAKE = " WHERE idCars = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM cars";
+    private static final String SQL_USER_ID = " WHERE Users_id = ?";
     private static final String ID_CAR = "idCars";
     private static final String BRAND = "brand";
     private static final String MODEL = "model";
@@ -156,6 +157,35 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
             close(statement);
         }
         logger.log(Level.INFO, "Finish takeAll. listCar: " + listCar);
+        return listCar;
+    }
+
+    @Override
+    public List<Car> takeAllByUserId(long userId) throws DaoException {
+        logger.log(Level.INFO, "Start takeAllByUserId");
+        List<Car> listCar = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_TAKE_ALL + SQL_USER_ID);
+            statement.setLong(1,userId);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listCar.add(new Car(
+                        resultSet.getLong(ID_CAR),
+                        resultSet.getString(BRAND),
+                        resultSet.getString(MODEL),
+                        resultSet.getInt(YEAR),
+                        resultSet.getString(CODE_VIN),
+                        resultSet.getString(FUEL),
+                        resultSet.getLong(USER_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish takeAllByUserId. listCar: " + listCar);
         return listCar;
     }
 }

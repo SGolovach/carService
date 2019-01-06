@@ -12,8 +12,16 @@ public enum CommandType {
     WRITECOMMENT(new WriteCommentCommand()),
     SERVICE(new ServiceCommand()),
     CHECKOUTSERVICE(new CheckOutServiceCommand()),
+    ACCOUNT(new AccountCommand()),
     ERROR(new ErrorCommand()),
     CHANGELOCALE(new ChangeLocaleCommand()),
+    INFOSIGNUPEXIST(new InfoSignUpExistCommand()),
+    INFOSIGNUPVALID(new InfoSignUpValidCommand()),
+    INFOLOGINVALID(new InfoLoginValidCommand()),
+    INFOCREATECARVALID(new InfoCreateCarValidCommand()),
+    INFOUSERDETAILVALID(new InfoUserDetailValidCommand()),
+    CREATECAR(new CreateCarCommand()),
+    EDITCAR(new EditCarCommand()),
     EMPTY(new EmptyCommand());
 
     private Command command;

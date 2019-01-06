@@ -1,4 +1,4 @@
-<div class="container">
+<div class="container-fluid">
     <c:set var="ID" scope="session" value="${roleId}"/>
     <c:choose>
         <c:when test="${ID==1}">

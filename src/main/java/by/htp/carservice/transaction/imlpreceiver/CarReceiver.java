@@ -139,4 +139,27 @@ public class CarReceiver implements QueryReceiverCar {
         logger.log(Level.INFO,"Finish method takeAllQuery result:" + carList);
         return carList;
     }
+
+    @Override
+    public List<Car> takeAllByUserIdQuery(long userId) throws ServiceException {
+        logger.log(Level.INFO,"Start method takeAllByUserIdQuery");
+        DaoCar carDao = DaoFactory.getInstance().getCarDao();
+        List<Car> carList;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao)carDao);
+            carList = carDao.takeAllByUserId(userId);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO,"Finish method takeAllByUserIdQuery result:" + carList);
+        return carList;
+    }
 }
