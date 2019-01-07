@@ -26,7 +26,7 @@ public class EditCarCommand extends AbstractCommand {
         List<Car> carList;
 
         try {
-            carList = factory.getCarQueryReceiverService().takeAllByUserIdQuery(userId);
+            carList = factory.getCarQueryService().takeAllByUserIdQuery(userId);
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Error in EditCarCommand", e);
             return new ErrorCommand().getCommandName();

@@ -29,7 +29,7 @@ public class ValidationData {
     private static final String REGEX_CODE_VIN = "[\\w]{17}";
     private static final int MIN_CODE_VIN = 17;
     private static final int MAX_CODE_VIN = 17;
-    private static final String REGEX_DESCRIPTION = "[\\w\\s]{1,90}";
+    private static final String REGEX_DESCRIPTION = "[\\w\\W\\s]{1,90}";
     private static final int MIN_DESCRIPTION = 1;
     private static final int MAX_DESCRIPTION = 90;
 

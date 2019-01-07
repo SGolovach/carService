@@ -3,7 +3,7 @@ package by.htp.carservice.command.impl;
 import by.htp.carservice.command.AbstractCommand;
 import by.htp.carservice.entity.impl.User;
 import by.htp.carservice.exception.CommandException;
-import by.htp.carservice.hashpass.PasswordHash;
+import by.htp.carservice.util.PasswordHash;
 import by.htp.carservice.service.ServiceFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -37,7 +37,7 @@ public class LoginCommand extends AbstractCommand {
                 List<User> users;
                 String password = hash.getHashPAss(passwordClean);
                 try {
-                    users = factory.getUserQueryReceiverService().checkLoginQuery(login, password);
+                    users = factory.getUserQueryService().checkLoginQuery(login, password);
                 } catch (CommandException e) {
                     logger.log(Level.ERROR, "Error in check login", e);
                     return new ErrorCommand().getCommandName();

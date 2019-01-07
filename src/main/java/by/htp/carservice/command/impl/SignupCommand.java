@@ -3,7 +3,7 @@ package by.htp.carservice.command.impl;
 import by.htp.carservice.command.AbstractCommand;
 import by.htp.carservice.entity.impl.User;
 import by.htp.carservice.exception.CommandException;
-import by.htp.carservice.hashpass.PasswordHash;
+import by.htp.carservice.util.PasswordHash;
 import by.htp.carservice.service.ServiceFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -29,7 +29,7 @@ public class SignupCommand extends AbstractCommand {
             boolean validPassword = factory.getValidationData().validatePassword(passwordClean);
             if (validLogin && validPassword) {
                 try {
-                    if (factory.getUserQueryReceiverService().existLoginQuery(login)) {
+                    if (factory.getUserQueryService().existLoginQuery(login)) {
                         return new InfoSignUpExistCommand().getCommandName();
                     }
                     String password = hash.getHashPAss(passwordClean);
@@ -37,7 +37,7 @@ public class SignupCommand extends AbstractCommand {
                     user.setLogin(login);
                     user.setPassword(password);
                     user.setRoleId(STANDARD_ID_USER);
-                    factory.getUserQueryReceiverService().saveQuery(user);
+                    factory.getUserQueryService().saveQuery(user);
                 } catch (CommandException e) {
                     logger.log(Level.ERROR,"Error in save data",e);
                     return new ErrorCommand().getCommandName();

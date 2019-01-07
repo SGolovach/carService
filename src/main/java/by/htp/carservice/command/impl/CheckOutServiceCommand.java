@@ -36,14 +36,18 @@ public class CheckOutServiceCommand extends AbstractCommand {
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
+        User user = ((User) session.getAttribute(SESSION_USER));
+        if (user == null) {
+            return new SignupCommand().getPathJsp();
+        }
         ServiceFactory factory = ServiceFactory.getInstance();
-        long userId = ((User) session.getAttribute(SESSION_USER)).getIdUser();
+        long userId = user.getIdUser();
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
             String description = request.getParameter(PARAM_DESCRIPTION);
+            String timeRegisterStr = request.getParameter(PARAM_TIME_REGISTER);
             boolean descriptionValid = factory.getValidationData().validateDescription(description);
-            if (descriptionValid) {
+            if (descriptionValid && !timeRegisterStr.isEmpty()) {
                 DateTimeFormatter formater = DateTimeFormatter.ofPattern(PATTERN_DATE);
-                String timeRegisterStr = request.getParameter(PARAM_TIME_REGISTER);
                 long departmentId = Long.parseLong(request.getParameter(PARAM_DEPARTMENT_ID));
                 long carId = Long.parseLong(request.getParameter(PARAM_CAR_ID));
                 LocalDateTime localDateTime =
@@ -59,7 +63,7 @@ public class CheckOutServiceCommand extends AbstractCommand {
                 order.setCarId(carId);
 
                 try {
-                    factory.getOrderQueryReceiverService().saveQuery(order);
+                    factory.getOrderQueryService().saveQuery(order);
                 } catch (CommandException e) {
                     logger.log(Level.ERROR, "Error in CheckOutServiceCommand", e);
                     return new ErrorCommand().getCommandName();
@@ -74,8 +78,8 @@ public class CheckOutServiceCommand extends AbstractCommand {
         Department department;
         long serviceId = Long.parseLong(request.getParameter(PARAM_SERVICE_ID));
         try {
-            carListForOrder = factory.getCarQueryReceiverService().takeAllByUserIdQuery(userId);
-            department = factory.getDepartmentQueryReceiverService().takeQuery(serviceId);
+            carListForOrder = factory.getCarQueryService().takeAllByUserIdQuery(userId);
+            department = factory.getDepartmentQueryService().takeQuery(serviceId);
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Error in CheckOutServiceCommand", e);
             return new ErrorCommand().getCommandName();

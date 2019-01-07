@@ -17,7 +17,7 @@ INSERT INTO carservice.Departments (idDepartment, nameDepartment)
 INSERT INTO carservice.Departments (idDepartment, nameDepartment)
   VALUES (Default, 'Reading engine errors');
 INSERT INTO carservice.Departments (idDepartment, nameDepartment)
-  VALUES (Default, 'Order parts');
+  VALUES (Default, 'OrderTransaction parts');
 INSERT INTO carservice.Departments (idDepartment, nameDepartment)
   VALUES (Default, 'Brake system repair');
 INSERT INTO carservice.Departments (idDepartment, nameDepartment)

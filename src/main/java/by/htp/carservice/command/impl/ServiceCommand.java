@@ -22,7 +22,7 @@ public class ServiceCommand extends AbstractCommand {
         HttpSession session = request.getSession();
         List<Department> departmentList;
         try {
-            departmentList = factory.getDepartmentQueryReceiverService().takeAllQuery();
+            departmentList = factory.getDepartmentQueryService().takeAllQuery();
             session.setAttribute(SESSION_DEPART, departmentList);
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Error in ServiceCommand", e);

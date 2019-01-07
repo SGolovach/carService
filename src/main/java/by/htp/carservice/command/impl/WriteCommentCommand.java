@@ -5,11 +5,16 @@ import by.htp.carservice.entity.impl.Comment;
 import by.htp.carservice.entity.impl.User;
 import by.htp.carservice.exception.CommandException;
 import by.htp.carservice.service.ServiceFactory;
+import org.apache.logging.log4j.Level;
+import org.apache.logging.log4j.LogManager;
+import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
 public class WriteCommentCommand extends AbstractCommand {
+    private static Logger logger = LogManager.getLogger();
+
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
@@ -22,9 +27,10 @@ public class WriteCommentCommand extends AbstractCommand {
             comment.setDescription(description);
             comment.setUserId(userId);
             try {
-                factory.getCommentQueryReceiverService().saveQuery(comment);
+                factory.getCommentQueryService().saveQuery(comment);
             } catch (CommandException e) {
-                e.printStackTrace();
+                logger.log(Level.ERROR, "Error in check login", e);
+                return new ErrorCommand().getCommandName();
             }
             return new CommentCommand().getCommandName();
         }

@@ -24,9 +24,9 @@ public class CommentCommand extends AbstractCommand {
         List<UserDetail> userList =new ArrayList<>();
         List<Comment> commentList = null;
         try {
-            commentList = factory.getCommentQueryReceiverService().takeAllQuery();
+            commentList = factory.getCommentQueryService().takeAllQuery();
             for (Comment comment : commentList) {
-                userList.add(factory.getUserDetailQueryReceiverService().takeQuery(comment.getUserId()));
+                userList.add(factory.getUserDetailQueryService().takeQuery(comment.getUserId()));
             }
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Error in check login", e);

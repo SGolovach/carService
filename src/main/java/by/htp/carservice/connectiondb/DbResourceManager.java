@@ -5,7 +5,7 @@ import java.util.ResourceBundle;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
-public class DbResourceManager {
+ class DbResourceManager {
     private static DbResourceManager instance;
     private ResourceBundle bundle;
     private static ReentrantLock lockDbResourceManager = new ReentrantLock();
@@ -17,7 +17,7 @@ public class DbResourceManager {
         bundle = ResourceBundle.getBundle("dbMySQL", Locale.ENGLISH);
     }
 
-    public static DbResourceManager getInstance() {
+     static DbResourceManager getInstance() {
         if (!createDbResourceManager.get()) {
             try {
                 lockDbResourceManager.lock();

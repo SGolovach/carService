@@ -1,6 +1,6 @@
 package by.htp.carservice.dao;
 
-import by.htp.carservice.dao.impldao.*;
+import by.htp.carservice.dao.impl.*;
 
 public class DaoFactory {
     private final DaoUserDetail userDetailDao = new UserDetailDao();

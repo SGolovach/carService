@@ -33,7 +33,7 @@ public class FrontController extends HttpServlet {
         String commandName = doProcess(request);
         RequestDispatcher dispatcher = request.getRequestDispatcher(commandName);
             dispatcher.forward(request, response);
-        } catch (Exception e) {
+        } catch (IOException e) {
             logger.log(Level.ERROR, "Error in frontController", e);
             RequestDispatcher dispatcherError =
                     request.getRequestDispatcher(new ErrorCommand().getPathJsp());
@@ -47,7 +47,7 @@ public class FrontController extends HttpServlet {
         try {
         String commandName = doProcess(request);
             response.sendRedirect(commandName);
-        } catch (Exception e) {
+        } catch (IOException e) {
             logger.log(Level.ERROR, "Error in frontController", e);
             RequestDispatcher dispatcherError =
                     request.getRequestDispatcher(new ErrorCommand().getPathJsp());

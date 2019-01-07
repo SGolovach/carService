@@ -39,7 +39,7 @@ public class UserDetailCommand extends AbstractCommand {
                     userDetail.setPhone(phone);
                     userDetail.setEmail(email);
                     userDetail.setUserId(userId);
-                    factory.getUserDetailQueryReceiverService().saveQuery(userDetail);
+                    factory.getUserDetailQueryService().saveQuery(userDetail);
                     return new MainCommand().getCommandName();
                 } catch (CommandException e) {
                     logger.log(Level.ERROR, "Error in UserDetailCommand", e);
@@ -50,7 +50,7 @@ public class UserDetailCommand extends AbstractCommand {
             }
         }
         try {
-            if (factory.getUserDetailQueryReceiverService().checkRecordQuery(userId)) {
+            if (factory.getUserDetailQueryService().checkRecordQuery(userId)) {
                 return new MainCommand().getPathJsp();
             }
         } catch (CommandException e) {

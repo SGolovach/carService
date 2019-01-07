@@ -50,7 +50,7 @@ public class CreateCarCommand extends AbstractCommand {
                 car.setFuel(fuel);
                 car.setUserId(userId);
                 try {
-                    factory.getCarQueryReceiverService().saveQuery(car);
+                    factory.getCarQueryService().saveQuery(car);
                 } catch (CommandException e) {
                     logger.log(Level.ERROR, "Error in check login", e);
                     return new ErrorCommand().getCommandName();

@@ -93,7 +93,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `carservice`.`Orders` (
   `idOrder` BIGINT(4) NOT NULL AUTO_INCREMENT,
   `timeRegister` TIMESTAMP NULL,
-  `Description` VARCHAR(45) NULL,
+  `Description` VARCHAR(120) NULL,
   `status` VARCHAR(50) NULL,
   `Users_id` BIGINT(4) NOT NULL,
   `Departments_id` BIGINT(4) NOT NULL,

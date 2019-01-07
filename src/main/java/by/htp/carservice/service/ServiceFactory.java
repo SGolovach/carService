@@ -5,22 +5,22 @@ import by.htp.carservice.validation.ValidationData;
 
 
 public class ServiceFactory {
-    private final QueryReceiverServiceCar carQueryReceiverService =
-            new CarReceiverService();
-    private final QueryReceiverServiceComment commentQueryReceiverService =
-            new CommentReceiverService();
-    private final QueryReceiverServiceDepartment departmentQueryReceiverService =
-            new DepartmentReceiverService();
-    private final QueryReceiverServiceInvoice invoiceQueryReceiverService =
-            new InvoiceReceiverService();
-    private final QueryReceiverServiceOrder orderQueryReceiverService =
-            new OrderReceiverService();
-    private final QueryReceiverServiceRole roleQueryReceiverService =
-            new RoleReceiverService();
-    private final QueryReceiverServiceUserDetail userDetailQueryReceiverService =
-            new UserDetailReceiverService();
-    private final QueryReceiverServiceUser userQueryReceiverService =
-            new UserReceiverService();
+    private final QueryServiceCar carQueryService =
+            new CarService();
+    private final QueryServiceComment commentQueryService =
+            new CommentService();
+    private final QueryServiceDepartment departmentQueryService =
+            new DepartmentService();
+    private final QueryServiceInvoice invoiceQueryService =
+            new InvoiceService();
+    private final QueryServiceOrder orderQueryService =
+            new OrderService();
+    private final QueryServiceRole roleQueryService =
+            new RoleService();
+    private final QueryServiceUserDetail userDetailQueryService =
+            new UserDetailService();
+    private final QueryServiceUser userQueryService =
+            new UserService();
     private final ValidationData validationData = new ValidationData();
 
     private static class ServiceFactoryHolder {
@@ -31,36 +31,36 @@ public class ServiceFactory {
         return ServiceFactoryHolder.INSTANCE;
     }
 
-    public QueryReceiverServiceCar getCarQueryReceiverService() {
-        return carQueryReceiverService;
+    public QueryServiceCar getCarQueryService() {
+        return carQueryService;
     }
 
-    public QueryReceiverServiceComment getCommentQueryReceiverService() {
-        return commentQueryReceiverService;
+    public QueryServiceComment getCommentQueryService() {
+        return commentQueryService;
     }
 
-    public QueryReceiverServiceDepartment getDepartmentQueryReceiverService() {
-        return departmentQueryReceiverService;
+    public QueryServiceDepartment getDepartmentQueryService() {
+        return departmentQueryService;
     }
 
-    public QueryReceiverServiceInvoice getInvoiceQueryReceiverService() {
-        return invoiceQueryReceiverService;
+    public QueryServiceInvoice getInvoiceQueryService() {
+        return invoiceQueryService;
     }
 
-    public QueryReceiverServiceOrder getOrderQueryReceiverService() {
-        return orderQueryReceiverService;
+    public QueryServiceOrder getOrderQueryService() {
+        return orderQueryService;
     }
 
-    public QueryReceiverServiceRole getRoleQueryReceiverService() {
-        return roleQueryReceiverService;
+    public QueryServiceRole getRoleQueryService() {
+        return roleQueryService;
     }
 
-    public QueryReceiverServiceUserDetail getUserDetailQueryReceiverService() {
-        return userDetailQueryReceiverService;
+    public QueryServiceUserDetail getUserDetailQueryService() {
+        return userDetailQueryService;
     }
 
-    public QueryReceiverServiceUser getUserQueryReceiverService() {
-        return userQueryReceiverService;
+    public QueryServiceUser getUserQueryService() {
+        return userQueryService;
     }
 
     public ValidationData getValidationData() {
