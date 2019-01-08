@@ -22,6 +22,8 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
     private static final String SQL_DELETE = "DELETE FROM roles WHERE idRole = ?";
     private static final String SQL_TAKE = " WHERE idRole = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM roles";
+    private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM roles";
+    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM roles LIMIT ? OFFSET ?";
     private static final String ID_ROLE = "idRole";
     private static final String ROLE = "role";
 
@@ -128,5 +130,60 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         }
         logger.log(Level.INFO, "Finish takeAll. listCar: " + listRole);
         return listRole;
+    }
+
+    @Override
+    public int countRecord() throws DaoException {
+        logger.log(Level.INFO, "Start countRecord");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecord , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public int countRecordById(long id) throws DaoException {
+        throw new UnsupportedOperationException("Operation do not realese");
+    }
+
+    @Override
+    public List<Role> checkAllRecord(int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkAllRecord");
+        List<Role> listRole = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
+            statement.setInt(1,limit);
+            statement.setInt(2,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listRole.add(new Role(
+                        resultSet.getLong(ID_ROLE),
+                        resultSet.getString(ROLE)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkAllRecord. listRole: " + listRole);
+        return listRole;
+    }
+
+    @Override
+    public List<Role> checkRecordById(long id, int limit, int offset) throws DaoException {
+        throw new UnsupportedOperationException("Operation do not realese");
     }
 }

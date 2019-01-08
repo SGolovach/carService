@@ -46,3 +46,5 @@ msg.accountadmin.vieworders=View All Orders
 msg.accountadmin.viewinvoice=View All Invoice
 msg.info.signup.valid=Incorrect data entered
 msg.info.signup.exist=User with this login exists
+msg.info.session.invalidate=Session time is up. To renew access to your account, follow this link:
+msg.info.signup=If you do not have an account, click here to register:

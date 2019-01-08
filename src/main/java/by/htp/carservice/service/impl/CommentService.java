@@ -67,4 +67,48 @@ public class CommentService implements QueryServiceComment {
         }
         return listComment;
     }
+
+    @Override
+    public int countRecordQuery() throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordQuery();
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordByIdQuery(id);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Comment> checkAllRecordQuery(int limit, int offset) throws CommandException {
+        List<Comment> listComment;
+        try {
+            listComment = receiver.checkAllRecordQuery(limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listComment;
+    }
+
+    @Override
+    public List<Comment> checkRecordByIdQuery(long id, int limit, int offset) throws CommandException {
+        List<Comment> listComment;
+        try {
+            listComment = receiver.checkRecordByIdQuery(id, limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listComment;
+    }
 }

@@ -26,6 +26,10 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
     private static final String SQL_DELETE = "DELETE FROM orders WHERE idOrder = ?";
     private static final String SQL_TAKE = " WHERE idOrder = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM orders";
+    private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM orders";
+    private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM orders WHERE Users_id = ?";
+    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM orders LIMIT ? OFFSET ?";
+    private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM orders WHERE Users_id = ? LIMIT ? OFFSET ?";
     private static final String ID_ORDER = "idOrder";
     private static final String TIME_REGISTER = "timeRegister";
     private static final String DESCRIPTION = "Description";
@@ -156,6 +160,108 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
             close(statement);
         }
         logger.log(Level.INFO, "Finish takeAll. listCar: " + listOrder);
+        return listOrder;
+    }
+
+    @Override
+    public int countRecord() throws DaoException {
+        logger.log(Level.INFO, "Start countRecord");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecord , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public int countRecordById(long id) throws DaoException {
+        logger.log(Level.INFO, "Start countRecordById");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD_ID);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecordById , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public List<Order> checkAllRecord(int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkAllRecord");
+        List<Order> listOrder = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
+            statement.setInt(1,limit);
+            statement.setInt(2,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listOrder.add(new Order(
+                        resultSet.getLong(ID_ORDER),
+                        resultSet.getTimestamp(TIME_REGISTER),
+                        resultSet.getString(DESCRIPTION),
+                        resultSet.getString(STATUS),
+                        resultSet.getLong(USER_ID),
+                        resultSet.getLong(DEPARTMENT_ID),
+                        resultSet.getLong(CAR_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkAllRecord. listOrder: " + listOrder);
+        return listOrder;
+    }
+
+    @Override
+    public List<Order> checkRecordById(long id, int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkRecordById");
+        List<Order> listOrder = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_RECORD_ID);
+            statement.setLong(1,id);
+            statement.setInt(2,limit);
+            statement.setInt(3,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listOrder.add(new Order(
+                        resultSet.getLong(ID_ORDER),
+                        resultSet.getTimestamp(TIME_REGISTER),
+                        resultSet.getString(DESCRIPTION),
+                        resultSet.getString(STATUS),
+                        resultSet.getLong(USER_ID),
+                        resultSet.getLong(DEPARTMENT_ID),
+                        resultSet.getLong(CAR_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkRecordById. listOrder: " + listOrder);
         return listOrder;
     }
 }

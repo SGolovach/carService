@@ -16,4 +16,12 @@ public interface QueryService<T extends Entity> {
     T takeQuery(long id) throws CommandException;
 
     List<T> takeAllQuery() throws CommandException;
+
+    int countRecordQuery() throws CommandException;
+
+    int countRecordByIdQuery(long id) throws CommandException;
+
+    List<T> checkAllRecordQuery(int limit, int offset) throws CommandException;
+
+    List<T> checkRecordByIdQuery(long id, int limit, int offset) throws CommandException;
 }

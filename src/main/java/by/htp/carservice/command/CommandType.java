@@ -20,6 +20,7 @@ public enum CommandType {
     INFOLOGINVALID(new InfoLoginValidCommand()),
     INFOCREATECARVALID(new InfoCreateCarValidCommand()),
     INFOUSERDETAILVALID(new InfoUserDetailValidCommand()),
+    INFOSESSIONIVALIDATE(new InfoSessionInvalidateCommand()),
     CREATECAR(new CreateCarCommand()),
     EDITCAR(new EditCarCommand()),
     EMPTY(new EmptyCommand());

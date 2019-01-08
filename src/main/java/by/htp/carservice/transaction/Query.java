@@ -16,4 +16,12 @@ public interface Query<T extends Entity> {
     T takeQuery(long id) throws ServiceException;
 
     List<T> takeAllQuery() throws ServiceException;
+
+    int countRecordQuery() throws ServiceException;
+
+    int countRecordByIdQuery(long id) throws ServiceException;
+
+    List<T> checkAllRecordQuery(int limit, int offset) throws ServiceException;
+
+    List<T> checkRecordByIdQuery(long id, int limit, int offset) throws ServiceException;
 }

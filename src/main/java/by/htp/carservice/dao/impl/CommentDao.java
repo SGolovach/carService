@@ -25,6 +25,10 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
     private static final String SQL_DELETE = "DELETE FROM comments WHERE idComment = ?";
     private static final String SQL_TAKE = " WHERE idComment = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM comments";
+    private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM comments";
+    private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM comments WHERE Users_id = ?";
+    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM comments LIMIT ? OFFSET ?";
+    private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM comments WHERE Users_id = ? LIMIT ? OFFSET ?";
     private static final String ID_COMMENT = "idComment";
     private static final String DESCRIPTION = "description";
     private static final String USER_ID = "Users_id";
@@ -134,7 +138,101 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish takeAll. listCar: " + listComment);
+        logger.log(Level.INFO, "Finish takeAll. listComment: " + listComment);
+        return listComment;
+    }
+
+    @Override
+    public int countRecord() throws DaoException {
+        logger.log(Level.INFO, "Start countRecord");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecord , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public int countRecordById(long id) throws DaoException {
+        logger.log(Level.INFO, "Start countRecordById");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD_ID);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecordById , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public List<Comment> checkAllRecord(int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkAllRecord");
+        List<Comment> listComment = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
+            statement.setInt(1,limit);
+            statement.setInt(2,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listComment.add(new Comment(
+                        resultSet.getLong(ID_COMMENT),
+                        resultSet.getString(DESCRIPTION),
+                        resultSet.getLong(USER_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkAllRecord. listComment: " + listComment);
+        return listComment;
+    }
+
+    @Override
+    public List<Comment> checkRecordById(long id, int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkRecordById");
+        List<Comment> listComment = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_RECORD_ID);
+            statement.setLong(1,id);
+            statement.setInt(2,limit);
+            statement.setInt(3,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listComment.add(new Comment(
+                        resultSet.getLong(ID_COMMENT),
+                        resultSet.getString(DESCRIPTION),
+                        resultSet.getLong(USER_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkRecordById. listComment: " + listComment);
         return listComment;
     }
 }

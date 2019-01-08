@@ -67,4 +67,48 @@ public class RoleService implements QueryServiceRole {
         }
         return listRole;
     }
+
+    @Override
+    public int countRecordQuery() throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordQuery();
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordByIdQuery(id);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Role> checkAllRecordQuery(int limit, int offset) throws CommandException {
+        List<Role> listRole;
+        try {
+            listRole = receiver.checkAllRecordQuery(limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listRole;
+    }
+
+    @Override
+    public List<Role> checkRecordByIdQuery(long id, int limit, int offset) throws CommandException {
+        List<Role> listRole;
+        try {
+            listRole = receiver.checkRecordByIdQuery(id, limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listRole;
+    }
 }

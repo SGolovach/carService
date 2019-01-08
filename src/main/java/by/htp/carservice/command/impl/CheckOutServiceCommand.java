@@ -37,8 +37,8 @@ public class CheckOutServiceCommand extends AbstractCommand {
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = ((User) session.getAttribute(SESSION_USER));
-        if (user == null) {
-            return new SignupCommand().getPathJsp();
+        if(user==null){
+            return new InfoSessionInvalidateCommand().getCommandName();
         }
         ServiceFactory factory = ServiceFactory.getInstance();
         long userId = user.getIdUser();

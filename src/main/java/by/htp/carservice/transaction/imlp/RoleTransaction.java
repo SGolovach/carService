@@ -3,6 +3,7 @@ package by.htp.carservice.transaction.imlp;
 import by.htp.carservice.dao.AbstractDao;
 import by.htp.carservice.dao.DaoFactory;
 import by.htp.carservice.dao.DaoRole;
+import by.htp.carservice.entity.impl.Role;
 import by.htp.carservice.transaction.EntityTransaction;
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.DaoException;
@@ -19,7 +20,7 @@ public class RoleTransaction implements QueryRole {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public boolean saveQuery(by.htp.carservice.entity.impl.Role entity) throws ServiceException {
+    public boolean saveQuery(Role entity) throws ServiceException {
         logger.log(Level.INFO, "Start method saveQuery entity:" + entity);
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         boolean flagResult;
@@ -44,7 +45,7 @@ public class RoleTransaction implements QueryRole {
     }
 
     @Override
-    public boolean updateQuery(by.htp.carservice.entity.impl.Role entity) throws ServiceException {
+    public boolean updateQuery(Role entity) throws ServiceException {
         logger.log(Level.INFO, "Start method updateQuery entity:" + entity);
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         boolean flagResult;
@@ -69,7 +70,7 @@ public class RoleTransaction implements QueryRole {
     }
 
     @Override
-    public boolean deleteQuery(by.htp.carservice.entity.impl.Role entity) throws ServiceException {
+    public boolean deleteQuery(Role entity) throws ServiceException {
         logger.log(Level.INFO, "Start method deleteQuery entity:" + entity);
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         boolean flagResult;
@@ -94,10 +95,10 @@ public class RoleTransaction implements QueryRole {
     }
 
     @Override
-    public by.htp.carservice.entity.impl.Role takeQuery(long id) throws ServiceException {
+    public Role takeQuery(long id) throws ServiceException {
         logger.log(Level.INFO, "Start method takeQuery entity by id:" + id);
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
-        by.htp.carservice.entity.impl.Role role;
+        Role role;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -117,10 +118,10 @@ public class RoleTransaction implements QueryRole {
     }
 
     @Override
-    public List<by.htp.carservice.entity.impl.Role> takeAllQuery() throws ServiceException {
+    public List<Role> takeAllQuery() throws ServiceException {
         logger.log(Level.INFO, "Start method takeAllQuery");
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
-        List<by.htp.carservice.entity.impl.Role> roleList;
+        List<Role> roleList;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -136,6 +137,98 @@ public class RoleTransaction implements QueryRole {
             transaction.endTransaction();
         }
         logger.log(Level.INFO, "Finish method takeAllQuery result:" + roleList);
+        return roleList;
+    }
+
+    @Override
+    public int countRecordQuery() throws ServiceException {
+        logger.log(Level.INFO, "Start method countRecordQuery");
+        DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
+        int result;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) roleDao);
+            result = roleDao.countRecord();
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method countRecordQuery result:" + result);
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws ServiceException {
+        logger.log(Level.INFO, "Start method countRecordByIdQuery " + id);
+        DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
+        int result;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) roleDao);
+            result = roleDao.countRecordById(id);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method countRecordByIdQuery result:" + result);
+        return result;
+    }
+
+    @Override
+    public List<Role> checkAllRecordQuery(int limit, int offset) throws ServiceException {
+        logger.log(Level.INFO, "Start method checkAllRecordQuery");
+        DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
+        List<Role> roleList;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) roleDao);
+            roleList = roleDao.checkAllRecord(limit, offset);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method checkAllRecordQuery result:" + roleList);
+        return roleList;
+    }
+
+    @Override
+    public List<Role> checkRecordByIdQuery(long id, int limit, int offset) throws ServiceException {
+        logger.log(Level.INFO, "Start method checkRecordByIdQuery");
+        DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
+        List<Role> roleList;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) roleDao);
+            roleList = roleDao.checkRecordById(id, limit, offset);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method checkRecordByIdQuery result:" + roleList);
         return roleList;
     }
 }

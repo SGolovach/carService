@@ -25,6 +25,15 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
     private static final String SQL_DELETE = "DELETE FROM invoices WHERE idInvoice = ?";
     private static final String SQL_TAKE = " WHERE idInvoice = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM invoices";
+    private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM invoices";
+    private static final String SQL_COUNT_RECORD_ID =
+            "SELECT COUNT(*) FROM invoices " +
+                    "JOIN orders ON invoices.Orders_id=orders.idOrder " +
+                    "WHERE orders.idOrder IN(SELECT idOrder FROM orders WHERE Users_id = ?)";
+    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM invoices LIMIT ? OFFSET ?";
+    private static final String SQL_CHECK_RECORD_ID = "SELECT idInvoice,numberInvoice,cost,Orders_id FROM invoices " +
+            "JOIN orders ON invoices.Orders_id=orders.idOrder " +
+            "WHERE orders.idOrder IN(SELECT idOrder FROM orders WHERE Users_id = ?) LIMIT ? OFFSET ?";
     private static final String ID_INVOICE = "idInvoice";
     private static final String NUMBER_INVOICE = "numberInvoice";
     private static final String COST = "cost";
@@ -140,6 +149,102 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
             close(statement);
         }
         logger.log(Level.INFO, "Finish takeAll. listCar: " + listInvoice);
+        return listInvoice;
+    }
+
+    @Override
+    public int countRecord() throws DaoException {
+        logger.log(Level.INFO, "Start countRecord");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecord , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public int countRecordById(long id) throws DaoException {
+        logger.log(Level.INFO, "Start countRecordById");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD_ID);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecordById , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public List<Invoice> checkAllRecord(int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkAllRecord");
+        List<Invoice> listInvoice = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
+            statement.setInt(1,limit);
+            statement.setInt(2,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listInvoice.add(new Invoice(
+                        resultSet.getLong(ID_INVOICE),
+                        resultSet.getLong(NUMBER_INVOICE),
+                        resultSet.getBigDecimal(COST),
+                        resultSet.getLong(ORDER_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkAllRecord. listInvoice: " + listInvoice);
+        return listInvoice;
+    }
+
+    @Override
+    public List<Invoice> checkRecordById(long id, int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkRecordById");
+        List<Invoice> listInvoice = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_RECORD_ID);
+            statement.setLong(1,id);
+            statement.setInt(2,limit);
+            statement.setInt(3,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listInvoice.add(new Invoice(
+                        resultSet.getLong(ID_INVOICE),
+                        resultSet.getLong(NUMBER_INVOICE),
+                        resultSet.getBigDecimal(COST),
+                        resultSet.getLong(ORDER_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkRecordById. listInvoice: " + listInvoice);
         return listInvoice;
     }
 }

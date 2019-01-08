@@ -24,6 +24,8 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
     private static final String SQL_DELETE = "DELETE FROM departments WHERE idDepartment = ?";
     private static final String SQL_TAKE = " WHERE idDepartment = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM departments";
+    private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM departments";
+    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM departments LIMIT ? OFFSET ?";
     private static final String ID_DEPARTMENT = "idDepartment";
     private static final String NAME_DEPARTMENT = "nameDepartment";
 
@@ -130,5 +132,60 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         }
         logger.log(Level.INFO, "Finish takeAll. listCar: " + listDepartment);
         return listDepartment;
+    }
+
+    @Override
+    public int countRecord() throws DaoException {
+        logger.log(Level.INFO, "Start countRecord");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecord , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public int countRecordById(long id) throws DaoException {
+        throw new UnsupportedOperationException("Operation do not realese");
+    }
+
+    @Override
+    public List<Department> checkAllRecord(int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkAllRecord");
+        List<Department> listDepartment = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
+            statement.setInt(1,limit);
+            statement.setInt(2,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listDepartment.add(new Department(
+                        resultSet.getLong(ID_DEPARTMENT),
+                        resultSet.getString(NAME_DEPARTMENT)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkAllRecord. listDepartment: " + listDepartment);
+        return listDepartment;
+    }
+
+    @Override
+    public List<Department> checkRecordById(long id, int limit, int offset) throws DaoException {
+        throw new UnsupportedOperationException("Operation do not realese");
     }
 }

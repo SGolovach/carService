@@ -67,4 +67,48 @@ public class OrderService implements QueryServiceOrder {
         }
         return listOrder;
     }
+
+    @Override
+    public int countRecordQuery() throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordQuery();
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordByIdQuery(id);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Order> checkAllRecordQuery(int limit, int offset) throws CommandException {
+        List<Order> listOrder;
+        try {
+            listOrder = receiver.checkAllRecordQuery(limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listOrder;
+    }
+
+    @Override
+    public List<Order> checkRecordByIdQuery(long id, int limit, int offset) throws CommandException {
+        List<Order> listOrder;
+        try {
+            listOrder = receiver.checkRecordByIdQuery(id, limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listOrder;
+    }
 }

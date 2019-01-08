@@ -3,6 +3,7 @@ package by.htp.carservice.transaction.imlp;
 import by.htp.carservice.dao.AbstractDao;
 import by.htp.carservice.dao.DaoFactory;
 import by.htp.carservice.dao.DaoInvoice;
+import by.htp.carservice.entity.impl.Invoice;
 import by.htp.carservice.transaction.EntityTransaction;
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.DaoException;
@@ -19,7 +20,7 @@ public class InvoiceTransaction implements QueryInvoice {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public boolean saveQuery(by.htp.carservice.entity.impl.Invoice entity) throws ServiceException {
+    public boolean saveQuery(Invoice entity) throws ServiceException {
         logger.log(Level.INFO, "Start method saveQuery entity:" + entity);
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         boolean flagResult;
@@ -44,7 +45,7 @@ public class InvoiceTransaction implements QueryInvoice {
     }
 
     @Override
-    public boolean updateQuery(by.htp.carservice.entity.impl.Invoice entity) throws ServiceException {
+    public boolean updateQuery(Invoice entity) throws ServiceException {
         logger.log(Level.INFO, "Start method updateQuery entity:" + entity);
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         boolean flagResult;
@@ -69,7 +70,7 @@ public class InvoiceTransaction implements QueryInvoice {
     }
 
     @Override
-    public boolean deleteQuery(by.htp.carservice.entity.impl.Invoice entity) throws ServiceException {
+    public boolean deleteQuery(Invoice entity) throws ServiceException {
         logger.log(Level.INFO, "Start method deleteQuery entity:" + entity);
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         boolean flagResult;
@@ -94,10 +95,10 @@ public class InvoiceTransaction implements QueryInvoice {
     }
 
     @Override
-    public by.htp.carservice.entity.impl.Invoice takeQuery(long id) throws ServiceException {
+    public Invoice takeQuery(long id) throws ServiceException {
         logger.log(Level.INFO, "Start method takeQuery entity by id:" + id);
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
-        by.htp.carservice.entity.impl.Invoice invoice;
+        Invoice invoice;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -117,10 +118,10 @@ public class InvoiceTransaction implements QueryInvoice {
     }
 
     @Override
-    public List<by.htp.carservice.entity.impl.Invoice> takeAllQuery() throws ServiceException {
+    public List<Invoice> takeAllQuery() throws ServiceException {
         logger.log(Level.INFO, "Start method takeAllQuery");
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
-        List<by.htp.carservice.entity.impl.Invoice> invoiceList;
+        List<Invoice> invoiceList;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -136,6 +137,98 @@ public class InvoiceTransaction implements QueryInvoice {
             transaction.endTransaction();
         }
         logger.log(Level.INFO, "Finish method takeAllQuery result:" + invoiceList);
+        return invoiceList;
+    }
+
+    @Override
+    public int countRecordQuery() throws ServiceException {
+        logger.log(Level.INFO, "Start method countRecordQuery");
+        DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
+        int result;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) invoiceDao);
+            result = invoiceDao.countRecord();
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method countRecordQuery result:" + result);
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws ServiceException {
+        logger.log(Level.INFO, "Start method countRecordByIdQuery by id:" + id);
+        DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
+        int result;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) invoiceDao);
+            result = invoiceDao.countRecordById(id);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method countRecordByIdQuery result:" + result);
+        return result;
+    }
+
+    @Override
+    public List<Invoice> checkAllRecordQuery(int limit, int offset) throws ServiceException {
+        logger.log(Level.INFO, "Start method takeAllQuery");
+        DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
+        List<Invoice> invoiceList;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) invoiceDao);
+            invoiceList = invoiceDao.checkAllRecord(limit, offset);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method checkAllRecordQuery result:" + invoiceList);
+        return invoiceList;
+    }
+
+    @Override
+    public List<Invoice> checkRecordByIdQuery(long id, int limit, int offset) throws ServiceException {
+        logger.log(Level.INFO, "Start method checkRecordByIdQuery");
+        DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
+        List<Invoice> invoiceList;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) invoiceDao);
+            invoiceList = invoiceDao.checkRecordById(id, limit, offset);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method checkRecordByIdQuery result:" + invoiceList);
         return invoiceList;
     }
 }

@@ -22,6 +22,9 @@ public class WriteCommentCommand extends AbstractCommand {
         if (request.getMethod().equalsIgnoreCase("post")) {
             String description = request.getParameter("description");
             User user = (User) session.getAttribute("user");
+            if(user==null){
+                return new InfoSessionInvalidateCommand().getCommandName();
+            }
             long userId = user.getIdUser();
             Comment comment = new Comment();
             comment.setDescription(description);

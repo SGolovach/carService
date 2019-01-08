@@ -69,6 +69,50 @@ public class CarService implements QueryServiceCar {
     }
 
     @Override
+    public int countRecordQuery() throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordQuery();
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordByIdQuery(id);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Car> checkAllRecordQuery(int limit, int offset) throws CommandException {
+        List<Car> listCar;
+        try {
+            listCar = receiver.checkAllRecordQuery(limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listCar;
+    }
+
+    @Override
+    public List<Car> checkRecordByIdQuery(long id, int limit, int offset) throws CommandException {
+        List<Car> listCar;
+        try {
+            listCar = receiver.checkRecordByIdQuery(id, limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listCar;
+    }
+
+    @Override
     public List<Car> takeAllByUserIdQuery(long userId) throws CommandException {
         List<Car> listCar;
         try {

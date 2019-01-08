@@ -3,6 +3,7 @@ package by.htp.carservice.transaction.imlp;
 import by.htp.carservice.dao.AbstractDao;
 import by.htp.carservice.dao.DaoFactory;
 import by.htp.carservice.dao.DaoUser;
+import by.htp.carservice.entity.impl.User;
 import by.htp.carservice.transaction.EntityTransaction;
 import by.htp.carservice.exception.ConnectionPoolException;
 import by.htp.carservice.exception.DaoException;
@@ -19,7 +20,7 @@ public class UserTransaction implements QueryUser {
     private static Logger logger = LogManager.getLogger();
 
     @Override
-    public boolean saveQuery(by.htp.carservice.entity.impl.User entity) throws ServiceException {
+    public boolean saveQuery(User entity) throws ServiceException {
         logger.log(Level.INFO, "Start method saveQuery entity:" + entity);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
@@ -44,7 +45,7 @@ public class UserTransaction implements QueryUser {
     }
 
     @Override
-    public boolean updateQuery(by.htp.carservice.entity.impl.User entity) throws ServiceException {
+    public boolean updateQuery(User entity) throws ServiceException {
         logger.log(Level.INFO, "Start method updateQuery entity:" + entity);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
@@ -55,7 +56,7 @@ public class UserTransaction implements QueryUser {
             throw new ServiceException(e);
         }
         try {
-            transaction.beginTransaction((AbstractDao)userDao);
+            transaction.beginTransaction((AbstractDao) userDao);
             flagResult = userDao.update(entity);
             transaction.commit();
         } catch (DaoException | ConnectionPoolException e) {
@@ -69,7 +70,7 @@ public class UserTransaction implements QueryUser {
     }
 
     @Override
-    public boolean deleteQuery(by.htp.carservice.entity.impl.User entity) throws ServiceException {
+    public boolean deleteQuery(User entity) throws ServiceException {
         logger.log(Level.INFO, "Start method deleteQuery entity:" + entity);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
@@ -94,10 +95,10 @@ public class UserTransaction implements QueryUser {
     }
 
     @Override
-    public by.htp.carservice.entity.impl.User takeQuery(long id) throws ServiceException {
+    public User takeQuery(long id) throws ServiceException {
         logger.log(Level.INFO, "Start method takeQuery entity by id:" + id);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
-        by.htp.carservice.entity.impl.User user;
+        User user;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -117,10 +118,10 @@ public class UserTransaction implements QueryUser {
     }
 
     @Override
-    public List<by.htp.carservice.entity.impl.User> takeAllQuery() throws ServiceException {
+    public List<User> takeAllQuery() throws ServiceException {
         logger.log(Level.INFO, "Start method takeAllQuery");
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
-        List<by.htp.carservice.entity.impl.User> userList;
+        List<User> userList;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -140,10 +141,10 @@ public class UserTransaction implements QueryUser {
     }
 
     @Override
-    public List<by.htp.carservice.entity.impl.User> checkLoginQuery(String login, String password) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAllQuery");
+    public int countRecordQuery() throws ServiceException {
+        logger.log(Level.INFO, "Start method countRecordQuery");
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
-        List<by.htp.carservice.entity.impl.User> userList;
+        int result;
         EntityTransaction transaction;
         try {
             transaction = new EntityTransaction();
@@ -152,7 +153,99 @@ public class UserTransaction implements QueryUser {
         }
         try {
             transaction.begin((AbstractDao) userDao);
-            userList = userDao.checkLogin(login,password);
+            result = userDao.countRecord();
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method countRecordQuery result:" + result);
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws ServiceException {
+        logger.log(Level.INFO, "Start method countRecordByIdQuery " + id);
+        DaoUser userDao = DaoFactory.getInstance().getUserDao();
+        int result;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) userDao);
+            result = userDao.countRecordById(id);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method countRecordByIdQuery result:" + result);
+        return result;
+    }
+
+    @Override
+    public List<User> checkAllRecordQuery(int limit, int offset) throws ServiceException {
+        logger.log(Level.INFO, "Start method checkAllRecordQuery");
+        DaoUser userDao = DaoFactory.getInstance().getUserDao();
+        List<User> userList;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) userDao);
+            userList = userDao.checkAllRecord(limit, offset);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method checkAllRecordQuery result:" + userList);
+        return userList;
+    }
+
+    @Override
+    public List<User> checkRecordByIdQuery(long id, int limit, int offset) throws ServiceException {
+        logger.log(Level.INFO, "Start method checkRecordByIdQuery");
+        DaoUser userDao = DaoFactory.getInstance().getUserDao();
+        List<User> userList;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) userDao);
+            userList = userDao.checkRecordById(id, limit, offset);
+        } catch (TransactionException | DaoException e) {
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method checkRecordByIdQuery result:" + userList);
+        return userList;
+    }
+
+    @Override
+    public List<User> checkLoginQuery(String login, String password) throws ServiceException {
+        logger.log(Level.INFO, "Start method takeAllQuery");
+        DaoUser userDao = DaoFactory.getInstance().getUserDao();
+        List<User> userList;
+        EntityTransaction transaction;
+        try {
+            transaction = new EntityTransaction();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.begin((AbstractDao) userDao);
+            userList = userDao.checkLogin(login, password);
         } catch (TransactionException | DaoException e) {
             throw new ServiceException(e);
         } finally {

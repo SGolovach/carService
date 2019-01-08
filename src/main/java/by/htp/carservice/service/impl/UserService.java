@@ -69,10 +69,54 @@ public class UserService implements QueryServiceUser {
     }
 
     @Override
-    public List<User> checkLoginQuery(String login,String password) throws CommandException {
+    public int countRecordQuery() throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordQuery();
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordByIdQuery(id);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<User> checkAllRecordQuery(int limit, int offset) throws CommandException {
         List<User> listUser;
         try {
-            listUser = receiver.checkLoginQuery(login,password);
+            listUser = receiver.checkAllRecordQuery(limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listUser;
+    }
+
+    @Override
+    public List<User> checkRecordByIdQuery(long id, int limit, int offset) throws CommandException {
+        List<User> listUser;
+        try {
+            listUser = receiver.checkRecordByIdQuery(id, limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listUser;
+    }
+
+    @Override
+    public List<User> checkLoginQuery(String login, String password) throws CommandException {
+        List<User> listUser;
+        try {
+            listUser = receiver.checkLoginQuery(login, password);
         } catch (ServiceException e) {
             throw new CommandException(e);
         }

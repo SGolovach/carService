@@ -67,4 +67,48 @@ public class DepartmentService implements QueryServiceDepartment {
         }
         return listDepartment;
     }
+
+    @Override
+    public int countRecordQuery() throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordQuery();
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordByIdQuery(id);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Department> checkAllRecordQuery(int limit, int offset) throws CommandException {
+        List<Department> listDepartment;
+        try {
+            listDepartment = receiver.checkAllRecordQuery(limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listDepartment;
+    }
+
+    @Override
+    public List<Department> checkRecordByIdQuery(long id, int limit, int offset) throws CommandException {
+        List<Department> listDepartment;
+        try {
+            listDepartment = receiver.checkRecordByIdQuery(id, limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listDepartment;
+    }
 }

@@ -143,7 +143,7 @@ ENGINE = InnoDB;
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `carservice`.`Comments` (
   `idComment` BIGINT(4) NOT NULL AUTO_INCREMENT,
-  `description` VARCHAR(45) NULL,
+  `description` VARCHAR(120) NULL,
   `Users_id` BIGINT(4) NOT NULL,
   PRIMARY KEY (`idComment`),
   INDEX `fk_Comments_Users1_idx` (`Users_id` ASC),

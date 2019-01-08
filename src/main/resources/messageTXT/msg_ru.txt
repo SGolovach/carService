@@ -46,3 +46,5 @@ msg.accountadmin.vieworders=Просмотр заказов
 msg.accountadmin.viewinvoice=Просмотр счетов
 msg.info.signup.valid=Введены некорректные данные
 msg.info.signup.exist=Пользователь с таким логином существует
+msg.info.session.invalidate=Время сессии вышло. Для возобновление доступа к своему аккаунту, перейдите по этой ссылке:
+msg.info.signup=Если у вас нет аккаунта пройдите по этой ссылке для регистрации:

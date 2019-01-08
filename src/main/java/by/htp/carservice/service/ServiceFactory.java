@@ -1,6 +1,8 @@
 package by.htp.carservice.service;
 
+import by.htp.carservice.entity.impl.Comment;
 import by.htp.carservice.service.impl.*;
+import by.htp.carservice.service.implpaginate.CommentPaginateService;
 import by.htp.carservice.validation.ValidationData;
 
 
@@ -22,6 +24,8 @@ public class ServiceFactory {
     private final QueryServiceUser userQueryService =
             new UserService();
     private final ValidationData validationData = new ValidationData();
+    private final PaginationDataService<Comment> commentPaginationDataService =
+            new CommentPaginateService();
 
     private static class ServiceFactoryHolder {
         private static final ServiceFactory INSTANCE = new ServiceFactory();
@@ -65,5 +69,9 @@ public class ServiceFactory {
 
     public ValidationData getValidationData() {
         return validationData;
+    }
+
+    public PaginationDataService<Comment> getCommentPaginationDataService() {
+        return commentPaginationDataService;
     }
 }

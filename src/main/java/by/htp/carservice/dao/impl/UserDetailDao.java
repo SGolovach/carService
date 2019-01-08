@@ -25,6 +25,10 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
     private static final String SQL_TAKE = " WHERE idUserDetail = ?";
     private static final String SQL_CHECK_RECORD = " WHERE Users_id = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM userdetails";
+    private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM userdetails";
+    private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM userdetails WHERE Users_id = ?";
+    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM userdetails LIMIT ? OFFSET ?";
+    private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM userdetails WHERE Users_id = ? LIMIT ? OFFSET ?";
     private static final String ID_USER_DETAIL = "idUserDetail";
     private static final String NAME = "name";
     private static final String PHONE = "phone";
@@ -149,6 +153,104 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
     }
 
     @Override
+    public int countRecord() throws DaoException {
+        logger.log(Level.INFO, "Start countRecord");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecord , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public int countRecordById(long id) throws DaoException {
+        logger.log(Level.INFO, "Start countRecordById");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD_ID);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecordById , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public List<UserDetail> checkAllRecord(int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkAllRecord");
+        List<UserDetail> listUserDetail = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listUserDetail.add(new UserDetail(
+                        resultSet.getLong(ID_USER_DETAIL),
+                        resultSet.getString(NAME),
+                        resultSet.getString(PHONE),
+                        resultSet.getString(EMAIL),
+                        resultSet.getLong(USER_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkAllRecord. listUserDetail: " + listUserDetail);
+        return listUserDetail;
+    }
+
+    @Override
+    public List<UserDetail> checkRecordById(long id, int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkAllRecord");
+        List<UserDetail> listUserDetail = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_RECORD_ID);
+            statement.setLong(1, id);
+            statement.setInt(2, limit);
+            statement.setInt(3, offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listUserDetail.add(new UserDetail(
+                        resultSet.getLong(ID_USER_DETAIL),
+                        resultSet.getString(NAME),
+                        resultSet.getString(PHONE),
+                        resultSet.getString(EMAIL),
+                        resultSet.getLong(USER_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkAllRecord. listUserDetail: " + listUserDetail);
+        return listUserDetail;
+    }
+
+    @Override
     public boolean checkRecord(long userId) throws DaoException {
         logger.log(Level.INFO, "Start checkRecord by userId: " + userId);
         boolean result;
@@ -157,7 +259,7 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
             statement = connection.prepareStatement(SQL_TAKE_ALL + SQL_CHECK_RECORD);
             statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
-            result=resultSet.next();
+            result = resultSet.next();
         } catch (SQLException e) {
             throw new DaoException(e);
         } finally {

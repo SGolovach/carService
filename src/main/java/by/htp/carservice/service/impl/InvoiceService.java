@@ -67,4 +67,48 @@ public class InvoiceService implements QueryServiceInvoice {
         }
         return listInvoice;
     }
+
+    @Override
+    public int countRecordQuery() throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordQuery();
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordByIdQuery(id);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<Invoice> checkAllRecordQuery(int limit, int offset) throws CommandException {
+        List<Invoice> listInvoice;
+        try {
+            listInvoice = receiver.checkAllRecordQuery(limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listInvoice;
+    }
+
+    @Override
+    public List<Invoice> checkRecordByIdQuery(long id, int limit, int offset) throws CommandException {
+        List<Invoice> listInvoice;
+        try {
+            listInvoice = receiver.checkRecordByIdQuery(id, limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listInvoice;
+    }
 }

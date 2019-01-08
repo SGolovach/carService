@@ -69,6 +69,50 @@ public class UserDetailService implements QueryServiceUserDetail {
     }
 
     @Override
+    public int countRecordQuery() throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordQuery();
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public int countRecordByIdQuery(long id) throws CommandException {
+        int result;
+        try {
+            result = receiver.countRecordByIdQuery(id);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return result;
+    }
+
+    @Override
+    public List<UserDetail> checkAllRecordQuery(int limit, int offset) throws CommandException {
+        List<UserDetail> listUserDetail;
+        try {
+            listUserDetail = receiver.checkAllRecordQuery(limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listUserDetail;
+    }
+
+    @Override
+    public List<UserDetail> checkRecordByIdQuery(long id, int limit, int offset) throws CommandException {
+        List<UserDetail> listUserDetail;
+        try {
+            listUserDetail = receiver.checkRecordByIdQuery(id, limit, offset);
+        } catch (ServiceException e) {
+            throw new CommandException(e);
+        }
+        return listUserDetail;
+    }
+
+    @Override
     public boolean checkRecordQuery(long userId) throws CommandException {
         boolean flagResult;
         try {

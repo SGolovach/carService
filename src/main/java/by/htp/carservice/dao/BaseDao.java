@@ -16,4 +16,12 @@ public interface BaseDao<T> {
 
     List<T> takeAll() throws DaoException;
 
+    int countRecord() throws DaoException;
+
+    int countRecordById(long id) throws DaoException;
+
+    List<T> checkAllRecord(int limit, int offset) throws DaoException;
+
+    List<T> checkRecordById(long id, int limit, int offset) throws DaoException;
+
 }

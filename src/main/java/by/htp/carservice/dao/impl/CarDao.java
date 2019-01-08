@@ -27,6 +27,10 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
     private static final String SQL_TAKE = " WHERE idCars = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM cars";
     private static final String SQL_USER_ID = " WHERE Users_id = ?";
+    private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM cars";
+    private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM cars WHERE Users_id = ?";
+    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM cars LIMIT ? OFFSET ?";
+    private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM cars WHERE Users_id = ? LIMIT ? OFFSET ?";
     private static final String ID_CAR = "idCars";
     private static final String BRAND = "brand";
     private static final String MODEL = "model";
@@ -161,6 +165,108 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
     }
 
     @Override
+    public int countRecord() throws DaoException {
+        logger.log(Level.INFO, "Start countRecord");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecord , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public int countRecordById(long id) throws DaoException {
+        logger.log(Level.INFO, "Start countRecordById");
+        PreparedStatement statement = null;
+        int resultCount = 0;
+        try {
+            statement = connection.prepareStatement(SQL_COUNT_RECORD_ID);
+            statement.setLong(1, id);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                resultCount = resultSet.getInt(1);
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish countRecordById , result: " + resultCount);
+        return resultCount;
+    }
+
+    @Override
+    public List<Car> checkAllRecord(int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkAllRecord");
+        List<Car> listCar = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
+            statement.setInt(1,limit);
+            statement.setInt(2,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listCar.add(new Car(
+                        resultSet.getLong(ID_CAR),
+                        resultSet.getString(BRAND),
+                        resultSet.getString(MODEL),
+                        resultSet.getInt(YEAR),
+                        resultSet.getString(CODE_VIN),
+                        resultSet.getString(FUEL),
+                        resultSet.getLong(USER_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkAllRecord. listCar: " + listCar);
+        return listCar;
+    }
+
+    @Override
+    public List<Car> checkRecordById(long id, int limit, int offset) throws DaoException {
+        logger.log(Level.INFO, "Start checkRecordById");
+        List<Car> listCar = new ArrayList<>();
+        PreparedStatement statement = null;
+        try {
+            statement = connection.prepareStatement(SQL_CHECK_RECORD_ID);
+            statement.setLong(1,id);
+            statement.setInt(2,limit);
+            statement.setInt(3,offset);
+            ResultSet resultSet = statement.executeQuery();
+            while (resultSet.next()) {
+                listCar.add(new Car(
+                        resultSet.getLong(ID_CAR),
+                        resultSet.getString(BRAND),
+                        resultSet.getString(MODEL),
+                        resultSet.getInt(YEAR),
+                        resultSet.getString(CODE_VIN),
+                        resultSet.getString(FUEL),
+                        resultSet.getLong(USER_ID)
+                ));
+            }
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish checkRecordById. listCar: " + listCar);
+        return listCar;
+    }
+
+    @Override
     public List<Car> takeAllByUserId(long userId) throws DaoException {
         logger.log(Level.INFO, "Start takeAllByUserId");
         List<Car> listCar = new ArrayList<>();
@@ -188,4 +294,6 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         logger.log(Level.INFO, "Finish takeAllByUserId. listCar: " + listCar);
         return listCar;
     }
+
+
 }
