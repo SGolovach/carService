@@ -13,6 +13,7 @@ public enum CommandType {
     SERVICE(new ServiceCommand()),
     CHECKOUTSERVICE(new CheckOutServiceCommand()),
     ACCOUNT(new AccountCommand()),
+    INVOICEUSER(new InvoiceUserCommand()),
     ERROR(new ErrorCommand()),
     CHANGELOCALE(new ChangeLocaleCommand()),
     INFOSIGNUPEXIST(new InfoSignUpExistCommand()),
@@ -20,9 +21,15 @@ public enum CommandType {
     INFOLOGINVALID(new InfoLoginValidCommand()),
     INFOCREATECARVALID(new InfoCreateCarValidCommand()),
     INFOUSERDETAILVALID(new InfoUserDetailValidCommand()),
-    INFOSESSIONIVALIDATE(new InfoSessionInvalidateCommand()),
+    INFOSESSIONINVALIDATE(new InfoSessionInvalidateCommand()),
+    INFOCREATEORDER(new InfoCreateOrderCommand()),
+    INFOCOMMENTVALID(new InfoCommentValidCommand()),
     CREATECAR(new CreateCarCommand()),
     EDITCAR(new EditCarCommand()),
+    EDITUSERDETAIL(new EditUserDetailCommand()),
+    EDITLOGINPASSWORD(new EditLoginPasswordCommand()),
+    EDITCOMMENT(new EditCommentCommand()),
+    EDITORDER(new EditOrderCommand()),
     EMPTY(new EmptyCommand());
 
     private Command command;

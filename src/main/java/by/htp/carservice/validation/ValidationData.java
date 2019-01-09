@@ -17,8 +17,8 @@ public class ValidationData {
     private static final String REGEX_EMAIL = "(\\w+)@(\\w+\\.)([a-z]{2,4})";
     private static final int MIN_EMAIL = 6;
     private static final int MAX_EMAIL = 50;
-    private static final String REGEX_NAME = "([\\w\\W]{3,15})";
-    private static final int MIN_NAME = 3;
+    private static final String REGEX_NAME = "([\\w\\W]{2,15})";
+    private static final int MIN_NAME = 2;
     private static final int MAX_NAME = 15;
     private static final String REGEX_PHONE = "[\\d]{7,11}";
     private static final int MIN_PHONE = 7;

@@ -3,7 +3,7 @@
 
     <Properties>
         <property name="pathFile">
-            logs/text.log
+            ../logs/carservice.log
         </property>
         <property name="pattern_file">
             %d{dd.MM.yyyy HH:mm:ss.SSS} [%t] %-5level %logger{5}:%msg%n
@@ -15,7 +15,7 @@
 
     <Appenders>
         <RollingFile name="FileLogAppender" fileName="${pathFile}" append="true"
-                     filePattern = "logs/${date:yyyy-MM-dd}/%d{yyyy-MM-dd_HH-mm}_%i.log">
+                     filePattern = "../logs/${date:yyyy-MM-dd}/%d{yyyy-MM-dd_HH-mm}_%i.log">
             <PatternLayout pattern="${pattern_file}"/>
             <Policies>
                 <TimeBasedTriggeringPolicy interval="11" modulate="true"/>

@@ -32,21 +32,22 @@ public class CheckOutServiceCommand extends AbstractCommand {
     private static final String STATUS_ORDER_NEW = "new";
     private static final String PATTERN_DATE = "yyyy-MM-dd HH:mm";
     private static final String REPLACE_DATE = "T";
+    private static final String SESSION_USER_INVALIDATE = "/WEB-INF/jsp/info/sessionInvalidate.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = ((User) session.getAttribute(SESSION_USER));
-        if(user==null){
-            return new InfoSessionInvalidateCommand().getCommandName();
-        }
         ServiceFactory factory = ServiceFactory.getInstance();
-        long userId = user.getIdUser();
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
             String description = request.getParameter(PARAM_DESCRIPTION);
             String timeRegisterStr = request.getParameter(PARAM_TIME_REGISTER);
             boolean descriptionValid = factory.getValidationData().validateDescription(description);
             if (descriptionValid && !timeRegisterStr.isEmpty()) {
+                if(user==null){
+                    return new InfoSessionInvalidateCommand().getCommandName();
+                }
+                long userId = user.getIdUser();
                 DateTimeFormatter formater = DateTimeFormatter.ofPattern(PATTERN_DATE);
                 long departmentId = Long.parseLong(request.getParameter(PARAM_DEPARTMENT_ID));
                 long carId = Long.parseLong(request.getParameter(PARAM_CAR_ID));
@@ -69,20 +70,24 @@ public class CheckOutServiceCommand extends AbstractCommand {
                     return new ErrorCommand().getCommandName();
                 }
 
-                return new ServiceCommand().getCommandName();
+                return new InfoCreateOrderCommand().getCommandName();
             } else {
                 return new MainCommand().getCommandName();
             }
         }
+        if(user==null){
+            return SESSION_USER_INVALIDATE;
+        }
         List<Car> carListForOrder;
         Department department;
         long serviceId = Long.parseLong(request.getParameter(PARAM_SERVICE_ID));
+        long userId = user.getIdUser();
         try {
             carListForOrder = factory.getCarQueryService().takeAllByUserIdQuery(userId);
             department = factory.getDepartmentQueryService().takeQuery(serviceId);
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Error in CheckOutServiceCommand", e);
-            return new ErrorCommand().getCommandName();
+            return new ErrorCommand().getPathJsp();
         }
         if (carListForOrder.isEmpty()) {
             return new CreateCarCommand().getPathJsp();

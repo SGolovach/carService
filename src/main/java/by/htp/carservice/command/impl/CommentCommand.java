@@ -27,7 +27,7 @@ public class CommentCommand extends AbstractCommand {
             commentList=factory.getCommentPaginationDataService().paginate(resultSplit);
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Error in check login", e);
-            return new ErrorCommand().getCommandName();
+            return new ErrorCommand().getPathJsp();
         }
         splitRequestParam.splitRequestBack(request, resultSplit);
         request.getSession().setAttribute(SESSION_COMMENT, commentList);

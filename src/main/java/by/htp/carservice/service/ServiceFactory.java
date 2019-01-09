@@ -1,8 +1,8 @@
 package by.htp.carservice.service;
 
-import by.htp.carservice.entity.impl.Comment;
+import by.htp.carservice.entity.impl.*;
 import by.htp.carservice.service.impl.*;
-import by.htp.carservice.service.implpaginate.CommentPaginateService;
+import by.htp.carservice.service.impl.CommentPaginateService;
 import by.htp.carservice.validation.ValidationData;
 
 
@@ -26,6 +26,27 @@ public class ServiceFactory {
     private final ValidationData validationData = new ValidationData();
     private final PaginationDataService<Comment> commentPaginationDataService =
             new CommentPaginateService();
+
+    private final PaginationDataService<Car> carPaginationDataService =
+            new CarPaginateService();
+
+    private final PaginationDataService<Department> departmentPaginationDataService =
+            new DepartmentPaginateService();
+
+    private final PaginationDataService<Invoice> invoicePaginationDataService =
+            new InvoicePaginateService();
+
+    private final PaginationDataService<Order> orderPaginationDataService =
+            new OrderPaginateService();
+
+    private final PaginationDataService<Role> rolePaginationDataService =
+            new RolePaginateService();
+
+    private final PaginationDataService<UserDetail> userDetailPaginationDataService =
+            new UserDetailPaginateService();
+
+    private final PaginationDataService<User> userPaginationDataService =
+            new UserPaginateService();
 
     private static class ServiceFactoryHolder {
         private static final ServiceFactory INSTANCE = new ServiceFactory();
@@ -73,5 +94,33 @@ public class ServiceFactory {
 
     public PaginationDataService<Comment> getCommentPaginationDataService() {
         return commentPaginationDataService;
+    }
+
+    public PaginationDataService<Car> getCarPaginationDataService() {
+        return carPaginationDataService;
+    }
+
+    public PaginationDataService<Department> getDepartmentPaginationDataService() {
+        return departmentPaginationDataService;
+    }
+
+    public PaginationDataService<Invoice> getInvoicePaginationDataService() {
+        return invoicePaginationDataService;
+    }
+
+    public PaginationDataService<Order> getOrderPaginationDataService() {
+        return orderPaginationDataService;
+    }
+
+    public PaginationDataService<Role> getRolePaginationDataService() {
+        return rolePaginationDataService;
+    }
+
+    public PaginationDataService<UserDetail> getUserDetailPaginationDataService() {
+        return userDetailPaginationDataService;
+    }
+
+    public PaginationDataService<User> getUserPaginationDataService() {
+        return userPaginationDataService;
     }
 }

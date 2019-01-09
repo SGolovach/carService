@@ -25,6 +25,11 @@ public class CreateCarCommand extends AbstractCommand {
     @Override
     public String execute(HttpServletRequest request) {
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
+            HttpSession session = request.getSession();
+            User user = (User) session.getAttribute(SESSION_USER);
+            if(user==null){
+                return new InfoSessionInvalidateCommand().getCommandName();
+            }
             ServiceFactory factory = ServiceFactory.getInstance();
             String brand = request.getParameter(PARAM_BRAND);
             String model = request.getParameter(PARAM_MODEL);
@@ -39,9 +44,8 @@ public class CreateCarCommand extends AbstractCommand {
             boolean validFuel = factory.getValidationData().validateFuel(fuel);
 
             if (validBrand && validModel && validYear && validCodeVin && validFuel) {
-                HttpSession session = request.getSession();
                 int year = Integer.parseInt(yearStr);
-                long userId = ((User) session.getAttribute(SESSION_USER)).getIdUser();
+                long userId = user.getIdUser();
                 Car car = new Car();
                 car.setBrand(brand);
                 car.setModel(model);

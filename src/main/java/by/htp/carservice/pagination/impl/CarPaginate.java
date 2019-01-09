@@ -1,6 +1,6 @@
 package by.htp.carservice.pagination.impl;
 
-import by.htp.carservice.entity.impl.Comment;
+import by.htp.carservice.entity.impl.Car;
 import by.htp.carservice.exception.CommandException;
 import by.htp.carservice.exception.ServiceException;
 import by.htp.carservice.pagination.PaginationData;
@@ -12,26 +12,26 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
-public class CommentPaginate implements PaginationData<Comment> {
+public class CarPaginate implements PaginationData<Car> {
     private static Logger logger = LogManager.getLogger();
     private static final String PARAM_CHECK_ILLUSTRATE = "checkIllustreta";
     private static final String PARAM_CURRENT_PAGE = "currentPage";
     private static final String SESSION_CHECK_ILLUSTRATE = "checkIllustretaSession";
-    private static final String SESSION_COUNT_PAGE_COMMENT = "countPageSessionComment";
-    private static final String SESSION_COUNT_PAGE_COMMENT_ALL = "countPageSessionCommentAll";
+    private static final String SESSION_COUNT_PAGE_EDIT_CAR = "countPageSessionEditCar";
+    private static final String SESSION_COUNT_PAGE_EDIT_ALL_CAR = "countPageSessionEditAllCar";
     private static final int STANDARD_CHECK_ILLUSTRATE = 10;
     private static final int MINUS_CURRENT_PAGE = 1;
     private static final String CHECK_DATA = "0";
 
     @Override
-    public List<Comment> paginate(Map<String, String> requestParam) throws ServiceException {
+    public List<Car> paginate(Map<String, String> requestParam) throws ServiceException {
         logger.log(Level.INFO, "Start method paginate class CommentPaginate");
         ServiceFactory factory = ServiceFactory.getInstance();
         int checkIllustreta = Integer.parseInt(checkData(requestParam.get(PARAM_CHECK_ILLUSTRATE)));
         int currentPage = Integer.parseInt(checkData(requestParam.get(PARAM_CURRENT_PAGE)));
         int checkIllustretaSession = Integer.parseInt(checkData(requestParam.get(SESSION_CHECK_ILLUSTRATE)));
-        int countPageSession = Integer.parseInt(checkData(requestParam.get(SESSION_COUNT_PAGE_COMMENT_ALL)));
-        List<Comment> commentList;
+        int countPageSession = Integer.parseInt(checkData(requestParam.get(SESSION_COUNT_PAGE_EDIT_ALL_CAR)));
+        List<Car> carList;
         boolean flagCountPage = false;
         try {
             if (checkIllustreta == 0 && checkIllustretaSession == 0) {
@@ -42,7 +42,7 @@ public class CommentPaginate implements PaginationData<Comment> {
                 flagCountPage = true;
             }
             if (countPageSession == 0 || flagCountPage) {
-                int countRecord = factory.getCommentQueryService().countRecordQuery();
+                int countRecord = factory.getCarQueryService().countRecordQuery();
                 int modCountrecord = countRecord % checkIllustretaSession;
                 countPageSession = countRecord / checkIllustretaSession;
                 if (modCountrecord > 0) {
@@ -54,33 +54,36 @@ public class CommentPaginate implements PaginationData<Comment> {
             }
             int offset = (currentPage - MINUS_CURRENT_PAGE) * checkIllustretaSession;
             int limit = checkIllustretaSession;
-            commentList = factory.getCommentQueryService().checkAllRecordQuery(limit, offset);
+            carList = factory.getCarQueryService().checkAllRecordQuery(limit, offset);
             requestParam.put(SESSION_CHECK_ILLUSTRATE, String.valueOf(checkIllustretaSession));
-            requestParam.put(SESSION_COUNT_PAGE_COMMENT_ALL, String.valueOf(countPageSession));
+            requestParam.put(SESSION_COUNT_PAGE_EDIT_ALL_CAR, String.valueOf(countPageSession));
         } catch (CommandException e) {
             throw new ServiceException(e);
         }
-        logger.log(Level.INFO, "Finish method paginate class CommentPaginate, result = " + commentList);
-        return commentList;
+        logger.log(Level.INFO, "Finish method paginate class CommentPaginate, result = " + carList);
+        return carList;
     }
 
     @Override
-    public List<Comment> paginateById(Map<String, String> requestParam, long id) throws ServiceException {
+    public List<Car> paginateById(Map<String, String> requestParam, long id) throws ServiceException {
         logger.log(Level.INFO, "Start method paginateById class CommentPaginate");
         ServiceFactory factory = ServiceFactory.getInstance();
         int checkIllustreta = Integer.parseInt(checkData(requestParam.get(PARAM_CHECK_ILLUSTRATE)));
         int currentPage = Integer.parseInt(checkData(requestParam.get(PARAM_CURRENT_PAGE)));
         int checkIllustretaSession = Integer.parseInt(checkData(requestParam.get(SESSION_CHECK_ILLUSTRATE)));
-        int countPageSession = Integer.parseInt(checkData(requestParam.get(SESSION_COUNT_PAGE_COMMENT)));
-        List<Comment> commentList;
+        int countPageSession = Integer.parseInt(checkData(requestParam.get(SESSION_COUNT_PAGE_EDIT_CAR)));
+        List<Car> carList;
+        boolean flagCountPage = false;
         try {
             if (checkIllustreta == 0 && checkIllustretaSession == 0) {
                 checkIllustretaSession = STANDARD_CHECK_ILLUSTRATE;
-            } else if (checkIllustreta != 0) {
-                checkIllustretaSession = checkIllustreta;
             }
-            if (countPageSession == 0) {
-                int countRecord = factory.getCommentQueryService().countRecordByIdQuery(id);
+            if (checkIllustreta != 0 && checkIllustretaSession != 0) {
+                checkIllustretaSession = checkIllustreta;
+                flagCountPage = true;
+            }
+            if (countPageSession == 0 || flagCountPage) {
+                int countRecord = factory.getCarQueryService().countRecordByIdQuery(id);
                 int modCountrecord = countRecord % checkIllustretaSession;
                 countPageSession = countRecord / checkIllustretaSession;
                 if (modCountrecord > 0) {
@@ -92,14 +95,14 @@ public class CommentPaginate implements PaginationData<Comment> {
             }
             int offset = (currentPage - MINUS_CURRENT_PAGE) * checkIllustretaSession;
             int limit = checkIllustretaSession;
-            commentList = factory.getCommentQueryService().checkRecordByIdQuery(id, limit, offset);
+            carList = factory.getCarQueryService().checkRecordByIdQuery(id,limit, offset);
             requestParam.put(SESSION_CHECK_ILLUSTRATE, String.valueOf(checkIllustretaSession));
-            requestParam.put(SESSION_COUNT_PAGE_COMMENT, String.valueOf(countPageSession));
+            requestParam.put(SESSION_COUNT_PAGE_EDIT_CAR, String.valueOf(countPageSession));
         } catch (CommandException e) {
             throw new ServiceException(e);
         }
-        logger.log(Level.INFO, "Start method paginateById class CommentPaginate");
-        return commentList;
+        logger.log(Level.INFO, "Finish method paginateById class CommentPaginate, result = " + carList);
+        return carList;
     }
 
     private String checkData(String data) {

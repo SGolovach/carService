@@ -22,7 +22,7 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
     private static final String SQL_UPDATE =
             "UPDATE userdetails SET name = ?, phone = ?, email = ?, Users_id = ? WHERE idUserDetail = ?";
     private static final String SQL_DELETE = "DELETE FROM userdetails WHERE idUserDetail = ?";
-    private static final String SQL_TAKE = " WHERE idUserDetail = ?";
+    private static final String SQL_TAKE = " WHERE Users_id = ?";
     private static final String SQL_CHECK_RECORD = " WHERE Users_id = ?";
     private static final String SQL_TAKE_ALL = "SELECT * FROM userdetails";
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM userdetails";

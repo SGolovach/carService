@@ -12,13 +12,15 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class UserDetailCommand extends AbstractCommand {
+public class EditUserDetailCommand extends AbstractCommand {
     private static Logger logger = LogManager.getLogger();
     private static final String METHOD_POST = "post";
     private static final String PARAM_NAME = "name";
     private static final String PARAM_PHONE = "phone";
     private static final String PARAM_EMAIL = "email";
     private static final String SESSION_USER = "user";
+    private static final String SESSION_USER_DETAIL = "userDetail";
+    private static final String PARAM_ID_USER_DETAIL = "idUserDetail";
     private static final String SESSION_USER_INVALIDATE = "/WEB-INF/jsp/info/sessionInvalidate.jsp";
 
     @Override
@@ -28,9 +30,10 @@ public class UserDetailCommand extends AbstractCommand {
         User user = (User) session.getAttribute(SESSION_USER);
         long userId = user.getIdUser();
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
-            if(user==null){
+            if (user == null) {
                 return new InfoSessionInvalidateCommand().getCommandName();
             }
+            long idUserDetail = Long.parseLong(request.getParameter(PARAM_ID_USER_DETAIL));
             String name = request.getParameter(PARAM_NAME);
             String phone = request.getParameter(PARAM_PHONE);
             String email = request.getParameter(PARAM_EMAIL);
@@ -40,11 +43,12 @@ public class UserDetailCommand extends AbstractCommand {
             if (validName && validPhone && validEmail) {
                 try {
                     UserDetail userDetail = new UserDetail();
+                    userDetail.setIdUserDetail(idUserDetail);
                     userDetail.setName(name);
                     userDetail.setPhone(phone);
                     userDetail.setEmail(email);
                     userDetail.setUserId(userId);
-                    factory.getUserDetailQueryService().saveQuery(userDetail);
+                    factory.getUserDetailQueryService().updateQuery(userDetail);
                     return new MainCommand().getCommandName();
                 } catch (CommandException e) {
                     logger.log(Level.ERROR, "Error in UserDetailCommand", e);
@@ -54,17 +58,17 @@ public class UserDetailCommand extends AbstractCommand {
                 return new InfoUserDetailValidCommand().getCommandName();
             }
         }
-        if(user==null){
+        if (user == null) {
             return SESSION_USER_INVALIDATE;
         }
+        UserDetail userDetail;
         try {
-            if (factory.getUserDetailQueryService().checkRecordQuery(userId)) {
-                return new MainCommand().getPathJsp();
-            }
+            userDetail = factory.getUserDetailQueryService().takeQuery(userId);
         } catch (CommandException e) {
             logger.log(Level.ERROR, "Error in UserDetailCommand", e);
             return new ErrorCommand().getCommandName();
         }
-        return new UserDetailCommand().getPathJsp();
+        session.setAttribute(SESSION_USER_DETAIL, userDetail);
+        return new EditUserDetailCommand().getPathJsp();
     }
 }

@@ -7,13 +7,13 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class InfoSessionInvalidateCommand extends AbstractCommand {
+public class InfoCommentValidCommand extends AbstractCommand {
     private static Logger logger = LogManager.getLogger();
-    private static final String PAGE_VALIDATE = "/WEB-INF/jsp/info/sessionInvalidate.jsp";
+    private static final String PAGE_VALIDATE = "/WEB-INF/jsp/info/commentvalid.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
-        logger.log(Level.INFO,"Method InfoSessionInvalidateCommand");
+        logger.log(Level.INFO,"Method InfoCommentValidCommand");
         return PAGE_VALIDATE;
     }
 }

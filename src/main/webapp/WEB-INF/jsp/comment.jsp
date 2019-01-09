@@ -5,9 +5,9 @@
 
 <table border="1">
     <tr>
-        <td><a href="action?command=comment&checkIllustreta=3">3</a></td>
+        <td><a href="action?command=comment&checkIllustreta=5">5</a></td>
         <td><a href="action?command=comment&checkIllustreta=10">10</a></td>
-        <td><a href="action?command=comment&checkIllustreta=20">20</a></td>
+        <td><a href="action?command=comment&checkIllustreta=25">20</a></td>
     </tr>
 </table>
 
@@ -29,8 +29,8 @@
 <table border="1">
     <tr>
         <c:choose>
-            <c:when test="${countPageSession > 1}">
-                <c:forEach begin="1" end="${countPageSession}" var="i">
+            <c:when test="${countPageSessionCommentAll > 1}">
+                <c:forEach begin="1" end="${countPageSessionCommentAll}" var="i">
                     <td><a href="action?command=comment&currentPage=${i}">${i}</a></td>
                 </c:forEach>
             </c:when>

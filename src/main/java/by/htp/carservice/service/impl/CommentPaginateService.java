@@ -1,4 +1,4 @@
-package by.htp.carservice.service.implpaginate;
+package by.htp.carservice.service.impl;
 
 import by.htp.carservice.entity.impl.Comment;
 import by.htp.carservice.exception.CommandException;
