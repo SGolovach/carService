@@ -15,20 +15,46 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class DepartmentDao.
+ */
 public class DepartmentDao extends AbstractDao<Department> implements DaoDepartment {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SQL_SAVE. */
     private static final String SQL_SAVE =
             "INSERT INTO departments(idDepartment, nameDepartment) VALUES(? ,?)";
+    
+    /** The Constant SQL_UPDATE. */
     private static final String SQL_UPDATE =
             "UPDATE departments SET nameDepartment = ? WHERE idDepartment = ?";
+    
+    /** The Constant SQL_DELETE. */
     private static final String SQL_DELETE = "DELETE FROM departments WHERE idDepartment = ?";
+    
+    /** The Constant SQL_TAKE. */
     private static final String SQL_TAKE = " WHERE idDepartment = ?";
+    
+    /** The Constant SQL_TAKE_ALL. */
     private static final String SQL_TAKE_ALL = "SELECT * FROM departments";
+    
+    /** The Constant SQL_COUNT_RECORD. */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM departments";
+    
+    /** The Constant SQL_CHECK_ALL_RECORD. */
     private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM departments LIMIT ? OFFSET ?";
+    
+    /** The Constant ID_DEPARTMENT. */
     private static final String ID_DEPARTMENT = "idDepartment";
+    
+    /** The Constant NAME_DEPARTMENT. */
     private static final String NAME_DEPARTMENT = "nameDepartment";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#save(java.lang.Object)
+     */
     @Override
     public boolean save(Department entity) throws DaoException {
         logger.log(Level.INFO, "Start save entity: " + entity);
@@ -52,6 +78,9 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#update(java.lang.Object)
+     */
     @Override
     public boolean update(Department entity) throws DaoException {
         logger.log(Level.INFO, "Start update entity: " + entity);
@@ -71,6 +100,9 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#delete(java.lang.Object)
+     */
     @Override
     public boolean delete(Department entity) throws DaoException {
         logger.log(Level.INFO, "Start delete entity: " + entity);
@@ -89,6 +121,9 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#take(long)
+     */
     @Override
     public Department take(long id) throws DaoException {
         logger.log(Level.INFO, "Start take entity by id: " + id);
@@ -111,6 +146,9 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         return department;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#takeAll()
+     */
     @Override
     public List<Department> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
@@ -134,6 +172,9 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         return listDepartment;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecord()
+     */
     @Override
     public int countRecord() throws DaoException {
         logger.log(Level.INFO, "Start countRecord");
@@ -154,11 +195,17 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecordById(long)
+     */
     @Override
     public int countRecordById(long id) throws DaoException {
         throw new UnsupportedOperationException("Operation do not realese");
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkAllRecord(int, int)
+     */
     @Override
     public List<Department> checkAllRecord(int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkAllRecord");
@@ -184,6 +231,9 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         return listDepartment;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkRecordById(long, int, int)
+     */
     @Override
     public List<Department> checkRecordById(long id, int limit, int offset) throws DaoException {
         throw new UnsupportedOperationException("Operation do not realese");

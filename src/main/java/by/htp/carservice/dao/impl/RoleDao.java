@@ -15,18 +15,44 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class RoleDao.
+ */
 public class RoleDao extends AbstractDao<Role> implements DaoRole {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SQL_SAVE. */
     private static final String SQL_SAVE = "INSERT INTO roles(idRole, role) VALUES(? ,?)";
+    
+    /** The Constant SQL_UPDATE. */
     private static final String SQL_UPDATE = "UPDATE roles SET role = ? WHERE idRole = ?";
+    
+    /** The Constant SQL_DELETE. */
     private static final String SQL_DELETE = "DELETE FROM roles WHERE idRole = ?";
+    
+    /** The Constant SQL_TAKE. */
     private static final String SQL_TAKE = " WHERE idRole = ?";
+    
+    /** The Constant SQL_TAKE_ALL. */
     private static final String SQL_TAKE_ALL = "SELECT * FROM roles";
+    
+    /** The Constant SQL_COUNT_RECORD. */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM roles";
+    
+    /** The Constant SQL_CHECK_ALL_RECORD. */
     private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM roles LIMIT ? OFFSET ?";
+    
+    /** The Constant ID_ROLE. */
     private static final String ID_ROLE = "idRole";
+    
+    /** The Constant ROLE. */
     private static final String ROLE = "role";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#save(java.lang.Object)
+     */
     @Override
     public boolean save(Role entity) throws DaoException {
         logger.log(Level.INFO, "Start save entity: " + entity);
@@ -50,6 +76,9 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#update(java.lang.Object)
+     */
     @Override
     public boolean update(Role entity) throws DaoException {
         logger.log(Level.INFO, "Start update entity: " + entity);
@@ -69,6 +98,9 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#delete(java.lang.Object)
+     */
     @Override
     public boolean delete(Role entity) throws DaoException {
         logger.log(Level.INFO, "Start delete entity: " + entity);
@@ -87,6 +119,9 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#take(long)
+     */
     @Override
     public Role take(long id) throws DaoException {
         logger.log(Level.INFO, "Start take entity by id: " + id);
@@ -109,6 +144,9 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         return role;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#takeAll()
+     */
     @Override
     public List<Role> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
@@ -132,6 +170,9 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         return listRole;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecord()
+     */
     @Override
     public int countRecord() throws DaoException {
         logger.log(Level.INFO, "Start countRecord");
@@ -152,11 +193,17 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecordById(long)
+     */
     @Override
     public int countRecordById(long id) throws DaoException {
         throw new UnsupportedOperationException("Operation do not realese");
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkAllRecord(int, int)
+     */
     @Override
     public List<Role> checkAllRecord(int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkAllRecord");
@@ -182,6 +229,9 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         return listRole;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkRecordById(long, int, int)
+     */
     @Override
     public List<Role> checkRecordById(long id, int limit, int offset) throws DaoException {
         throw new UnsupportedOperationException("Operation do not realese");

@@ -23,6 +23,7 @@ msg.idorder=Номер заказа
 msg.timeregister=Время регистрации
 msg.checkcar=Выбор авто
 msg.status=Статус
+msg.gotoorder=Перейти
 msg.phone=Мобильный телефон
 msg.email=Электронная почта
 msg.navbar.login=Логин

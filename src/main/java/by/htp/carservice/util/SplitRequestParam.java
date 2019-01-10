@@ -9,27 +9,72 @@ import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
+/**
+ * The Class SplitRequestParam.
+ */
 public class SplitRequestParam {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant PARAM_CHECK_ILLUSTRATE. */
     private static final String PARAM_CHECK_ILLUSTRATE = "checkIllustreta";
+    
+    /** The Constant PARAM_CURRENT_PAGE. */
     private static final String PARAM_CURRENT_PAGE = "currentPage";
+    
+    /** The Constant SESSION_CHECK_ILLUSTRATE. */
     private static final String SESSION_CHECK_ILLUSTRATE = "checkIllustretaSession";
+    
+    /** The Constant SESSION_COUNT_PAGE_COMMENT. */
     private static final String SESSION_COUNT_PAGE_COMMENT = "countPageSessionComment";
+    
+    /** The Constant SESSION_COUNT_PAGE_COMMENT_ALL. */
     private static final String SESSION_COUNT_PAGE_COMMENT_ALL = "countPageSessionCommentAll";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_CAR. */
     private static final String SESSION_COUNT_PAGE_EDIT_CAR = "countPageSessionEditCar";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_ALL_CAR. */
     private static final String SESSION_COUNT_PAGE_EDIT_ALL_CAR = "countPageSessionEditAllCar";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_DEPARTMENT. */
     private static final String SESSION_COUNT_PAGE_EDIT_DEPARTMENT = "countPageSessionEditDepartment";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_ROLE. */
     private static final String SESSION_COUNT_PAGE_EDIT_ROLE = "countPageSessionEditRole";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_INVOICE. */
     private static final String SESSION_COUNT_PAGE_EDIT_INVOICE = "countPageSessionEditInvoice";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_ALL_INVOICE. */
     private static final String SESSION_COUNT_PAGE_EDIT_ALL_INVOICE = "countPageSessionEditAllInvoice";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_ORDER. */
     private static final String SESSION_COUNT_PAGE_EDIT_ORDER = "countPageSessionEditOrder";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_ALL_ORDER. */
     private static final String SESSION_COUNT_PAGE_EDIT_ALL_ORDER = "countPageSessionEditAllOrder";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_USER. */
     private static final String SESSION_COUNT_PAGE_EDIT_USER = "countPageSessionEditUser";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_ALL_USER. */
     private static final String SESSION_COUNT_PAGE_EDIT_ALL_USER = "countPageSessionEditAllUser";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_USER_DETAIL. */
     private static final String SESSION_COUNT_PAGE_EDIT_USER_DETAIL = "countPageSessionEditUserDetail";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_ALL_USER_DETAIL. */
     private static final String SESSION_COUNT_PAGE_EDIT_ALL_USER_DETAIL = "countPageSessionEditAllUserDetail";
 
 
+    /**
+     * Split request.
+     *
+     * @param request the request
+     * @return the map
+     */
     public Map<String,String> splitRequest(HttpServletRequest request){
         logger.log(Level.INFO,"Start method splitRequest");
         HttpSession session = request.getSession();
@@ -72,6 +117,12 @@ public class SplitRequestParam {
         return result;
     }
 
+    /**
+     * Split request back.
+     *
+     * @param request the request
+     * @param resultSplit the result split
+     */
     public void splitRequestBack(HttpServletRequest request,Map<String,String> resultSplit){
         logger.log(Level.INFO,"Start method splitRequestBack");
         HttpSession session = request.getSession();

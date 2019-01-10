@@ -49,7 +49,7 @@ public class EditUserDetailCommand extends AbstractCommand {
                     userDetail.setEmail(email);
                     userDetail.setUserId(userId);
                     factory.getUserDetailQueryService().updateQuery(userDetail);
-                    return new MainCommand().getCommandName();
+                    return new EditUserDetailCommand().getCommandName();
                 } catch (CommandException e) {
                     logger.log(Level.ERROR, "Error in UserDetailCommand", e);
                     return new ErrorCommand().getCommandName();

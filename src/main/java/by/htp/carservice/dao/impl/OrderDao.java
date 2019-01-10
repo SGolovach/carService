@@ -15,29 +15,69 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class OrderDao.
+ */
 public class OrderDao extends AbstractDao<Order> implements DaoOrder {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SQL_SAVE. */
     private static final String SQL_SAVE =
             "INSERT INTO orders(idOrder, timeRegister, Description, status, Users_id, Departments_id, Cars_id)" +
                     " VALUES(?, ?, ?, ?, ?, ?, ?)";
+    
+    /** The Constant SQL_UPDATE. */
     private static final String SQL_UPDATE =
             "UPDATE orders SET timeRegister = ?, Description = ?, status = ?, Users_id = ?," +
                     " Departments_id = ?, Cars_id = ? WHERE idOrder = ?";
+    
+    /** The Constant SQL_DELETE. */
     private static final String SQL_DELETE = "DELETE FROM orders WHERE idOrder = ?";
+    
+    /** The Constant SQL_TAKE. */
     private static final String SQL_TAKE = " WHERE idOrder = ?";
+    
+    /** The Constant SQL_TAKE_ALL. */
     private static final String SQL_TAKE_ALL = "SELECT * FROM orders";
+    
+    /** The Constant SQL_COUNT_RECORD. */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM orders";
+    
+    /** The Constant SQL_COUNT_RECORD_ID. */
     private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM orders WHERE Users_id = ?";
+    
+    /** The Constant SQL_CHECK_ALL_RECORD. */
     private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM orders LIMIT ? OFFSET ?";
+    
+    /** The Constant SQL_CHECK_RECORD_ID. */
     private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM orders WHERE Users_id = ? LIMIT ? OFFSET ?";
+    
+    /** The Constant ID_ORDER. */
     private static final String ID_ORDER = "idOrder";
+    
+    /** The Constant TIME_REGISTER. */
     private static final String TIME_REGISTER = "timeRegister";
+    
+    /** The Constant DESCRIPTION. */
     private static final String DESCRIPTION = "Description";
+    
+    /** The Constant STATUS. */
     private static final String STATUS = "status";
+    
+    /** The Constant USER_ID. */
     private static final String USER_ID = "Users_id";
+    
+    /** The Constant DEPARTMENT_ID. */
     private static final String DEPARTMENT_ID = "Departments_id";
+    
+    /** The Constant CAR_ID. */
     private static final String CAR_ID = "Cars_id";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#save(java.lang.Object)
+     */
     @Override
     public boolean save(Order entity) throws DaoException {
         logger.log(Level.INFO, "Start save entity: " + entity);
@@ -66,6 +106,9 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#update(java.lang.Object)
+     */
     @Override
     public boolean update(Order entity) throws DaoException {
         logger.log(Level.INFO, "Start update entity: " + entity);
@@ -90,6 +133,9 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#delete(java.lang.Object)
+     */
     @Override
     public boolean delete(Order entity) throws DaoException {
         logger.log(Level.INFO, "Start delete entity: " + entity);
@@ -108,6 +154,9 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#take(long)
+     */
     @Override
     public Order take(long id) throws DaoException {
         logger.log(Level.INFO, "Start take entity by id: " + id);
@@ -135,6 +184,9 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         return order;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#takeAll()
+     */
     @Override
     public List<Order> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
@@ -163,6 +215,9 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         return listOrder;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecord()
+     */
     @Override
     public int countRecord() throws DaoException {
         logger.log(Level.INFO, "Start countRecord");
@@ -183,6 +238,9 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecordById(long)
+     */
     @Override
     public int countRecordById(long id) throws DaoException {
         logger.log(Level.INFO, "Start countRecordById");
@@ -204,6 +262,9 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkAllRecord(int, int)
+     */
     @Override
     public List<Order> checkAllRecord(int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkAllRecord");
@@ -234,6 +295,9 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         return listOrder;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkRecordById(long, int, int)
+     */
     @Override
     public List<Order> checkRecordById(long id, int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkRecordById");

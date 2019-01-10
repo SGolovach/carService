@@ -9,19 +9,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 
+/**
+ * The Class LocaleFilter.
+ */
 public class LocaleFilter implements Filter {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant BUNDEL_NAME. */
     private static final String BUNDEL_NAME = "bundel";
+    
+    /** The Constant LANGUAGE_NAME. */
     private static final String LANGUAGE_NAME = "language";
+    
+    /** The Constant LOCALE_NAME. */
     private static final String LOCALE_NAME = "locale";
+    
+    /** The Constant LANGUAGE_EN. */
     private static final String LANGUAGE_EN = "en";
 
 
+    /* (non-Javadoc)
+     * @see javax.servlet.Filter#init(javax.servlet.FilterConfig)
+     */
     @Override
     public void init(FilterConfig filterConfig) throws ServletException {
 
     }
 
+    /* (non-Javadoc)
+     * @see javax.servlet.Filter#doFilter(javax.servlet.ServletRequest, javax.servlet.ServletResponse, javax.servlet.FilterChain)
+     */
     @Override
     public void doFilter(ServletRequest request, ServletResponse response, FilterChain chain)
             throws IOException, ServletException {
@@ -47,6 +66,9 @@ public class LocaleFilter implements Filter {
         chain.doFilter(request,response);
 }
 
+    /* (non-Javadoc)
+     * @see javax.servlet.Filter#destroy()
+     */
     @Override
     public void destroy() {
 

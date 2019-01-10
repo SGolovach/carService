@@ -15,30 +15,72 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class CarDao.
+ */
 public class CarDao extends AbstractDao<Car> implements DaoCar {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SQL_SAVE. */
     private static final String SQL_SAVE =
             "INSERT INTO cars(idCars, brand, model, year, codeVIN, fuel, Users_id)" +
                     " VALUES(?, ?, ?, ?, ?, ?, ?)";
+    
+    /** The Constant SQL_UPDATE. */
     private static final String SQL_UPDATE =
             "UPDATE cars SET brand = ?, model = ?, year = ?, codeVIN = ?," +
                     " fuel = ?, Users_id = ? WHERE idCars = ?";
+    
+    /** The Constant SQL_DELETE. */
     private static final String SQL_DELETE = "DELETE FROM cars WHERE idCars = ?";
+    
+    /** The Constant SQL_TAKE. */
     private static final String SQL_TAKE = " WHERE idCars = ?";
+    
+    /** The Constant SQL_TAKE_ALL. */
     private static final String SQL_TAKE_ALL = "SELECT * FROM cars";
+    
+    /** The Constant SQL_USER_ID. */
     private static final String SQL_USER_ID = " WHERE Users_id = ?";
+    
+    /** The Constant SQL_COUNT_RECORD. */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM cars";
+    
+    /** The Constant SQL_COUNT_RECORD_ID. */
     private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM cars WHERE Users_id = ?";
+    
+    /** The Constant SQL_CHECK_ALL_RECORD. */
     private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM cars LIMIT ? OFFSET ?";
+    
+    /** The Constant SQL_CHECK_RECORD_ID. */
     private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM cars WHERE Users_id = ? LIMIT ? OFFSET ?";
+    
+    /** The Constant ID_CAR. */
     private static final String ID_CAR = "idCars";
+    
+    /** The Constant BRAND. */
     private static final String BRAND = "brand";
+    
+    /** The Constant MODEL. */
     private static final String MODEL = "model";
+    
+    /** The Constant YEAR. */
     private static final String YEAR = "year";
+    
+    /** The Constant CODE_VIN. */
     private static final String CODE_VIN = "codeVIN";
+    
+    /** The Constant FUEL. */
     private static final String FUEL = "fuel";
+    
+    /** The Constant USER_ID. */
     private static final String USER_ID = "Users_id";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#save(java.lang.Object)
+     */
     @Override
     public boolean save(Car entity) throws DaoException {
         logger.log(Level.INFO, "Start save entity: " + entity);
@@ -67,6 +109,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#update(java.lang.Object)
+     */
     @Override
     public boolean update(Car entity) throws DaoException {
         logger.log(Level.INFO, "Start update entity: " + entity);
@@ -91,6 +136,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#delete(java.lang.Object)
+     */
     @Override
     public boolean delete(Car entity) throws DaoException {
         logger.log(Level.INFO, "Start delete entity: " + entity);
@@ -109,6 +157,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#take(long)
+     */
     @Override
     public Car take(long id) throws DaoException {
         logger.log(Level.INFO, "Start take entity by id: " + id);
@@ -136,6 +187,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         return car;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#takeAll()
+     */
     @Override
     public List<Car> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
@@ -164,6 +218,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         return listCar;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecord()
+     */
     @Override
     public int countRecord() throws DaoException {
         logger.log(Level.INFO, "Start countRecord");
@@ -184,6 +241,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecordById(long)
+     */
     @Override
     public int countRecordById(long id) throws DaoException {
         logger.log(Level.INFO, "Start countRecordById");
@@ -205,6 +265,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkAllRecord(int, int)
+     */
     @Override
     public List<Car> checkAllRecord(int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkAllRecord");
@@ -235,6 +298,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         return listCar;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkRecordById(long, int, int)
+     */
     @Override
     public List<Car> checkRecordById(long id, int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkRecordById");
@@ -266,6 +332,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         return listCar;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.DaoCar#takeAllByUserId(long)
+     */
     @Override
     public List<Car> takeAllByUserId(long userId) throws DaoException {
         logger.log(Level.INFO, "Start takeAllByUserId");

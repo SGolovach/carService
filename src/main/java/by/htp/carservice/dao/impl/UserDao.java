@@ -15,27 +15,65 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class UserDao.
+ */
 public class UserDao extends AbstractDao<User> implements DaoUser {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SQL_SAVE. */
     private static final String SQL_SAVE =
             "INSERT INTO users(idUsers, login, password, Roles_id) VALUES(? ,?, ?, ?)";
+    
+    /** The Constant SQL_UPDATE. */
     private static final String SQL_UPDATE =
             "UPDATE users SET login = ?, password = ?, Roles_id = ? WHERE idUsers = ?";
+    
+    /** The Constant SQL_DELETE. */
     private static final String SQL_DELETE = "DELETE FROM users WHERE idUsers = ?";
+    
+    /** The Constant SQL_TAKE. */
     private static final String SQL_TAKE = " WHERE idUsers = ?";
+    
+    /** The Constant SQL_CHECK_LOGIN. */
     private static final String SQL_CHECK_LOGIN = " WHERE login = ? AND password = ?";
+    
+    /** The Constant SQL_EXIST_LOGIN. */
     private static final String SQL_EXIST_LOGIN = " WHERE login = ?";
+    
+    /** The Constant SQL_TAKE_ALL. */
     private static final String SQL_TAKE_ALL = "SELECT * FROM users";
+    
+    /** The Constant SQL_COUNT_RECORD. */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM users";
+    
+    /** The Constant SQL_COUNT_RECORD_ID. */
     private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM users WHERE idUsers = ?";
+    
+    /** The Constant SQL_CHECK_ALL_RECORD. */
     private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM users LIMIT ? OFFSET ?";
+    
+    /** The Constant SQL_CHECK_RECORD_ID. */
     private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM users WHERE idUsers = ? LIMIT ? OFFSET ?";
+    
+    /** The Constant ID_USER. */
     private static final String ID_USER = "idUsers";
+    
+    /** The Constant LOGIN. */
     private static final String LOGIN = "login";
+    
+    /** The Constant PASSWORD. */
     private static final String PASSWORD = "password";
+    
+    /** The Constant ROLE_ID. */
     private static final String ROLE_ID = "Roles_id";
 
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#save(java.lang.Object)
+     */
     @Override
     public boolean save(User entity) throws DaoException {
         logger.log(Level.INFO, "Start save entity: " + entity);
@@ -61,6 +99,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#update(java.lang.Object)
+     */
     @Override
     public boolean update(User entity) throws DaoException {
         logger.log(Level.INFO, "Start update entity: " + entity);
@@ -82,6 +123,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#delete(java.lang.Object)
+     */
     @Override
     public boolean delete(User entity) throws DaoException {
         logger.log(Level.INFO, "Start delete entity: " + entity);
@@ -100,6 +144,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#take(long)
+     */
     @Override
     public User take(long id) throws DaoException {
         logger.log(Level.INFO, "Start take entity by id: " + id);
@@ -124,6 +171,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return user;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#takeAll()
+     */
     @Override
     public List<User> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
@@ -149,6 +199,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return listUser;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecord()
+     */
     @Override
     public int countRecord() throws DaoException {
         logger.log(Level.INFO, "Start countRecord");
@@ -169,6 +222,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecordById(long)
+     */
     @Override
     public int countRecordById(long id) throws DaoException {
         logger.log(Level.INFO, "Start countRecordById");
@@ -190,6 +246,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkAllRecord(int, int)
+     */
     @Override
     public List<User> checkAllRecord(int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkAllRecord");
@@ -217,6 +276,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return listUser;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkRecordById(long, int, int)
+     */
     @Override
     public List<User> checkRecordById(long id, int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkRecordById");
@@ -245,6 +307,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return listUser;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.DaoUser#checkLogin(java.lang.String, java.lang.String)
+     */
     @Override
     public List<User> checkLogin(String login, String password) throws DaoException {
         logger.log(Level.INFO, "Start checkLogin");
@@ -272,6 +337,9 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         return listUser;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.DaoUser#existLogin(java.lang.String)
+     */
     @Override
     public boolean existLogin(String login) throws DaoException {
         logger.log(Level.INFO, "Start existLogin by login: " + login);

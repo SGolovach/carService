@@ -46,9 +46,6 @@ public class EditLoginPasswordCommand extends AbstractCommand {
             User userCheckPassword;
             try {
                 userCheckPassword = factory.getUserQueryService().takeQuery(userId);
-                System.out.println(checkPasswordOld);
-                System.out.println(userCheckPassword.getPassword());
-                System.out.println(checkPasswordOld.equals(userCheckPassword.getPassword()));
                 if (!checkPasswordOld.equals(userCheckPassword.getPassword())) {
                     return new EditLoginPasswordCommand().getCommandName();
                 }
@@ -66,7 +63,7 @@ public class EditLoginPasswordCommand extends AbstractCommand {
             boolean validLogin = factory.getValidationData().validateLogin(login);
             boolean validPassword = factory.getValidationData().validatePassword(passwordClean);
             if (validLogin && validPassword) {
-                long roleId = (Long)session.getAttribute(SESSION_ROLE_ID);
+                long roleId = (Long) session.getAttribute(SESSION_ROLE_ID);
                 String password = hash.getHashPAss(passwordClean);
                 User userUpdate = new User();
                 userUpdate.setRoleId(roleId);
@@ -81,7 +78,7 @@ public class EditLoginPasswordCommand extends AbstractCommand {
                 }
                 return new LogOutCommand().getCommandName();
             } else {
-                return new InfoLoginValidCommand().getCommandName();
+                return new InfoLoginPasswordCommand().getCommandName();
             }
 
         }

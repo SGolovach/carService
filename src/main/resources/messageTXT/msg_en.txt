@@ -24,6 +24,7 @@ msg.cost=Cost
 msg.idorder=Number Order
 msg.timeregister=Time register
 msg.status=Status
+msg.gotoorder=Go Over
 msg.checkcar=Check car
 msg.navbar.login=Login
 msg.navbar.signup=SignUp

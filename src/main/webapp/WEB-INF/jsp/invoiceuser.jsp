@@ -15,6 +15,7 @@
         <th scope="col"><fmt:message key="msg.numberInvoice"/></th>
         <th scope="col"><fmt:message key="msg.cost"/></th>
         <th scope="col"><fmt:message key="msg.idorder"/></th>
+        <th scope="col"></th>
     </tr>
     </thead>
     <tbody>
@@ -28,6 +29,11 @@
         </td>
         <td align="center">
                 ${invoiceList.getOrderId()}
+        </td>
+        <td align="center">
+            <a href="action?command=showorderuser&orderId=${invoiceList.getOrderId()}">
+                <fmt:message key="msg.gotoorder"/>
+            </a>
         </td>
         </c:forEach>
     </tbody>

@@ -15,24 +15,56 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class CommentDao.
+ */
 public class CommentDao extends AbstractDao<Comment> implements DaoComment {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SQL_SAVE. */
     private static final String SQL_SAVE =
             "INSERT INTO comments(idComment, description, Users_id)" +
                     " VALUES(?, ?, ?)";
+    
+    /** The Constant SQL_UPDATE. */
     private static final String SQL_UPDATE =
             "UPDATE comments SET description = ?, Users_id = ? WHERE idComment = ?";
+    
+    /** The Constant SQL_DELETE. */
     private static final String SQL_DELETE = "DELETE FROM comments WHERE idComment = ?";
+    
+    /** The Constant SQL_TAKE. */
     private static final String SQL_TAKE = " WHERE idComment = ?";
+    
+    /** The Constant SQL_TAKE_ALL. */
     private static final String SQL_TAKE_ALL = "SELECT * FROM comments";
+    
+    /** The Constant SQL_COUNT_RECORD. */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM comments";
+    
+    /** The Constant SQL_COUNT_RECORD_ID. */
     private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM comments WHERE Users_id = ?";
+    
+    /** The Constant SQL_CHECK_ALL_RECORD. */
     private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM comments LIMIT ? OFFSET ?";
+    
+    /** The Constant SQL_CHECK_RECORD_ID. */
     private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM comments WHERE Users_id = ? LIMIT ? OFFSET ?";
+    
+    /** The Constant ID_COMMENT. */
     private static final String ID_COMMENT = "idComment";
+    
+    /** The Constant DESCRIPTION. */
     private static final String DESCRIPTION = "description";
+    
+    /** The Constant USER_ID. */
     private static final String USER_ID = "Users_id";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#save(java.lang.Object)
+     */
     @Override
     public boolean save(Comment entity) throws DaoException {
         logger.log(Level.INFO, "Start save entity: " + entity);
@@ -57,6 +89,9 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#update(java.lang.Object)
+     */
     @Override
     public boolean update(Comment entity) throws DaoException {
         logger.log(Level.INFO, "Start update entity: " + entity);
@@ -77,6 +112,9 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#delete(java.lang.Object)
+     */
     @Override
     public boolean delete(Comment entity) throws DaoException {
         logger.log(Level.INFO, "Start delete entity: " + entity);
@@ -95,6 +133,9 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#take(long)
+     */
     @Override
     public Comment take(long id) throws DaoException {
         logger.log(Level.INFO, "Start take entity by id: " + id);
@@ -118,6 +159,9 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         return comment;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#takeAll()
+     */
     @Override
     public List<Comment> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
@@ -142,6 +186,9 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         return listComment;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecord()
+     */
     @Override
     public int countRecord() throws DaoException {
         logger.log(Level.INFO, "Start countRecord");
@@ -162,6 +209,9 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecordById(long)
+     */
     @Override
     public int countRecordById(long id) throws DaoException {
         logger.log(Level.INFO, "Start countRecordById");
@@ -183,6 +233,9 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkAllRecord(int, int)
+     */
     @Override
     public List<Comment> checkAllRecord(int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkAllRecord");
@@ -209,6 +262,9 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         return listComment;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkRecordById(long, int, int)
+     */
     @Override
     public List<Comment> checkRecordById(long id, int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkRecordById");

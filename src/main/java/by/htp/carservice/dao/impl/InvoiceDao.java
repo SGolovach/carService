@@ -15,30 +15,64 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * The Class InvoiceDao.
+ */
 public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SQL_SAVE. */
     private static final String SQL_SAVE =
             "INSERT INTO invoices(idInvoice, numberInvoice, cost, Orders_id)" +
                     " VALUES(?, ?, ?, ?)";
+    
+    /** The Constant SQL_UPDATE. */
     private static final String SQL_UPDATE =
             "UPDATE invoices SET numberInvoice = ?, cost = ?, Orders_id = ? WHERE idInvoice = ?";
+    
+    /** The Constant SQL_DELETE. */
     private static final String SQL_DELETE = "DELETE FROM invoices WHERE idInvoice = ?";
+    
+    /** The Constant SQL_TAKE. */
     private static final String SQL_TAKE = " WHERE idInvoice = ?";
+    
+    /** The Constant SQL_TAKE_ALL. */
     private static final String SQL_TAKE_ALL = "SELECT * FROM invoices";
+    
+    /** The Constant SQL_COUNT_RECORD. */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM invoices";
+    
+    /** The Constant SQL_COUNT_RECORD_ID. */
     private static final String SQL_COUNT_RECORD_ID =
             "SELECT COUNT(*) FROM invoices " +
                     "JOIN orders ON invoices.Orders_id=orders.idOrder " +
                     "WHERE orders.idOrder IN(SELECT idOrder FROM orders WHERE Users_id = ?)";
+    
+    /** The Constant SQL_CHECK_ALL_RECORD. */
     private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM invoices LIMIT ? OFFSET ?";
+    
+    /** The Constant SQL_CHECK_RECORD_ID. */
     private static final String SQL_CHECK_RECORD_ID = "SELECT idInvoice,numberInvoice,cost,Orders_id FROM invoices " +
             "JOIN orders ON invoices.Orders_id=orders.idOrder " +
             "WHERE orders.idOrder IN(SELECT idOrder FROM orders WHERE Users_id = ?) LIMIT ? OFFSET ?";
+    
+    /** The Constant ID_INVOICE. */
     private static final String ID_INVOICE = "idInvoice";
+    
+    /** The Constant NUMBER_INVOICE. */
     private static final String NUMBER_INVOICE = "numberInvoice";
+    
+    /** The Constant COST. */
     private static final String COST = "cost";
+    
+    /** The Constant ORDER_ID. */
     private static final String ORDER_ID = "Orders_id";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#save(java.lang.Object)
+     */
     @Override
     public boolean save(Invoice entity) throws DaoException {
         logger.log(Level.INFO, "Start save entity: " + entity);
@@ -64,6 +98,9 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#update(java.lang.Object)
+     */
     @Override
     public boolean update(Invoice entity) throws DaoException {
         logger.log(Level.INFO, "Start update entity: " + entity);
@@ -85,6 +122,9 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#delete(java.lang.Object)
+     */
     @Override
     public boolean delete(Invoice entity) throws DaoException {
         logger.log(Level.INFO, "Start delete entity: " + entity);
@@ -103,6 +143,9 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         return (flagResult >= 1);
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#take(long)
+     */
     @Override
     public Invoice take(long id) throws DaoException {
         logger.log(Level.INFO, "Start take entity by id: " + id);
@@ -127,6 +170,9 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         return invoice;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#takeAll()
+     */
     @Override
     public List<Invoice> takeAll() throws DaoException {
         logger.log(Level.INFO, "Start takeAll");
@@ -152,6 +198,9 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         return listInvoice;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecord()
+     */
     @Override
     public int countRecord() throws DaoException {
         logger.log(Level.INFO, "Start countRecord");
@@ -172,6 +221,9 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#countRecordById(long)
+     */
     @Override
     public int countRecordById(long id) throws DaoException {
         logger.log(Level.INFO, "Start countRecordById");
@@ -193,6 +245,9 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         return resultCount;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkAllRecord(int, int)
+     */
     @Override
     public List<Invoice> checkAllRecord(int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkAllRecord");
@@ -220,6 +275,9 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         return listInvoice;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.BaseDao#checkRecordById(long, int, int)
+     */
     @Override
     public List<Invoice> checkRecordById(long id, int limit, int offset) throws DaoException {
         logger.log(Level.INFO, "Start checkRecordById");

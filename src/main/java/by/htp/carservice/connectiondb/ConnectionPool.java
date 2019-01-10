@@ -18,21 +18,53 @@ import java.util.concurrent.LinkedBlockingQueue;
 import java.util.concurrent.atomic.AtomicBoolean;
 import java.util.concurrent.locks.ReentrantLock;
 
+/**
+ * The Class ConnectionPool.
+ */
 public class ConnectionPool {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The instance. */
     private static ConnectionPool instance;
+    
+    /** The available connections. */
     private BlockingQueue<ProxyConnection> availableConnections;
+    
+    /** The used connections. */
     private BlockingQueue<ProxyConnection> usedConnections;
+    
+    /** The lock connection pool. */
     private static ReentrantLock lockConnectionPool = new ReentrantLock();
+    
+    /** The create connection pool. */
     private static AtomicBoolean createConnectionPool = new AtomicBoolean(false);
+    
+    /** The Constant USER. */
     private static final String USER = "user";
+    
+    /** The Constant PASSWORD. */
     private static final String PASSWORD = "password";
+    
+    /** The Constant AUTO_RECONNECT. */
     private static final String AUTO_RECONNECT = "autoReconnect";
+    
+    /** The Constant CHARACTER_ENCODING. */
     private static final String CHARACTER_ENCODING = "characterEncoding";
+    
+    /** The Constant USE_UNICODE. */
     private static final String USE_UNICODE = "useUnicode";
+    
+    /** The Constant USE_SSL. */
     private static final String USE_SSL = "useSSL";
+    
+    /** The Constant STANDARD_POOLSIZE. */
     private static final int STANDARD_POOLSIZE = 5;
 
+    /**
+     * Instantiates a new connection pool.
+     */
     private ConnectionPool() {
         try {
             DriverManager.registerDriver(new com.mysql.jdbc.Driver());
@@ -42,6 +74,11 @@ public class ConnectionPool {
         initConnectionPool();
     }
 
+    /**
+     * Gets the single instance of ConnectionPool.
+     *
+     * @return single instance of ConnectionPool
+     */
     public static ConnectionPool getInstance() {
         if (!createConnectionPool.get()) {
             try {
@@ -57,6 +94,9 @@ public class ConnectionPool {
         return instance;
     }
 
+    /**
+     * Inits the connection pool.
+     */
     private void initConnectionPool() {
         Locale.setDefault(Locale.ENGLISH);
         DbResourceManager dbResourceManager = DbResourceManager.getInstance();
@@ -82,6 +122,12 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Gets the data db.
+     *
+     * @param properties the properties
+     * @return the data db
+     */
     private String getDataDb(Properties properties) {
         Locale.setDefault(Locale.ENGLISH);
         DbResourceManager dbResourceManager = DbResourceManager.getInstance();
@@ -94,6 +140,12 @@ public class ConnectionPool {
         return dbResourceManager.getValue(DbParameter.DB_URL);
     }
 
+    /**
+     * Restore connection.
+     *
+     * @return the connection
+     * @throws ConnectionPoolException the connection pool exception
+     */
     private Connection restoreConnection() throws ConnectionPoolException {
         Connection connection;
         Properties properties = new Properties();
@@ -106,6 +158,12 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Take connection.
+     *
+     * @return the connection
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public Connection takeConnection() throws ConnectionPoolException {
         ProxyConnection connection;
         try {
@@ -117,6 +175,11 @@ public class ConnectionPool {
         return connection;
     }
 
+    /**
+     * Release connection.
+     *
+     * @param connection the connection
+     */
     void releaseConnection(Connection connection) {
         if (connection instanceof ProxyConnection) {
             usedConnections.remove(connection);
@@ -148,6 +211,11 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Close connection pool.
+     *
+     * @throws CommandException the command exception
+     */
     public void closeConnectionPool() throws CommandException {
         logger.log(Level.INFO,"Start closeConnectionPool");
         try {
@@ -168,6 +236,12 @@ public class ConnectionPool {
         }
     }
 
+    /**
+     * Close connection queue.
+     *
+     * @param queue the queue
+     * @throws ConnectionPoolException the connection pool exception
+     */
     private void closeConnectionQueue(BlockingQueue<ProxyConnection> queue) throws ConnectionPoolException {
         Connection connection;
         while (queue.size() != 0) {
