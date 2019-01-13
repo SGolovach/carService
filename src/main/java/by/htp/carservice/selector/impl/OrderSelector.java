@@ -111,4 +111,15 @@ public class OrderSelector implements SelectorOrder {
         }
         return listOrder;
     }
+
+    @Override
+    public boolean updateStatus(long orderId) throws SelectorException {
+        boolean flagResult;
+        try {
+            flagResult = transactionOrder.updateStatusTransaction(orderId);
+        } catch (ServiceException e) {
+            throw new SelectorException(e);
+        }
+        return flagResult;
+    }
 }

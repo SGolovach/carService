@@ -12,6 +12,8 @@ public enum NamePage {
     COMMENT_PAGE("comment"),
     WRITE_COMMENT_PAGE("writecomment"),
     SERVICE_PAGE("service"),
+    BILL_PAGE("bill"),
+    BILL_ORDER_PAGE("billorder"),
     CHECK_OUT_SERVICE_PAGE("checkoutservice"),
     INVOICE_USER_PAGE("invoiceuser"),
     ERROR_PAGE("error"),
@@ -26,6 +28,7 @@ public enum NamePage {
     INFO_CREATE_ORDER_PAGE("infocreateorder"),
     INFO_COMMENT_VALID_PAGE("infocommentvalid"),
     INFO_CREATE_SERVICE_VALID_PAGE("infocreateservicevalid"),
+    INFO_BILL_ORDER_VALID_PAGE("infobillordervalid"),
     CREATE_CAR_PAGE("createcar"),
     CREATE_SERVICE_PAGE("createservice"),
     EDIT_CAR_PAGE("editcar"),
@@ -45,6 +48,7 @@ public enum NamePage {
     SIGN_UP_VALID_PAGE("info/signupvalid"),
     USER_DETAIL_VALID_PAGE("info/userdetailvalid"),
     CREATE_SERVICE_VALID_PAGE("info/createservice"),
+    BILL_ORDER_VALID_PAGE("info/billordervalid"),
     COMMAND_NAME_WITH_ACTION("action?command=");
 
     private String namePage;

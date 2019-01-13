@@ -40,6 +40,12 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
                     " Departments_id = ?, Cars_id = ? WHERE idOrder = ?";
 
     /**
+     * The Constant SQL_UPDATE_STATUS.
+     */
+    private static final String SQL_UPDATE_STATUS =
+            "UPDATE orders SET status = ? WHERE idOrder = ?";
+
+    /**
      * The Constant SQL_DELETE.
      */
     private static final String SQL_DELETE = "DELETE FROM orders WHERE idOrder = ?";
@@ -113,6 +119,11 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      * The Constant CAR_ID.
      */
     private static final String CAR_ID = "Cars_id";
+
+    /**
+     * The Constant BILL_STATUS.
+     */
+    private static final String BILL_STATUS = "bill";
 
     /* (non-Javadoc)
      * @see by.htp.carservice.dao.BaseDao#save(java.lang.Object)
@@ -366,5 +377,24 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         }
         logger.log(Level.INFO, "Finish checkRecordById. listOrder: " + listOrder);
         return listOrder;
+    }
+
+    @Override
+    public boolean updateStatus(long orderId) throws DaoException {
+        logger.log(Level.INFO, "Start updateStatus entity  orderId = " + orderId);
+        PreparedStatement statement = null;
+        int flagResult;
+        try {
+            statement = connection.prepareStatement(SQL_UPDATE_STATUS);
+            statement.setString(1, BILL_STATUS);
+            statement.setLong(2, orderId);
+            flagResult = statement.executeUpdate();
+        } catch (SQLException e) {
+            throw new DaoException(e);
+        } finally {
+            close(statement);
+        }
+        logger.log(Level.INFO, "Finish updateStatus entity, result: " + (flagResult >= 1));
+        return (flagResult >= 1);
     }
 }

@@ -231,4 +231,29 @@ public class OrderTransactionImpl implements TransactionOrder {
         logger.log(Level.INFO, "Finish method checkRecordByIdTransaction result:" + orderList);
         return orderList;
     }
+
+    @Override
+    public boolean updateStatusTransaction(long orderId) throws ServiceException {
+        logger.log(Level.INFO, "Start method updateStatusTransaction entity orderId = " + orderId);
+        DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
+        boolean flagResult;
+        TransactionManager transaction;
+        try {
+            transaction = new TransactionManager();
+        } catch (ConnectionPoolException e) {
+            throw new ServiceException(e);
+        }
+        try {
+            transaction.beginTransaction((AbstractDao) orderDao);
+            flagResult = orderDao.updateStatus(orderId);
+            transaction.commit();
+        } catch (DaoException | ConnectionPoolException e) {
+            transaction.rollback();
+            throw new ServiceException(e);
+        } finally {
+            transaction.endTransaction();
+        }
+        logger.log(Level.INFO, "Finish method updateStatusTransaction result:" + flagResult);
+        return flagResult;
+    }
 }
