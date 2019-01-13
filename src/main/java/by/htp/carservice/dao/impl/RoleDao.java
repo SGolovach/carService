@@ -19,35 +19,55 @@ import java.util.List;
  * The Class RoleDao.
  */
 public class RoleDao extends AbstractDao<Role> implements DaoRole {
-    
-    /** The logger. */
+
+    /**
+     * The logger.
+     */
     private static Logger logger = LogManager.getLogger();
-    
-    /** The Constant SQL_SAVE. */
+
+    /**
+     * The Constant SQL_SAVE.
+     */
     private static final String SQL_SAVE = "INSERT INTO roles(idRole, role) VALUES(? ,?)";
-    
-    /** The Constant SQL_UPDATE. */
+
+    /**
+     * The Constant SQL_UPDATE.
+     */
     private static final String SQL_UPDATE = "UPDATE roles SET role = ? WHERE idRole = ?";
-    
-    /** The Constant SQL_DELETE. */
+
+    /**
+     * The Constant SQL_DELETE.
+     */
     private static final String SQL_DELETE = "DELETE FROM roles WHERE idRole = ?";
-    
-    /** The Constant SQL_TAKE. */
+
+    /**
+     * The Constant SQL_TAKE.
+     */
     private static final String SQL_TAKE = " WHERE idRole = ?";
-    
-    /** The Constant SQL_TAKE_ALL. */
-    private static final String SQL_TAKE_ALL = "SELECT * FROM roles";
-    
-    /** The Constant SQL_COUNT_RECORD. */
+
+    /**
+     * The Constant SQL_TAKE_ALL.
+     */
+    private static final String SQL_TAKE_ALL = "SELECT idRole, role FROM roles";
+
+    /**
+     * The Constant SQL_COUNT_RECORD.
+     */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM roles";
-    
-    /** The Constant SQL_CHECK_ALL_RECORD. */
-    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM roles LIMIT ? OFFSET ?";
-    
-    /** The Constant ID_ROLE. */
+
+    /**
+     * The Constant SQL_CHECK_ALL_RECORD.
+     */
+    private static final String SQL_CHECK_ALL_RECORD = "SELECT idRole, role FROM roles LIMIT ? OFFSET ?";
+
+    /**
+     * The Constant ID_ROLE.
+     */
     private static final String ID_ROLE = "idRole";
-    
-    /** The Constant ROLE. */
+
+    /**
+     * The Constant ROLE.
+     */
     private static final String ROLE = "role";
 
     /* (non-Javadoc)
@@ -197,7 +217,7 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
      * @see by.htp.carservice.dao.BaseDao#countRecordById(long)
      */
     @Override
-    public int countRecordById(long id) throws DaoException {
+    public int countRecordById(long id) {
         throw new UnsupportedOperationException("Operation do not realese");
     }
 
@@ -211,8 +231,8 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
-            statement.setInt(1,limit);
-            statement.setInt(2,offset);
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listRole.add(new Role(
@@ -233,7 +253,7 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
      * @see by.htp.carservice.dao.BaseDao#checkRecordById(long, int, int)
      */
     @Override
-    public List<Role> checkRecordById(long id, int limit, int offset) throws DaoException {
+    public List<Role> checkRecordById(long id, int limit, int offset) {
         throw new UnsupportedOperationException("Operation do not realese");
     }
 }

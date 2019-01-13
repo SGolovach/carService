@@ -1,10 +1,11 @@
 package by.htp.carservice.command.impl;
 
-import by.htp.carservice.command.AbstractCommand;
+import by.htp.carservice.command.Command;
+import by.htp.carservice.command.NamePage;
 import by.htp.carservice.entity.impl.Car;
 import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.CommandException;
-import by.htp.carservice.service.ServiceFactory;
+import by.htp.carservice.exception.SelectorException;
+import by.htp.carservice.selector.SelectorFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class CreateCarCommand extends AbstractCommand {
+public class CreateCarCommand implements Command {
     private static Logger logger = LogManager.getLogger();
     private static final String METHOD_POST = "post";
     private static final String PARAM_BRAND = "brand";
@@ -27,10 +28,10 @@ public class CreateCarCommand extends AbstractCommand {
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
             HttpSession session = request.getSession();
             User user = (User) session.getAttribute(SESSION_USER);
-            if(user==null){
-                return new InfoSessionInvalidateCommand().getCommandName();
+            if (user == null) {
+                return NamePage.INFO_SESSION_INVALIDATE_PAGE.getRedirectPage();
             }
-            ServiceFactory factory = ServiceFactory.getInstance();
+            SelectorFactory factory = SelectorFactory.getInstance();
             String brand = request.getParameter(PARAM_BRAND);
             String model = request.getParameter(PARAM_MODEL);
             String yearStr = request.getParameter(PARAM_YEAR);
@@ -54,16 +55,16 @@ public class CreateCarCommand extends AbstractCommand {
                 car.setFuel(fuel);
                 car.setUserId(userId);
                 try {
-                    factory.getCarQueryService().saveQuery(car);
-                } catch (CommandException e) {
+                    factory.getCarSelector().save(car);
+                } catch (SelectorException e) {
                     logger.log(Level.ERROR, "Error in check login", e);
-                    return new ErrorCommand().getCommandName();
+                    return NamePage.ERROR_PAGE.getRedirectPage();
                 }
-                return new EditCarCommand().getCommandName();
+                return NamePage.EDIT_CAR_PAGE.getRedirectPage();
             } else {
-                return new InfoCreateCarValidCommand().getCommandName();
+                return NamePage.INFO_CREATE_CAR_VALID_PAGE.getRedirectPage();
             }
         }
-        return new CreateCarCommand().getPathJsp();
+        return NamePage.CREATE_CAR_PAGE.getForwardPage();
     }
 }

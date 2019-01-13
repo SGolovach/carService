@@ -1,10 +1,11 @@
 package by.htp.carservice.command.impl;
 
-import by.htp.carservice.command.AbstractCommand;
+import by.htp.carservice.command.Command;
+import by.htp.carservice.command.NamePage;
 import by.htp.carservice.entity.impl.User;
 import by.htp.carservice.entity.impl.UserDetail;
-import by.htp.carservice.exception.CommandException;
-import by.htp.carservice.service.ServiceFactory;
+import by.htp.carservice.exception.SelectorException;
+import by.htp.carservice.selector.SelectorFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -12,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class EditUserDetailCommand extends AbstractCommand {
+public class EditUserDetailCommand implements Command {
     private static Logger logger = LogManager.getLogger();
     private static final String METHOD_POST = "post";
     private static final String PARAM_NAME = "name";
@@ -21,18 +22,18 @@ public class EditUserDetailCommand extends AbstractCommand {
     private static final String SESSION_USER = "user";
     private static final String SESSION_USER_DETAIL = "userDetail";
     private static final String PARAM_ID_USER_DETAIL = "idUserDetail";
-    private static final String SESSION_USER_INVALIDATE = "/WEB-INF/jsp/info/sessionInvalidate.jsp";
+
 
     @Override
     public String execute(HttpServletRequest request) {
-        ServiceFactory factory = ServiceFactory.getInstance();
+        SelectorFactory factory = SelectorFactory.getInstance();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(SESSION_USER);
-        long userId = user.getIdUser();
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
             if (user == null) {
-                return new InfoSessionInvalidateCommand().getCommandName();
+                return NamePage.INFO_SESSION_INVALIDATE_PAGE.getRedirectPage();
             }
+            long userId = user.getIdUser();
             long idUserDetail = Long.parseLong(request.getParameter(PARAM_ID_USER_DETAIL));
             String name = request.getParameter(PARAM_NAME);
             String phone = request.getParameter(PARAM_PHONE);
@@ -48,27 +49,28 @@ public class EditUserDetailCommand extends AbstractCommand {
                     userDetail.setPhone(phone);
                     userDetail.setEmail(email);
                     userDetail.setUserId(userId);
-                    factory.getUserDetailQueryService().updateQuery(userDetail);
-                    return new EditUserDetailCommand().getCommandName();
-                } catch (CommandException e) {
+                    factory.getUserDetailSelector().update(userDetail);
+                    return NamePage.EDIT_USER_DETAIL_PAGE.getRedirectPage();
+                } catch (SelectorException e) {
                     logger.log(Level.ERROR, "Error in UserDetailCommand", e);
-                    return new ErrorCommand().getCommandName();
+                    return NamePage.ERROR_PAGE.getRedirectPage();
                 }
             } else {
-                return new InfoUserDetailValidCommand().getCommandName();
+                return NamePage.INFO_USER_DETAIL_VALID_PAGE.getRedirectPage();
             }
         }
         if (user == null) {
-            return SESSION_USER_INVALIDATE;
+            return NamePage.SESSION_USER_INVALIDATE_PAGE.getForwardPage();
         }
+        long userId = user.getIdUser();
         UserDetail userDetail;
         try {
-            userDetail = factory.getUserDetailQueryService().takeQuery(userId);
-        } catch (CommandException e) {
+            userDetail = factory.getUserDetailSelector().take(userId);
+        } catch (SelectorException e) {
             logger.log(Level.ERROR, "Error in UserDetailCommand", e);
-            return new ErrorCommand().getCommandName();
+            return NamePage.ERROR_PAGE.getForwardPage();
         }
         session.setAttribute(SESSION_USER_DETAIL, userDetail);
-        return new EditUserDetailCommand().getPathJsp();
+        return NamePage.EDIT_USER_DETAIL_PAGE.getForwardPage();
     }
 }

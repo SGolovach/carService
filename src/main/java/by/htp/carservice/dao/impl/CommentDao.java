@@ -19,47 +19,75 @@ import java.util.List;
  * The Class CommentDao.
  */
 public class CommentDao extends AbstractDao<Comment> implements DaoComment {
-    
-    /** The logger. */
+
+    /**
+     * The logger.
+     */
     private static Logger logger = LogManager.getLogger();
-    
-    /** The Constant SQL_SAVE. */
+
+    /**
+     * The Constant SQL_SAVE.
+     */
     private static final String SQL_SAVE =
             "INSERT INTO comments(idComment, description, Users_id)" +
                     " VALUES(?, ?, ?)";
-    
-    /** The Constant SQL_UPDATE. */
+
+    /**
+     * The Constant SQL_UPDATE.
+     */
     private static final String SQL_UPDATE =
             "UPDATE comments SET description = ?, Users_id = ? WHERE idComment = ?";
-    
-    /** The Constant SQL_DELETE. */
+
+    /**
+     * The Constant SQL_DELETE.
+     */
     private static final String SQL_DELETE = "DELETE FROM comments WHERE idComment = ?";
-    
-    /** The Constant SQL_TAKE. */
+
+    /**
+     * The Constant SQL_TAKE.
+     */
     private static final String SQL_TAKE = " WHERE idComment = ?";
-    
-    /** The Constant SQL_TAKE_ALL. */
-    private static final String SQL_TAKE_ALL = "SELECT * FROM comments";
-    
-    /** The Constant SQL_COUNT_RECORD. */
+
+    /**
+     * The Constant SQL_TAKE_ALL.
+     */
+    private static final String SQL_TAKE_ALL = "SELECT idComment, description, Users_id FROM comments";
+
+    /**
+     * The Constant SQL_COUNT_RECORD.
+     */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM comments";
-    
-    /** The Constant SQL_COUNT_RECORD_ID. */
+
+    /**
+     * The Constant SQL_COUNT_RECORD_ID.
+     */
     private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM comments WHERE Users_id = ?";
-    
-    /** The Constant SQL_CHECK_ALL_RECORD. */
-    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM comments LIMIT ? OFFSET ?";
-    
-    /** The Constant SQL_CHECK_RECORD_ID. */
-    private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM comments WHERE Users_id = ? LIMIT ? OFFSET ?";
-    
-    /** The Constant ID_COMMENT. */
+
+    /**
+     * The Constant SQL_CHECK_ALL_RECORD.
+     */
+    private static final String SQL_CHECK_ALL_RECORD =
+            "SELECT idComment, description, Users_id FROM comments LIMIT ? OFFSET ?";
+
+    /**
+     * The Constant SQL_CHECK_RECORD_ID.
+     */
+    private static final String SQL_CHECK_RECORD_ID =
+            "SELECT idComment, description, Users_id FROM comments WHERE Users_id = ? LIMIT ? OFFSET ?";
+
+    /**
+     * The Constant ID_COMMENT.
+     */
     private static final String ID_COMMENT = "idComment";
-    
-    /** The Constant DESCRIPTION. */
+
+    /**
+     * The Constant DESCRIPTION.
+     */
     private static final String DESCRIPTION = "description";
-    
-    /** The Constant USER_ID. */
+
+    /**
+     * The Constant USER_ID.
+     */
     private static final String USER_ID = "Users_id";
 
     /* (non-Javadoc)
@@ -243,8 +271,8 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
-            statement.setInt(1,limit);
-            statement.setInt(2,offset);
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listComment.add(new Comment(
@@ -272,9 +300,9 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_CHECK_RECORD_ID);
-            statement.setLong(1,id);
-            statement.setInt(2,limit);
-            statement.setInt(3,offset);
+            statement.setLong(1, id);
+            statement.setInt(2, limit);
+            statement.setInt(3, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listComment.add(new Comment(

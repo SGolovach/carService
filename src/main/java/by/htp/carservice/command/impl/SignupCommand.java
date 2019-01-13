@@ -1,17 +1,18 @@
 package by.htp.carservice.command.impl;
 
-import by.htp.carservice.command.AbstractCommand;
+import by.htp.carservice.command.Command;
+import by.htp.carservice.command.NamePage;
 import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.CommandException;
+import by.htp.carservice.exception.SelectorException;
 import by.htp.carservice.util.PasswordHash;
-import by.htp.carservice.service.ServiceFactory;
+import by.htp.carservice.selector.SelectorFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
-public class SignupCommand extends AbstractCommand {
+public class SignupCommand implements Command {
     private static Logger logger = LogManager.getLogger();
     private static final String METHOD_POST = "post";
     private static final String PARAM_LOGIN = "login";
@@ -21,7 +22,7 @@ public class SignupCommand extends AbstractCommand {
     @Override
     public String execute(HttpServletRequest request) {
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
-            ServiceFactory factory = ServiceFactory.getInstance();
+            SelectorFactory factory = SelectorFactory.getInstance();
             PasswordHash hash = new PasswordHash();
             String login = request.getParameter(PARAM_LOGIN);
             String passwordClean = request.getParameter(PARAM_PASS);
@@ -29,24 +30,24 @@ public class SignupCommand extends AbstractCommand {
             boolean validPassword = factory.getValidationData().validatePassword(passwordClean);
             if (validLogin && validPassword) {
                 try {
-                    if (factory.getUserQueryService().existLoginQuery(login)) {
-                        return new InfoSignUpExistCommand().getCommandName();
+                    if (factory.getUserSelector().existLogin(login)) {
+                        return NamePage.INFO_SIGN_UP_EXIST_PAGE.getRedirectPage();
                     }
                     String password = hash.getHashPAss(passwordClean);
                     User user = new User();
                     user.setLogin(login);
                     user.setPassword(password);
                     user.setRoleId(STANDARD_ID_USER);
-                    factory.getUserQueryService().saveQuery(user);
-                } catch (CommandException e) {
-                    logger.log(Level.ERROR,"Error in save data",e);
-                    return new ErrorCommand().getCommandName();
+                    factory.getUserSelector().save(user);
+                } catch (SelectorException e) {
+                    logger.log(Level.ERROR, "Error in save data", e);
+                    return NamePage.ERROR_PAGE.getRedirectPage();
                 }
-                return new LoginCommand().getCommandName();
+                return NamePage.LOGIN_PAGE.getRedirectPage();
             } else {
-                return new InfoSignUpValidCommand().getCommandName();
+                return NamePage.INFO_SIGN_UP_VALID_PAGE.getRedirectPage();
             }
         }
-        return new SignupCommand().getPathJsp();
+        return NamePage.SIGN_UP_PAGE.getForwardPage();
     }
 }

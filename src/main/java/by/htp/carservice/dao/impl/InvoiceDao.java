@@ -19,55 +19,85 @@ import java.util.List;
  * The Class InvoiceDao.
  */
 public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
-    
-    /** The logger. */
+
+    /**
+     * The logger.
+     */
     private static Logger logger = LogManager.getLogger();
-    
-    /** The Constant SQL_SAVE. */
+
+    /**
+     * The Constant SQL_SAVE.
+     */
     private static final String SQL_SAVE =
             "INSERT INTO invoices(idInvoice, numberInvoice, cost, Orders_id)" +
                     " VALUES(?, ?, ?, ?)";
-    
-    /** The Constant SQL_UPDATE. */
+
+    /**
+     * The Constant SQL_UPDATE.
+     */
     private static final String SQL_UPDATE =
             "UPDATE invoices SET numberInvoice = ?, cost = ?, Orders_id = ? WHERE idInvoice = ?";
-    
-    /** The Constant SQL_DELETE. */
+
+    /**
+     * The Constant SQL_DELETE.
+     */
     private static final String SQL_DELETE = "DELETE FROM invoices WHERE idInvoice = ?";
-    
-    /** The Constant SQL_TAKE. */
+
+    /**
+     * The Constant SQL_TAKE.
+     */
     private static final String SQL_TAKE = " WHERE idInvoice = ?";
-    
-    /** The Constant SQL_TAKE_ALL. */
-    private static final String SQL_TAKE_ALL = "SELECT * FROM invoices";
-    
-    /** The Constant SQL_COUNT_RECORD. */
+
+    /**
+     * The Constant SQL_TAKE_ALL.
+     */
+    private static final String SQL_TAKE_ALL =
+            "SELECT idInvoice, numberInvoice, cost, Orders_id FROM invoices";
+
+    /**
+     * The Constant SQL_COUNT_RECORD.
+     */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM invoices";
-    
-    /** The Constant SQL_COUNT_RECORD_ID. */
+
+    /**
+     * The Constant SQL_COUNT_RECORD_ID.
+     */
     private static final String SQL_COUNT_RECORD_ID =
             "SELECT COUNT(*) FROM invoices " +
                     "JOIN orders ON invoices.Orders_id=orders.idOrder " +
                     "WHERE orders.idOrder IN(SELECT idOrder FROM orders WHERE Users_id = ?)";
-    
-    /** The Constant SQL_CHECK_ALL_RECORD. */
-    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM invoices LIMIT ? OFFSET ?";
-    
-    /** The Constant SQL_CHECK_RECORD_ID. */
+
+    /**
+     * The Constant SQL_CHECK_ALL_RECORD.
+     */
+    private static final String SQL_CHECK_ALL_RECORD =
+            "SELECT idInvoice, numberInvoice, cost, Orders_id FROM invoices LIMIT ? OFFSET ?";
+
+    /**
+     * The Constant SQL_CHECK_RECORD_ID.
+     */
     private static final String SQL_CHECK_RECORD_ID = "SELECT idInvoice,numberInvoice,cost,Orders_id FROM invoices " +
             "JOIN orders ON invoices.Orders_id=orders.idOrder " +
             "WHERE orders.idOrder IN(SELECT idOrder FROM orders WHERE Users_id = ?) LIMIT ? OFFSET ?";
-    
-    /** The Constant ID_INVOICE. */
+
+    /**
+     * The Constant ID_INVOICE.
+     */
     private static final String ID_INVOICE = "idInvoice";
-    
-    /** The Constant NUMBER_INVOICE. */
+
+    /**
+     * The Constant NUMBER_INVOICE.
+     */
     private static final String NUMBER_INVOICE = "numberInvoice";
-    
-    /** The Constant COST. */
+
+    /**
+     * The Constant COST.
+     */
     private static final String COST = "cost";
-    
-    /** The Constant ORDER_ID. */
+
+    /**
+     * The Constant ORDER_ID.
+     */
     private static final String ORDER_ID = "Orders_id";
 
     /* (non-Javadoc)
@@ -255,8 +285,8 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
-            statement.setInt(1,limit);
-            statement.setInt(2,offset);
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listInvoice.add(new Invoice(
@@ -285,9 +315,9 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_CHECK_RECORD_ID);
-            statement.setLong(1,id);
-            statement.setInt(2,limit);
-            statement.setInt(3,offset);
+            statement.setLong(1, id);
+            statement.setInt(2, limit);
+            statement.setInt(3, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listInvoice.add(new Invoice(

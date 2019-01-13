@@ -19,37 +19,58 @@ import java.util.List;
  * The Class DepartmentDao.
  */
 public class DepartmentDao extends AbstractDao<Department> implements DaoDepartment {
-    
-    /** The logger. */
+
+    /**
+     * The logger.
+     */
     private static Logger logger = LogManager.getLogger();
-    
-    /** The Constant SQL_SAVE. */
+
+    /**
+     * The Constant SQL_SAVE.
+     */
     private static final String SQL_SAVE =
             "INSERT INTO departments(idDepartment, nameDepartment) VALUES(? ,?)";
-    
-    /** The Constant SQL_UPDATE. */
+
+    /**
+     * The Constant SQL_UPDATE.
+     */
     private static final String SQL_UPDATE =
             "UPDATE departments SET nameDepartment = ? WHERE idDepartment = ?";
-    
-    /** The Constant SQL_DELETE. */
+
+    /**
+     * The Constant SQL_DELETE.
+     */
     private static final String SQL_DELETE = "DELETE FROM departments WHERE idDepartment = ?";
-    
-    /** The Constant SQL_TAKE. */
+
+    /**
+     * The Constant SQL_TAKE.
+     */
     private static final String SQL_TAKE = " WHERE idDepartment = ?";
-    
-    /** The Constant SQL_TAKE_ALL. */
-    private static final String SQL_TAKE_ALL = "SELECT * FROM departments";
-    
-    /** The Constant SQL_COUNT_RECORD. */
+
+    /**
+     * The Constant SQL_TAKE_ALL.
+     */
+    private static final String SQL_TAKE_ALL = "SELECT idDepartment, nameDepartment FROM departments";
+
+    /**
+     * The Constant SQL_COUNT_RECORD.
+     */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM departments";
-    
-    /** The Constant SQL_CHECK_ALL_RECORD. */
-    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM departments LIMIT ? OFFSET ?";
-    
-    /** The Constant ID_DEPARTMENT. */
+
+    /**
+     * The Constant SQL_CHECK_ALL_RECORD.
+     */
+    private static final String SQL_CHECK_ALL_RECORD =
+            "SELECT idDepartment, nameDepartment FROM departments LIMIT ? OFFSET ?";
+
+    /**
+     * The Constant ID_DEPARTMENT.
+     */
     private static final String ID_DEPARTMENT = "idDepartment";
-    
-    /** The Constant NAME_DEPARTMENT. */
+
+    /**
+     * The Constant NAME_DEPARTMENT.
+     */
     private static final String NAME_DEPARTMENT = "nameDepartment";
 
     /* (non-Javadoc)
@@ -199,7 +220,7 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
      * @see by.htp.carservice.dao.BaseDao#countRecordById(long)
      */
     @Override
-    public int countRecordById(long id) throws DaoException {
+    public int countRecordById(long id) {
         throw new UnsupportedOperationException("Operation do not realese");
     }
 
@@ -213,8 +234,8 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
-            statement.setInt(1,limit);
-            statement.setInt(2,offset);
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listDepartment.add(new Department(
@@ -235,7 +256,7 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
      * @see by.htp.carservice.dao.BaseDao#checkRecordById(long, int, int)
      */
     @Override
-    public List<Department> checkRecordById(long id, int limit, int offset) throws DaoException {
+    public List<Department> checkRecordById(long id, int limit, int offset) {
         throw new UnsupportedOperationException("Operation do not realese");
     }
 }

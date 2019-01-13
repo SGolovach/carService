@@ -1,9 +1,10 @@
 package by.htp.carservice.command.impl;
 
-import by.htp.carservice.command.AbstractCommand;
+import by.htp.carservice.command.Command;
+import by.htp.carservice.command.NamePage;
 import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.CommandException;
-import by.htp.carservice.service.ServiceFactory;
+import by.htp.carservice.exception.SelectorException;
+import by.htp.carservice.selector.SelectorFactory;
 import by.htp.carservice.util.PasswordHash;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
@@ -12,7 +13,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class EditLoginPasswordCommand extends AbstractCommand {
+public class EditLoginPasswordCommand implements Command {
     private static Logger logger = LogManager.getLogger();
     private static final String METHOD_POST = "post";
     private static final String PARAM_LOGIN = "login";
@@ -20,38 +21,36 @@ public class EditLoginPasswordCommand extends AbstractCommand {
     private static final String PARAM_OLD_PASS = "oldpassword";
     private static final String SESSION_USER = "user";
     private static final String SESSION_ROLE_ID = "roleId";
-    private static final String SESSION_USER_INVALIDATE = "/WEB-INF/jsp/info/sessionInvalidate.jsp";
-
 
     @Override
     public String execute(HttpServletRequest request) {
-        ServiceFactory factory = ServiceFactory.getInstance();
+        SelectorFactory factory = SelectorFactory.getInstance();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(SESSION_USER);
-        long userId = user.getIdUser();
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
             if (user == null) {
-                return new InfoSessionInvalidateCommand().getCommandName();
+                return NamePage.INFO_SESSION_INVALIDATE_PAGE.getRedirectPage();
             }
+            long userId = user.getIdUser();
             PasswordHash hash = new PasswordHash();
             String login = request.getParameter(PARAM_LOGIN);
             String passwordCleanNew = request.getParameter(PARAM_NEW_PASS);
             String passwordCleanOld = request.getParameter(PARAM_OLD_PASS);
 
-            String passwordClean = "";
+            String passwordClean;
             if (passwordCleanOld == null) {
-                return new EditLoginPasswordCommand().getCommandName();
+                return NamePage.EDIT_LOGIN_PASSWORD_PAGE.getRedirectPage();
             }
             String checkPasswordOld = hash.getHashPAss(passwordCleanOld);
             User userCheckPassword;
             try {
-                userCheckPassword = factory.getUserQueryService().takeQuery(userId);
+                userCheckPassword = factory.getUserSelector().take(userId);
                 if (!checkPasswordOld.equals(userCheckPassword.getPassword())) {
-                    return new EditLoginPasswordCommand().getCommandName();
+                    return NamePage.EDIT_LOGIN_PASSWORD_PAGE.getRedirectPage();
                 }
-            } catch (CommandException e) {
+            } catch (SelectorException e) {
                 logger.log(Level.ERROR, "Error in check login", e);
-                return new ErrorCommand().getCommandName();
+                return NamePage.ERROR_PAGE.getRedirectPage();
             }
 
 
@@ -71,20 +70,20 @@ public class EditLoginPasswordCommand extends AbstractCommand {
                 userUpdate.setPassword(password);
                 userUpdate.setIdUser(userId);
                 try {
-                    factory.getUserQueryService().updateQuery(userUpdate);
-                } catch (CommandException e) {
+                    factory.getUserSelector().update(userUpdate);
+                } catch (SelectorException e) {
                     logger.log(Level.ERROR, "Error in check login", e);
-                    return new ErrorCommand().getCommandName();
+                    return NamePage.ERROR_PAGE.getRedirectPage();
                 }
-                return new LogOutCommand().getCommandName();
+                return NamePage.LOG_OUT_PAGE.getRedirectPage();
             } else {
-                return new InfoLoginPasswordCommand().getCommandName();
+                return NamePage.INFO_LOGIN_PASSWORD_PAGE.getRedirectPage();
             }
 
         }
         if (user == null) {
-            return SESSION_USER_INVALIDATE;
+            return NamePage.SESSION_USER_INVALIDATE_PAGE.getForwardPage();
         }
-        return new EditLoginPasswordCommand().getPathJsp();
+        return NamePage.EDIT_LOGIN_PASSWORD_PAGE.getForwardPage();
     }
 }

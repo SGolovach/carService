@@ -2,9 +2,10 @@ package by.htp.carservice.controller;
 
 import by.htp.carservice.command.ActionFactory;
 import by.htp.carservice.command.Command;
+import by.htp.carservice.command.NamePage;
 import by.htp.carservice.command.impl.ErrorCommand;
-import by.htp.carservice.connectiondb.ConnectionPool;
-import by.htp.carservice.exception.CommandException;
+import by.htp.carservice.connectionpool.ConnectionPool;
+import by.htp.carservice.exception.SelectorException;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -20,11 +21,15 @@ import java.io.IOException;
  * The Class FrontController.
  */
 public class FrontController extends HttpServlet {
-    
-    /** The logger. */
+
+    /**
+     * The logger.
+     */
     private static Logger logger = LogManager.getLogger();
-    
-    /** The Constant COMMAND_NAME. */
+
+    /**
+     * The Constant COMMAND_NAME.
+     */
     private static final String COMMAND_NAME = "command";
 
 
@@ -50,7 +55,7 @@ public class FrontController extends HttpServlet {
         } catch (IOException e) {
             logger.log(Level.ERROR, "Error in frontController", e);
             RequestDispatcher dispatcherError =
-                    request.getRequestDispatcher(new ErrorCommand().getPathJsp());
+                    request.getRequestDispatcher(NamePage.ERROR_PAGE.getForwardPage());
             dispatcherError.forward(request, response);
         }
     }
@@ -67,7 +72,7 @@ public class FrontController extends HttpServlet {
         } catch (IOException e) {
             logger.log(Level.ERROR, "Error in frontController", e);
             RequestDispatcher dispatcherError =
-                    request.getRequestDispatcher(new ErrorCommand().getPathJsp());
+                    request.getRequestDispatcher(NamePage.ERROR_PAGE.getForwardPage());
             dispatcherError.forward(request, response);
         }
     }
@@ -91,7 +96,7 @@ public class FrontController extends HttpServlet {
     public void destroy() {
         try {
             ConnectionPool.getInstance().closeConnectionPool();
-        } catch (CommandException e) {
+        } catch (SelectorException e) {
             logger.log(Level.ERROR, "ConnectionPool doesn't close", e);
         }
         super.destroy();

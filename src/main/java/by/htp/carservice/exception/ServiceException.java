@@ -6,14 +6,14 @@ package by.htp.carservice.exception;
 public class ServiceException extends Exception {
     
     /**
-     * Instantiates a new service exception.
+     * Instantiates a new selector exception.
      */
     public ServiceException() {
         super();
     }
 
     /**
-     * Instantiates a new service exception.
+     * Instantiates a new selector exception.
      *
      * @param message the message
      */
@@ -22,7 +22,7 @@ public class ServiceException extends Exception {
     }
 
     /**
-     * Instantiates a new service exception.
+     * Instantiates a new selector exception.
      *
      * @param message the message
      * @param cause the cause
@@ -32,7 +32,7 @@ public class ServiceException extends Exception {
     }
 
     /**
-     * Instantiates a new service exception.
+     * Instantiates a new selector exception.
      *
      * @param cause the cause
      */
@@ -41,7 +41,7 @@ public class ServiceException extends Exception {
     }
 
     /**
-     * Instantiates a new service exception.
+     * Instantiates a new selector exception.
      *
      * @param message the message
      * @param cause the cause

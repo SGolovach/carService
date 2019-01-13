@@ -19,63 +19,102 @@ import java.util.List;
  * The Class CarDao.
  */
 public class CarDao extends AbstractDao<Car> implements DaoCar {
-    
-    /** The logger. */
+
+    /**
+     * The logger.
+     */
     private static Logger logger = LogManager.getLogger();
-    
-    /** The Constant SQL_SAVE. */
+
+    /**
+     * The Constant SQL_SAVE.
+     */
     private static final String SQL_SAVE =
             "INSERT INTO cars(idCars, brand, model, year, codeVIN, fuel, Users_id)" +
                     " VALUES(?, ?, ?, ?, ?, ?, ?)";
-    
-    /** The Constant SQL_UPDATE. */
+
+    /**
+     * The Constant SQL_UPDATE.
+     */
     private static final String SQL_UPDATE =
             "UPDATE cars SET brand = ?, model = ?, year = ?, codeVIN = ?," +
                     " fuel = ?, Users_id = ? WHERE idCars = ?";
-    
-    /** The Constant SQL_DELETE. */
+
+    /**
+     * The Constant SQL_DELETE.
+     */
     private static final String SQL_DELETE = "DELETE FROM cars WHERE idCars = ?";
-    
-    /** The Constant SQL_TAKE. */
+
+    /**
+     * The Constant SQL_TAKE.
+     */
     private static final String SQL_TAKE = " WHERE idCars = ?";
-    
-    /** The Constant SQL_TAKE_ALL. */
-    private static final String SQL_TAKE_ALL = "SELECT * FROM cars";
-    
-    /** The Constant SQL_USER_ID. */
+
+    /**
+     * The Constant SQL_TAKE_ALL.
+     */
+    private static final String SQL_TAKE_ALL =
+            "SELECT idCars, brand, model, year, codeVIN, fuel, Users_id FROM cars";
+
+    /**
+     * The Constant SQL_USER_ID.
+     */
     private static final String SQL_USER_ID = " WHERE Users_id = ?";
-    
-    /** The Constant SQL_COUNT_RECORD. */
+
+    /**
+     * The Constant SQL_COUNT_RECORD.
+     */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM cars";
-    
-    /** The Constant SQL_COUNT_RECORD_ID. */
+
+    /**
+     * The Constant SQL_COUNT_RECORD_ID.
+     */
     private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM cars WHERE Users_id = ?";
-    
-    /** The Constant SQL_CHECK_ALL_RECORD. */
-    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM cars LIMIT ? OFFSET ?";
-    
-    /** The Constant SQL_CHECK_RECORD_ID. */
-    private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM cars WHERE Users_id = ? LIMIT ? OFFSET ?";
-    
-    /** The Constant ID_CAR. */
+
+    /**
+     * The Constant SQL_CHECK_ALL_RECORD.
+     */
+    private static final String SQL_CHECK_ALL_RECORD =
+            "SELECT idCars, brand, model, year, codeVIN, fuel, Users_id FROM cars LIMIT ? OFFSET ?";
+
+    /**
+     * The Constant SQL_CHECK_RECORD_ID.
+     */
+    private static final String SQL_CHECK_RECORD_ID =
+            "SELECT idCars, brand, model, year, codeVIN, fuel, Users_id FROM cars WHERE Users_id = ? LIMIT ? OFFSET ?";
+
+    /**
+     * The Constant ID_CAR.
+     */
     private static final String ID_CAR = "idCars";
-    
-    /** The Constant BRAND. */
+
+    /**
+     * The Constant BRAND.
+     */
     private static final String BRAND = "brand";
-    
-    /** The Constant MODEL. */
+
+    /**
+     * The Constant MODEL.
+     */
     private static final String MODEL = "model";
-    
-    /** The Constant YEAR. */
+
+    /**
+     * The Constant YEAR.
+     */
     private static final String YEAR = "year";
-    
-    /** The Constant CODE_VIN. */
+
+    /**
+     * The Constant CODE_VIN.
+     */
     private static final String CODE_VIN = "codeVIN";
-    
-    /** The Constant FUEL. */
+
+    /**
+     * The Constant FUEL.
+     */
     private static final String FUEL = "fuel";
-    
-    /** The Constant USER_ID. */
+
+    /**
+     * The Constant USER_ID.
+     */
     private static final String USER_ID = "Users_id";
 
     /* (non-Javadoc)
@@ -275,8 +314,8 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_CHECK_ALL_RECORD);
-            statement.setInt(1,limit);
-            statement.setInt(2,offset);
+            statement.setInt(1, limit);
+            statement.setInt(2, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listCar.add(new Car(
@@ -308,9 +347,9 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_CHECK_RECORD_ID);
-            statement.setLong(1,id);
-            statement.setInt(2,limit);
-            statement.setInt(3,offset);
+            statement.setLong(1, id);
+            statement.setInt(2, limit);
+            statement.setInt(3, offset);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listCar.add(new Car(
@@ -342,7 +381,7 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         PreparedStatement statement = null;
         try {
             statement = connection.prepareStatement(SQL_TAKE_ALL + SQL_USER_ID);
-            statement.setLong(1,userId);
+            statement.setLong(1, userId);
             ResultSet resultSet = statement.executeQuery();
             while (resultSet.next()) {
                 listCar.add(new Car(

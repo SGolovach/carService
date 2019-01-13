@@ -1,12 +1,13 @@
 package by.htp.carservice.command.impl;
 
-import by.htp.carservice.command.AbstractCommand;
+import by.htp.carservice.command.Command;
+import by.htp.carservice.command.NamePage;
 import by.htp.carservice.entity.impl.Car;
 import by.htp.carservice.entity.impl.Department;
 import by.htp.carservice.entity.impl.Order;
 import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.CommandException;
-import by.htp.carservice.service.ServiceFactory;
+import by.htp.carservice.exception.SelectorException;
+import by.htp.carservice.selector.SelectorFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -18,7 +19,7 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
-public class CheckOutServiceCommand extends AbstractCommand {
+public class CheckOutServiceCommand implements Command {
     private static Logger logger = LogManager.getLogger();
     private static final String METHOD_POST = "post";
     private static final String PARAM_SERVICE_ID = "serviceId";
@@ -32,20 +33,19 @@ public class CheckOutServiceCommand extends AbstractCommand {
     private static final String STATUS_ORDER_NEW = "new";
     private static final String PATTERN_DATE = "yyyy-MM-dd HH:mm";
     private static final String REPLACE_DATE = "T";
-    private static final String SESSION_USER_INVALIDATE = "/WEB-INF/jsp/info/sessionInvalidate.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();
         User user = ((User) session.getAttribute(SESSION_USER));
-        ServiceFactory factory = ServiceFactory.getInstance();
+        SelectorFactory factory = SelectorFactory.getInstance();
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
             String description = request.getParameter(PARAM_DESCRIPTION);
             String timeRegisterStr = request.getParameter(PARAM_TIME_REGISTER);
             boolean descriptionValid = factory.getValidationData().validateDescription(description);
             if (descriptionValid && !timeRegisterStr.isEmpty()) {
                 if(user==null){
-                    return new InfoSessionInvalidateCommand().getCommandName();
+                    return NamePage.INFO_SESSION_INVALIDATE_PAGE.getRedirectPage();
                 }
                 long userId = user.getIdUser();
                 DateTimeFormatter formater = DateTimeFormatter.ofPattern(PATTERN_DATE);
@@ -64,37 +64,37 @@ public class CheckOutServiceCommand extends AbstractCommand {
                 order.setCarId(carId);
 
                 try {
-                    factory.getOrderQueryService().saveQuery(order);
-                } catch (CommandException e) {
+                    factory.getOrderSelector().save(order);
+                } catch (SelectorException e) {
                     logger.log(Level.ERROR, "Error in CheckOutServiceCommand", e);
-                    return new ErrorCommand().getCommandName();
+                    return NamePage.ERROR_PAGE.getRedirectPage();
                 }
 
-                return new InfoCreateOrderCommand().getCommandName();
+                return NamePage.INFO_CREATE_ORDER_PAGE.getRedirectPage();
             } else {
-                return new MainCommand().getCommandName();
+                return NamePage.MAIN_PAGE.getRedirectPage();
             }
         }
         if(user==null){
-            return SESSION_USER_INVALIDATE;
+            return NamePage.SESSION_USER_INVALIDATE_PAGE.getForwardPage();
         }
         List<Car> carListForOrder;
         Department department;
         long serviceId = Long.parseLong(request.getParameter(PARAM_SERVICE_ID));
         long userId = user.getIdUser();
         try {
-            carListForOrder = factory.getCarQueryService().takeAllByUserIdQuery(userId);
-            department = factory.getDepartmentQueryService().takeQuery(serviceId);
-        } catch (CommandException e) {
+            carListForOrder = factory.getCarSelector().takeAllByUserId(userId);
+            department = factory.getDepartmentSelector().take(serviceId);
+        } catch (SelectorException e) {
             logger.log(Level.ERROR, "Error in CheckOutServiceCommand", e);
-            return new ErrorCommand().getPathJsp();
+            return NamePage.ERROR_PAGE.getForwardPage();
         }
         if (carListForOrder.isEmpty()) {
-            return new CreateCarCommand().getPathJsp();
+            return NamePage.CREATE_CAR_PAGE.getForwardPage();
         }
         session.setAttribute(SESSION_CAR_LIST, carListForOrder);
         session.setAttribute(SESSION_DEPARTMENT, department);
 
-        return new CheckOutServiceCommand().getPathJsp();
+        return NamePage.CHECK_OUT_SERVICE_PAGE.getForwardPage();
     }
 }

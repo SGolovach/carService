@@ -28,10 +28,10 @@ public enum CommandType {
     /** The write comment. */
     WRITE_COMMENT(new WriteCommentCommand()),
     
-    /** The service. */
+    /** The selector. */
     SERVICE(new ServiceCommand()),
     
-    /** The check out service. */
+    /** The check out selector. */
     CHECK_OUT_SERVICE(new CheckOutServiceCommand()),
     
     /** The account. */
@@ -72,9 +72,15 @@ public enum CommandType {
     
     /** The info comment valid. */
     INFO_COMMENT_VALID(new InfoCommentValidCommand()),
+
+    /** The info create service valid. */
+    INFO_CREATE_SERVICE_VALID(new InfoCreateServiceValidCommand()),
     
     /** The create car. */
     CREATE_CAR(new CreateCarCommand()),
+
+    /** The create service. */
+    CREATE_SERVICE(new CreateServiceCommand()),
     
     /** The edit car. */
     EDIT_CAR(new EditCarCommand()),

@@ -19,55 +19,89 @@ import java.util.List;
  * The Class UserDao.
  */
 public class UserDao extends AbstractDao<User> implements DaoUser {
-    
-    /** The logger. */
+
+    /**
+     * The logger.
+     */
     private static Logger logger = LogManager.getLogger();
-    
-    /** The Constant SQL_SAVE. */
+
+    /**
+     * The Constant SQL_SAVE.
+     */
     private static final String SQL_SAVE =
             "INSERT INTO users(idUsers, login, password, Roles_id) VALUES(? ,?, ?, ?)";
-    
-    /** The Constant SQL_UPDATE. */
+
+    /**
+     * The Constant SQL_UPDATE.
+     */
     private static final String SQL_UPDATE =
             "UPDATE users SET login = ?, password = ?, Roles_id = ? WHERE idUsers = ?";
-    
-    /** The Constant SQL_DELETE. */
+
+    /**
+     * The Constant SQL_DELETE.
+     */
     private static final String SQL_DELETE = "DELETE FROM users WHERE idUsers = ?";
-    
-    /** The Constant SQL_TAKE. */
+
+    /**
+     * The Constant SQL_TAKE.
+     */
     private static final String SQL_TAKE = " WHERE idUsers = ?";
-    
-    /** The Constant SQL_CHECK_LOGIN. */
+
+    /**
+     * The Constant SQL_CHECK_LOGIN.
+     */
     private static final String SQL_CHECK_LOGIN = " WHERE login = ? AND password = ?";
-    
-    /** The Constant SQL_EXIST_LOGIN. */
+
+    /**
+     * The Constant SQL_EXIST_LOGIN.
+     */
     private static final String SQL_EXIST_LOGIN = " WHERE login = ?";
-    
-    /** The Constant SQL_TAKE_ALL. */
-    private static final String SQL_TAKE_ALL = "SELECT * FROM users";
-    
-    /** The Constant SQL_COUNT_RECORD. */
+
+    /**
+     * The Constant SQL_TAKE_ALL.
+     */
+    private static final String SQL_TAKE_ALL = "SELECT idUsers, login, password, Roles_id FROM users";
+
+    /**
+     * The Constant SQL_COUNT_RECORD.
+     */
     private static final String SQL_COUNT_RECORD = "SELECT COUNT(*) FROM users";
-    
-    /** The Constant SQL_COUNT_RECORD_ID. */
+
+    /**
+     * The Constant SQL_COUNT_RECORD_ID.
+     */
     private static final String SQL_COUNT_RECORD_ID = "SELECT COUNT(*) FROM users WHERE idUsers = ?";
-    
-    /** The Constant SQL_CHECK_ALL_RECORD. */
-    private static final String SQL_CHECK_ALL_RECORD = "SELECT * FROM users LIMIT ? OFFSET ?";
-    
-    /** The Constant SQL_CHECK_RECORD_ID. */
-    private static final String SQL_CHECK_RECORD_ID = "SELECT * FROM users WHERE idUsers = ? LIMIT ? OFFSET ?";
-    
-    /** The Constant ID_USER. */
+
+    /**
+     * The Constant SQL_CHECK_ALL_RECORD.
+     */
+    private static final String SQL_CHECK_ALL_RECORD =
+            "SELECT idUsers, login, password, Roles_id FROM users LIMIT ? OFFSET ?";
+
+    /**
+     * The Constant SQL_CHECK_RECORD_ID.
+     */
+    private static final String SQL_CHECK_RECORD_ID =
+            "SELECT idUsers, login, password, Roles_id FROM users WHERE idUsers = ? LIMIT ? OFFSET ?";
+
+    /**
+     * The Constant ID_USER.
+     */
     private static final String ID_USER = "idUsers";
-    
-    /** The Constant LOGIN. */
+
+    /**
+     * The Constant LOGIN.
+     */
     private static final String LOGIN = "login";
-    
-    /** The Constant PASSWORD. */
+
+    /**
+     * The Constant PASSWORD.
+     */
     private static final String PASSWORD = "password";
-    
-    /** The Constant ROLE_ID. */
+
+    /**
+     * The Constant ROLE_ID.
+     */
     private static final String ROLE_ID = "Roles_id";
 
 

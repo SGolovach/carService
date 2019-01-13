@@ -1,11 +1,12 @@
 package by.htp.carservice.command.impl;
 
-import by.htp.carservice.command.AbstractCommand;
+import by.htp.carservice.command.Command;
+import by.htp.carservice.command.NamePage;
 import by.htp.carservice.entity.impl.Car;
 import by.htp.carservice.entity.impl.Order;
 import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.CommandException;
-import by.htp.carservice.service.ServiceFactory;
+import by.htp.carservice.exception.SelectorException;
+import by.htp.carservice.selector.SelectorFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -13,7 +14,7 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
-public class ShowOrderUserCommand extends AbstractCommand {
+public class ShowOrderUserCommand implements Command {
     private static Logger logger = LogManager.getLogger();
     private static final String SESSION_CAR_MODEL = "carModel";
     private static final String SESSION_ORDER_USER = "orderUser";
@@ -22,27 +23,26 @@ public class ShowOrderUserCommand extends AbstractCommand {
 
     @Override
     public String execute(HttpServletRequest request) {
-        ServiceFactory factory = ServiceFactory.getInstance();
+        SelectorFactory factory = SelectorFactory.getInstance();
         HttpSession session = request.getSession();
         User user = (User) session.getAttribute(SESSION_USER);
         if (user == null) {
-            return new InfoSessionInvalidateCommand().getCommandName();
+            return NamePage.INFO_SESSION_INVALIDATE_PAGE.getForwardPage();
         }
         long orderId = Long.parseLong(request.getParameter(PARAM_ORDER_ID));
-        Car car = new Car();
-        Order order = new Order();
-
+        Car car;
+        Order order;
         try {
-            order = factory.getOrderQueryService().takeQuery(orderId);
+            order = factory.getOrderSelector().take(orderId);
             long carId = order.getCarId();
-            car = factory.getCarQueryService().takeQuery(carId);
-        } catch (CommandException e) {
+            car = factory.getCarSelector().take(carId);
+        } catch (SelectorException e) {
             logger.log(Level.ERROR, "Error in check login", e);
-            return new ErrorCommand().getPathJsp();
+            return NamePage.ERROR_PAGE.getForwardPage();
         }
 
         session.setAttribute(SESSION_CAR_MODEL, car);
         session.setAttribute(SESSION_ORDER_USER, order);
-        return new ShowOrderUserCommand().getPathJsp();
+        return NamePage.SHOW_ORDER_USER_PAGE.getForwardPage();
     }
 }

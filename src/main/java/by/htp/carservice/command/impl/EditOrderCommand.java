@@ -1,11 +1,12 @@
 package by.htp.carservice.command.impl;
 
-import by.htp.carservice.command.AbstractCommand;
+import by.htp.carservice.command.Command;
+import by.htp.carservice.command.NamePage;
+import by.htp.carservice.command.RequestSpliter;
 import by.htp.carservice.entity.impl.Order;
 import by.htp.carservice.entity.impl.User;
-import by.htp.carservice.exception.CommandException;
-import by.htp.carservice.service.ServiceFactory;
-import by.htp.carservice.util.SplitRequestParam;
+import by.htp.carservice.exception.SelectorException;
+import by.htp.carservice.selector.SelectorFactory;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
@@ -15,56 +16,54 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
-public class EditOrderCommand extends AbstractCommand {
+public class EditOrderCommand implements Command {
     private static Logger logger = LogManager.getLogger();
     private static final String METHOD_POST = "post";
     private static final String PARAM_ORDER_ID = "idOrder";
     private static final String SESSION_USER = "user";
     private static final String SESSION_ORDER_LIST = "orderList";
     private static final String PARAM_DELETE = "delete";
-    private static final String SESSION_USER_INVALIDATE = "/WEB-INF/jsp/info/sessionInvalidate.jsp";
 
     @Override
     public String execute(HttpServletRequest request) {
-        ServiceFactory factory = ServiceFactory.getInstance();
+        SelectorFactory factory = SelectorFactory.getInstance();
         HttpSession session = request.getSession();
-        SplitRequestParam splitRequestParam = new SplitRequestParam();
+        RequestSpliter requestSpliter = new RequestSpliter();
         User user = (User) session.getAttribute(SESSION_USER);
-        long userId = user.getIdUser();
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
             long orderId = Long.parseLong(request.getParameter(PARAM_ORDER_ID));
             if (user == null) {
-                return new InfoSessionInvalidateCommand().getCommandName();
+                return NamePage.INFO_SESSION_INVALIDATE_PAGE.getRedirectPage();
             }
             try {
                 if (request.getParameter(PARAM_DELETE) != null) {
-                    Order order = factory.getOrderQueryService().takeQuery(orderId);
-                    factory.getOrderQueryService().deleteQuery(order);
-                    return new EditOrderCommand().getCommandName();
+                    Order order = factory.getOrderSelector().take(orderId);
+                    factory.getOrderSelector().delete(order);
+                    return NamePage.EDIT_ORDER_PAGE.getRedirectPage();
                 }
-            } catch (CommandException e) {
+            } catch (SelectorException e) {
                 logger.log(Level.ERROR, "Error in CheckOutServiceCommand", e);
-                return new ErrorCommand().getCommandName();
+                return NamePage.ERROR_PAGE.getRedirectPage();
             }
 
-            return new InfoCreateOrderCommand().getCommandName();
+            return NamePage.INFO_CREATE_ORDER_PAGE.getRedirectPage();
         }
 
         if (user == null) {
-            return SESSION_USER_INVALIDATE;
+            return NamePage.SESSION_USER_INVALIDATE_PAGE.getForwardPage();
         }
-
-        Map<String, String> resultSplit = splitRequestParam.splitRequest(request);
+        long userId = user.getIdUser();
+        Map<String, String> resultSplit = requestSpliter.splitRequest(request);
         List<Order> orderList;
         try {
-            orderList = factory.getOrderPaginationDataService().paginateById(resultSplit, userId);
-        } catch (CommandException e) {
+            orderList = factory.getOrderPaginationDataSelector().paginateById(resultSplit, userId);
+        } catch (SelectorException e) {
             logger.log(Level.ERROR, "Error in EditCarCommand", e);
-            return new ErrorCommand().getPathJsp();
+            return NamePage.ERROR_PAGE.getForwardPage();
         }
 
-        splitRequestParam.splitRequestBack(request, resultSplit);
+        requestSpliter.splitRequestBack(request, resultSplit);
         session.setAttribute(SESSION_ORDER_LIST, orderList);
-        return new EditOrderCommand().getPathJsp();
+        return NamePage.EDIT_ORDER_PAGE.getForwardPage();
     }
 }
