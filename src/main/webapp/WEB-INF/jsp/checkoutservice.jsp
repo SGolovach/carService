@@ -8,6 +8,7 @@
     ${department.getNameDepartment()}<br/>
     <fmt:message key="msg.comment.description"/>:<br/>
     <input type="text" name="description" value=""/>
+    <span class="help-block"><fmt:message key="msg.help.description"/> </span>
     <br/><fmt:message key="msg.navbar.service"/>:<br/>
     <input type="hidden" name="departmentId" value="${department.getIdDepartment()}"/>
     <br/><fmt:message key="msg.timeregister"/>:<br/>

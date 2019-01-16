@@ -183,6 +183,16 @@ public enum CommandType {
     SHOW_ORDER_USER(new ShowOrderUserCommand()),
 
     /**
+     * The view all order.
+     */
+    VIEW_ALL_ORDER(new ViewAllOrderCommand()),
+
+    /**
+     * The view all order.
+     */
+    VIEW_ALL_INVOICE(new ViewAllInvoiceCommand()),
+
+    /**
      * The empty.
      */
     EMPTY(new EmptyCommand());

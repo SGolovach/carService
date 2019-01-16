@@ -11,6 +11,7 @@
     <input type="text" name="login" value="${user.getLogin()}"/>
     <br/><fmt:message key="msg.newpass"/>:<br/>
     <input type="password" name="newpassword" value=""/>
+    <span class="help-block"><fmt:message key="msg.help.password"/> </span>
     <br/><fmt:message key="msg.oldpass"/>:<br/>
     <input type="password" name="oldpassword" value=""/>
     <br/>

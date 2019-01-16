@@ -1,7 +1,7 @@
 <html>
-<%@ include file="include/head.jsp"%>
+<%@ include file="include/head.jsp" %>
 <body>
-<%@include file="include/menuBar.jsp"%>
+<%@include file="include/menuBar.jsp" %>
 
 <form name="loginForm" method="post" action="action">
     <input type="hidden" name="command" value="login"/>
@@ -10,7 +10,7 @@
     <br/><fmt:message key="msg.password"/>:<br/>
     <input type="password" name="password" value=""/>
     <br/>
-    <input type="submit" onclick="checkValue(this.form,'Введены некоректные данные');" value="<fmt:message key="submit.login"/>"/>
+    <input type="submit" value="<fmt:message key="submit.login"/>" onclick="return checkValue()"/>
 </form>
 
 </body>

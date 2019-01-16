@@ -13,9 +13,9 @@
 <table border="1">
     <thead>
     <tr>
-        <th scope="col"> <fmt:message key="msg.timeregister"/></th>
-        <th scope="col"> <fmt:message key="msg.comment.description"/></th>
-        <th scope="col"> <fmt:message key="msg.status"/></th>
+        <th scope="col"><fmt:message key="msg.timeregister"/></th>
+        <th scope="col"><fmt:message key="msg.comment.description"/></th>
+        <th scope="col"><fmt:message key="msg.status"/></th>
         <th scope="col"></th>
     </tr>
     </thead>
@@ -26,10 +26,10 @@
             <input type="hidden" name="idOrder" value="${orderList.getIdOrder()}"/>
             <tr>
                 <td align="center">
-                    ${orderList.getTimeRegister()}
+                        ${orderList.getTimeRegister()}
                 </td>
                 <td align="center">
-                    ${orderList.getDescription()}
+                        ${orderList.getDescription()}
                 </td>
                 <td align="center">
                         ${orderList.getStatus()}
@@ -51,6 +51,7 @@
     <tr>
         <c:choose>
             <c:when test="${countPageSessionEditOrder > 1}">
+                <<fmt:message key="msg.help.page"/>
                 <c:forEach begin="1" end="${countPageSessionEditOrder}" var="i">
                     <td><a href="action?command=editorder&currentPage=${i}">${i}</a></td>
                 </c:forEach>

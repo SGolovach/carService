@@ -50,6 +50,8 @@ public enum NamePage {
     USER_DETAIL_VALID_PAGE("info/userdetailvalid"),
     CREATE_SERVICE_VALID_PAGE("info/createservice"),
     BILL_ORDER_VALID_PAGE("info/billordervalid"),
+    VIEW_ALL_ORDER_PAGE("viewallorder"),
+    VIEW_ALL_INVOICE_PAGE("viewallinvoice"),
     COMMAND_NAME_WITH_ACTION("action?command=");
 
     private String namePage;

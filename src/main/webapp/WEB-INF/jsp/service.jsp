@@ -28,6 +28,7 @@
     <tr>
         <c:choose>
             <c:when test="${countPageSessionEditDepartment > 1}">
+                <fmt:message key="msg.help.page"/>
                 <c:forEach begin="1" end="${countPageSessionEditDepartment}" var="i">
                     <td><a href="action?command=service&currentPage=${i}">${i}</a></td>
                 </c:forEach>

@@ -30,6 +30,7 @@
     <tr>
         <c:choose>
             <c:when test="${countPageSessionCommentAll > 1}">
+                <fmt:message key="msg.help.page"/>
                 <c:forEach begin="1" end="${countPageSessionCommentAll}" var="i">
                     <td><a href="action?command=comment&currentPage=${i}">${i}</a></td>
                 </c:forEach>

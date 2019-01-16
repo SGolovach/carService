@@ -13,7 +13,7 @@
 <table border="1">
     <thead>
     <tr>
-        <th scope="col"> <fmt:message key="msg.comment.description"/></th>
+        <th scope="col"><fmt:message key="msg.comment.description"/></th>
         <th scope="col"></th>
         <th scope="col"></th>
     </tr>
@@ -51,6 +51,7 @@
     <tr>
         <c:choose>
             <c:when test="${countPageSessionComment > 1}">
+                <fmt:message key="msg.help.page"/>
                 <c:forEach begin="1" end="${countPageSessionComment}" var="i">
                     <td><a href="action?command=editcomment&currentPage=${i}">${i}</a></td>
                 </c:forEach>

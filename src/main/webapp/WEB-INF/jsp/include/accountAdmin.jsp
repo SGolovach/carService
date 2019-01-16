@@ -43,22 +43,12 @@
     <fmt:message key="msg.accountadmin.editdepart"/>
 </a>
 <br/>
-<a href="action?command=main"
-   class="btn btn-link btn-sm active" role="button" aria-pressed="true">
-    <fmt:message key="msg.accountadmin.editusers"/>
-</a>
-<br/>
-<a href="action?command=main"
-   class="btn btn-link btn-sm active" role="button" aria-pressed="true">
-    <fmt:message key="msg.accountadmin.editcomments"/>
-</a>
-<br/>
-<a href="action?command=main"
+<a href="action?command=viewallorder"
    class="btn btn-link btn-sm active" role="button" aria-pressed="true">
     <fmt:message key="msg.accountadmin.vieworders"/>
 </a>
 <br/>
-<a href="action?command=main"
+<a href="action?command=viewallinvoice"
    class="btn btn-link btn-sm active" role="button" aria-pressed="true">
     <fmt:message key="msg.accountadmin.viewinvoice"/>
 </a>
