@@ -105,7 +105,6 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
      */
     @Override
     public boolean save(Invoice entity) throws DaoException {
-        logger.log(Level.INFO, "Start save entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {

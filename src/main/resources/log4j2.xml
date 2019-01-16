@@ -29,8 +29,8 @@
     </Appenders>
 
     <Loggers>
-        <Root level = "debug">
-            <Appender-ref ref="FileLogAppender" level="debug"/>
+        <Root level = "info">
+            <Appender-ref ref="FileLogAppender" level="info"/>
             <Appender-ref ref="ConsoleLogAppender" level="error"/>
         </Root>
     </Loggers>

@@ -1,8 +1,5 @@
 package by.htp.carservice.validation;
 
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
-
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -10,11 +7,6 @@ import java.util.regex.Pattern;
  * The Class ValidationData.
  */
 public class ValidationData {
-
-    /**
-     * The logger.
-     */
-    private static Logger logger = LogManager.getLogger();
 
     /**
      * The Constant REGEX_LOGIN.
@@ -191,13 +183,8 @@ public class ValidationData {
      * @return true, if successful
      */
     private boolean checkLenghtExpression(String expression, int min, int max) {
-        boolean result;
         int lenghtExp = expression.length();
-        if (lenghtExp >= min && lenghtExp <= max) {
-            result = true;
-        } else {
-            result = false;
-        }
+        boolean result = (lenghtExp >= min && lenghtExp <= max) ? true : false;
         return result;
     }
 
@@ -208,13 +195,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validateLogin(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_LOGIN, MAX_LOGIN);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_LOGIN);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_LOGIN, MAX_LOGIN) ?
+                parserData(expression, REGEX_LOGIN) : false;
         return result;
     }
 
@@ -225,13 +207,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validatePassword(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_PASSWORD, MAX_PASSWORD);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_PASSWORD);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_PASSWORD, MAX_PASSWORD) ?
+                parserData(expression, REGEX_PASSWORD) : false;
         return result;
     }
 
@@ -242,13 +219,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validateName(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_NAME, MAX_NAME);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_NAME);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_NAME, MAX_NAME) ?
+                parserData(expression, REGEX_NAME) : false;
         return result;
     }
 
@@ -259,13 +231,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validatePhone(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_PHONE, MAX_PHONE);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_PHONE);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_PHONE, MAX_PHONE) ?
+                parserData(expression, REGEX_PHONE) : false;
         return result;
     }
 
@@ -276,13 +243,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validateEmail(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_EMAIL, MAX_EMAIL);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_EMAIL);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_EMAIL, MAX_EMAIL) ?
+                parserData(expression, REGEX_EMAIL) : false;
         return result;
     }
 
@@ -293,13 +255,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validateBrand(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_NAME, MAX_NAME);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_NAME);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_NAME, MAX_NAME) ?
+                parserData(expression, REGEX_NAME) : false;
         return result;
     }
 
@@ -320,13 +277,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validateYear(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_YEAR_CAR, MAX_YEAR_CAR);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_YEAR_CAR);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_YEAR_CAR, MAX_YEAR_CAR) ?
+                parserData(expression, REGEX_YEAR_CAR) : false;
         return result;
     }
 
@@ -337,13 +289,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validateCodeVin(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_CODE_VIN, MAX_CODE_VIN);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_CODE_VIN);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_CODE_VIN, MAX_CODE_VIN) ?
+                parserData(expression, REGEX_CODE_VIN) : false;
         return result;
     }
 
@@ -364,13 +311,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validateDescription(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_DESCRIPTION, MAX_DESCRIPTION);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_DESCRIPTION);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_DESCRIPTION, MAX_DESCRIPTION) ?
+                parserData(expression, REGEX_DESCRIPTION) : false;
         return result;
     }
 
@@ -381,13 +323,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validateCost(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_COST, MAX_COST);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_COST);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_COST, MAX_COST) ?
+                parserData(expression, REGEX_COST) : false;
         return result;
     }
 
@@ -398,13 +335,8 @@ public class ValidationData {
      * @return true, if successful
      */
     public boolean validateNumberInvoice(String expression) {
-        boolean result;
-        boolean flagCheckLenght = checkLenghtExpression(expression, MIN_NUMBER_INVOICE, MAX_NUMBER_INVOICE);
-        if (flagCheckLenght) {
-            result = parserData(expression, REGEX_NUMBER_INVOICE);
-        } else {
-            result = false;
-        }
+        boolean result = checkLenghtExpression(expression, MIN_NUMBER_INVOICE, MAX_NUMBER_INVOICE) ?
+                parserData(expression, REGEX_NUMBER_INVOICE) : false;
         return result;
     }
 

@@ -26,7 +26,6 @@ public class CarPaginate implements PaginationData<Car> {
 
     @Override
     public List<Car> paginate(Map<String, String> requestParam) throws ServiceException {
-        logger.log(Level.INFO, "Start method paginate class CommentPaginate");
         int checkIllustreta = Integer.parseInt(checkData(requestParam.get(PARAM_CHECK_ILLUSTRATE)));
         int currentPage = Integer.parseInt(checkData(requestParam.get(PARAM_CURRENT_PAGE)));
         int checkIllustretaSession = Integer.parseInt(checkData(requestParam.get(SESSION_CHECK_ILLUSTRATE)));
@@ -62,7 +61,6 @@ public class CarPaginate implements PaginationData<Car> {
 
     @Override
     public List<Car> paginateById(Map<String, String> requestParam, long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method paginateById class CommentPaginate");
         int checkIllustreta = Integer.parseInt(checkData(requestParam.get(PARAM_CHECK_ILLUSTRATE)));
         int currentPage = Integer.parseInt(checkData(requestParam.get(PARAM_CURRENT_PAGE)));
         int checkIllustretaSession = Integer.parseInt(checkData(requestParam.get(SESSION_CHECK_ILLUSTRATE)));

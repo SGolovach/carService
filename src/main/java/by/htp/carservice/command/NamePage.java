@@ -36,6 +36,7 @@ public enum NamePage {
     EDIT_LOGIN_PASSWORD_PAGE("editloginpassword"),
     EDIT_COMMENT_PAGE("editcomment"),
     EDIT_ORDER_PAGE("editorder"),
+    EDIT_SERVICE_PAGE("editservice"),
     SHOW_ORDER_USER_PAGE("showorderuser"),
     EMPTY_PAGE("empty"),
     SESSION_USER_INVALIDATE_PAGE("info/sessionInvalidate"),

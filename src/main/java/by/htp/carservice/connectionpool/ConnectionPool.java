@@ -221,6 +221,11 @@ public class ConnectionPool {
     public void closeConnectionPool() throws SelectorException {
         logger.log(Level.INFO,"Start closeConnectionPool");
         try {
+            closeConnectionQueue(availableConnections);
+        } catch (ConnectionPoolException e) {
+            throw new SelectorException("Error in close ConnectionPool", e);
+        }
+        try {
             Enumeration<Driver> drivers = DriverManager.getDrivers();
             while (drivers.hasMoreElements()) {
                 Driver driver = drivers.nextElement();
@@ -229,12 +234,7 @@ public class ConnectionPool {
         } catch (SQLException e) {
             logger.log(Level.ERROR, "Can not deregister driver DriverManager");
         }
-        try {
-            closeConnectionQueue(availableConnections);
-            closeConnectionQueue(usedConnections);
-        } catch (ConnectionPoolException e) {
-            throw new SelectorException("Error in close ConnectionPool", e);
-        }
+
     }
 
     /**
@@ -245,7 +245,7 @@ public class ConnectionPool {
      */
     private void closeConnectionQueue(BlockingQueue<ProxyConnection> queue) throws ConnectionPoolException {
         Connection connection;
-        while (queue.size() != 0) {
+        while (!queue.isEmpty()) {
             try {
                 connection = queue.take();
                 ((ProxyConnection) connection).realClose();

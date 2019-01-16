@@ -2,30 +2,25 @@ package by.htp.carservice.connectionpool;
 
 import java.util.Locale;
 import java.util.ResourceBundle;
-import java.util.concurrent.atomic.AtomicBoolean;
-import java.util.concurrent.locks.ReentrantLock;
 
- /**
-  * The Class DbResourceManager.
-  */
- class DbResourceManager {
-    
-    /** The instance. */
-    private static DbResourceManager instance;
-    
-    /** The bundle. */
+/**
+ * The Class DbResourceManager.
+ */
+class DbResourceManager {
+
+    /**
+     * The bundle.
+     */
     private ResourceBundle bundle;
-    
-    /** The lock db resource manager. */
-    private static ReentrantLock lockDbResourceManager = new ReentrantLock();
-    
-    /** The create db resource manager. */
-    private static AtomicBoolean createDbResourceManager = new AtomicBoolean(false);
-    
-    /** The Constant REGEX_EXPRESSION. */
+
+    /**
+     * The Constant REGEX_EXPRESSION.
+     */
     private static final String REGEX_EXPRESSION = "_";
-    
-    /** The Constant REPLACE_VALUE. */
+
+    /**
+     * The Constant REPLACE_VALUE.
+     */
     private static final String REPLACE_VALUE = ".";
 
     /**
@@ -35,24 +30,17 @@ import java.util.concurrent.locks.ReentrantLock;
         bundle = ResourceBundle.getBundle("dbMySQL", Locale.ENGLISH);
     }
 
-     /**
-      * Gets the single instance of DbResourceManager.
-      *
-      * @return single instance of DbResourceManager
-      */
-     static DbResourceManager getInstance() {
-        if (!createDbResourceManager.get()) {
-            try {
-                lockDbResourceManager.lock();
-                if (instance == null) {
-                    instance = new DbResourceManager();
-                    createDbResourceManager.set(true);
-                }
-            } finally {
-                lockDbResourceManager.unlock();
-            }
-        }
-        return instance;
+    private static class DbResourceManagerHolder {
+        private static final DbResourceManager INSTANCE = new DbResourceManager();
+    }
+
+    /**
+     * Gets the single instance of DbResourceManager.
+     *
+     * @return single instance of DbResourceManager
+     */
+    static DbResourceManager getInstance() {
+        return DbResourceManagerHolder.INSTANCE;
     }
 
     /**

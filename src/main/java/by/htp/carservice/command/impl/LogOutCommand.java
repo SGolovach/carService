@@ -2,7 +2,7 @@ package by.htp.carservice.command.impl;
 
 import by.htp.carservice.command.Command;
 import by.htp.carservice.command.NamePage;
-import by.htp.carservice.local.MessageManager;
+import by.htp.carservice.util.MessageManager;
 import org.apache.logging.log4j.Level;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;

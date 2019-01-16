@@ -13,6 +13,7 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -20,6 +21,7 @@ public class BillCommand implements Command {
     private static Logger logger = LogManager.getLogger();
     private static final String SESSION_ORDER_NEW_LIST = "orderNewList";
     private static final String SESSION_USER = "user";
+    private static final String STATUS_ORDER_NEW = "new";
 
     @Override
     public String execute(HttpServletRequest request) {
@@ -35,11 +37,18 @@ public class BillCommand implements Command {
         try {
             orderList = factory.getOrderPaginationDataSelector().paginate(resultSplit);
         } catch (SelectorException e) {
-            logger.log(Level.ERROR, "Error in check login", e);
+            logger.log(Level.ERROR, "Error in BillCommand", e);
             return NamePage.ERROR_PAGE.getForwardPage();
         }
+        List<Order> statusNewOrder = new ArrayList<>();
+
+        for (Order order : orderList) {
+            if (order.getStatus().equalsIgnoreCase(STATUS_ORDER_NEW)) {
+                statusNewOrder.add(order);
+            }
+        }
         requestSpliter.splitRequestBack(request, resultSplit);
-        request.getSession().setAttribute(SESSION_ORDER_NEW_LIST, orderList);
+        session.setAttribute(SESSION_ORDER_NEW_LIST, statusNewOrder);
         return NamePage.BILL_PAGE.getForwardPage();
     }
 }

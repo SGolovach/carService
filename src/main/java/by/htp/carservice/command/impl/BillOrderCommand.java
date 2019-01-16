@@ -20,6 +20,7 @@ public class BillOrderCommand implements Command {
     private static final String PARAM_NUMBER_INVOICE = "numberInvoice";
     private static final String PARAM_COST = "cost";
     private static final String PARAM_ORDER_ID = "orderId";
+    private static final String SESSION_ORDER_ID = "idOrder";
     private static final String SESSION_USER = "user";
 
     @Override
@@ -27,6 +28,7 @@ public class BillOrderCommand implements Command {
         HttpSession session = request.getSession();
         User user = ((User) session.getAttribute(SESSION_USER));
         SelectorFactory factory = SelectorFactory.getInstance();
+        long orderId = Long.parseLong(request.getParameter(PARAM_ORDER_ID));
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
             String numberInvoice = request.getParameter(PARAM_NUMBER_INVOICE);
             String cost = request.getParameter(PARAM_COST);
@@ -36,10 +38,9 @@ public class BillOrderCommand implements Command {
                 if (user == null) {
                     return NamePage.INFO_SESSION_INVALIDATE_PAGE.getRedirectPage();
                 }
-                long orderId = Long.parseLong(request.getParameter(PARAM_ORDER_ID));
                 Invoice invoice = new Invoice();
                 invoice.setNumberInvoice(Long.parseLong(numberInvoice));
-                invoice.setCost(BigDecimal.valueOf(Long.parseLong(cost)));
+                invoice.setCost(BigDecimal.valueOf(Double.parseDouble(cost)));
                 invoice.setOrderId(orderId);
 
                 try {
@@ -57,6 +58,7 @@ public class BillOrderCommand implements Command {
         if (user == null) {
             return NamePage.SESSION_USER_INVALIDATE_PAGE.getForwardPage();
         }
+        session.setAttribute(SESSION_ORDER_ID,orderId);
         return NamePage.BILL_ORDER_PAGE.getForwardPage();
     }
 }

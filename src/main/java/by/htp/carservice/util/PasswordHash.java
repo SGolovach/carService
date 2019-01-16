@@ -23,9 +23,7 @@ public class PasswordHash {
      * @return the hash P ass
      */
     public String getHashPAss(String password){
-        logger.log(Level.INFO,"Start method getHashPAss");
         String resultHash = DigestUtils.sha256Hex(password+SALT);
-        logger.log(Level.INFO,"Finish method getHashPAss");
         return resultHash;
     }
 }

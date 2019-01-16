@@ -38,7 +38,7 @@
     <fmt:message key="msg.accountadmin.createdepart"/>
 </a>
 <br/>
-<a href="action?command=main"
+<a href="action?command=editservice"
    class="btn btn-link btn-sm active" role="button" aria-pressed="true">
     <fmt:message key="msg.accountadmin.editdepart"/>
 </a>

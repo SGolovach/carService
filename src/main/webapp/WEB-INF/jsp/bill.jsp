@@ -2,6 +2,8 @@
 <%@ include file="include/head.jsp" %>
 <body>
 <%@include file="include/menuBar.jsp" %>
+
+
 <table border="1">
     <tr>
         <td><a href="action?command=bill&checkIllustreta=5">5</a></td>
@@ -21,24 +23,22 @@
     </thead>
     <tbody>
     <c:forEach items="${orderNewList}" var="orderNewList">
-        <c:when test="${orderNewList.getStatus()eq new}">
-            <tr>
-                <td align="center">
-                        ${orderNewList.getTimeRegister()}
-                </td>
-                <td align="center">
-                        ${orderNewList.getDescription()}
-                </td>
-                <td align="center">
-                        ${orderNewList.getStatus()}
-                </td>
-                <td align="center">
-                    <a href="action?command=billorder&orderId=${orderNewList.getOrderId()}">
-                        <fmt:message key="msg.gotoorder"/>
-                    </a>
-                </td>
-            </tr>
-        </c:when>
+        <tr>
+            <td align="center">
+                    ${orderNewList.getTimeRegister()}
+            </td>
+            <td align="center">
+                    ${orderNewList.getDescription()}
+            </td>
+            <td align="center">
+                    ${orderNewList.getStatus()}
+            </td>
+            <td align="center">
+                <a href="action?command=billorder&orderId=${orderNewList.getIdOrder()}">
+                    <fmt:message key="msg.gotoorder"/>
+                </a>
+            </td>
+        </tr>
     </c:forEach>
     </tbody>
 </table>

@@ -1,4 +1,4 @@
-package by.htp.carservice.local;
+package by.htp.carservice.util;
 
 import java.util.Locale;
 import java.util.ResourceBundle;

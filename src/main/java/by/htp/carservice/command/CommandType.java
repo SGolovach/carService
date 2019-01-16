@@ -173,6 +173,11 @@ public enum CommandType {
     EDIT_ORDER(new EditOrderCommand()),
 
     /**
+     * The edit service.
+     */
+    EDIT_SERVICE(new EditServiceCommand()),
+
+    /**
      * The show order user.
      */
     SHOW_ORDER_USER(new ShowOrderUserCommand()),

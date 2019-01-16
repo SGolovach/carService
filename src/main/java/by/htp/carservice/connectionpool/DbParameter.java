@@ -3,7 +3,7 @@ package by.htp.carservice.connectionpool;
 /**
  * The Enum DbParameter.
  */
-public enum DbParameter {
+enum DbParameter {
     
     /** The db driver. */
     DB_DRIVER,

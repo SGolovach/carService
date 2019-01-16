@@ -1,6 +1,6 @@
 package by.htp.carservice.filter;
 
-import by.htp.carservice.local.MessageManager;
+import by.htp.carservice.util.MessageManager;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 

@@ -14,12 +14,16 @@ import java.sql.Statement;
  *
  * @param <T> the generic type
  */
-public abstract class AbstractDao<T extends Entity>{
-    
-    /** The logger. */
+public abstract class AbstractDao<T extends Entity> {
+
+    /**
+     * The logger.
+     */
     private static Logger logger = LogManager.getLogger();
-    
-    /** The connection. */
+
+    /**
+     * The connection.
+     */
     protected Connection connection;
 
     /**
@@ -28,15 +32,13 @@ public abstract class AbstractDao<T extends Entity>{
      * @param statement the statement
      */
     protected void close(Statement statement) {
-        logger.log(Level.INFO,"Start method close statement");
         try {
             if (statement != null) {
                 statement.close();
             }
         } catch (SQLException e) {
-            logger.log(Level.ERROR,"Can not close statement",e);
+            logger.log(Level.ERROR, "Can not close statement", e);
         }
-        logger.log(Level.INFO,"Finish method close statement");
     }
 
     /**
@@ -44,8 +46,7 @@ public abstract class AbstractDao<T extends Entity>{
      *
      * @param connection the new connection
      */
-    public void setConnection(Connection connection){
-        logger.log(Level.INFO,"Start method setConnection class AbstractDao");
+    public void setConnection(Connection connection) {
         this.connection = connection;
     }
 }
