@@ -12,13 +12,29 @@ import org.apache.logging.log4j.Logger;
 
 import javax.servlet.http.HttpServletRequest;
 
+/**
+ * The Class SignupCommand.
+ */
 public class SignupCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_LOGIN. */
     private static final String PARAM_LOGIN = "login";
+    
+    /** The Constant PARAM_PASS. */
     private static final String PARAM_PASS = "password";
+    
+    /** The Constant STANDARD_ID_USER. */
     private static final long STANDARD_ID_USER = 2;
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
@@ -33,7 +49,7 @@ public class SignupCommand implements Command {
                     if (factory.getUserSelector().existLogin(login)) {
                         return NamePage.INFO_SIGN_UP_EXIST_PAGE.getRedirectPage();
                     }
-                    String password = hash.getHashPAss(passwordClean);
+                    String password = hash.getHashPass(passwordClean);
                     User user = new User();
                     user.setLogin(login);
                     user.setPassword(password);

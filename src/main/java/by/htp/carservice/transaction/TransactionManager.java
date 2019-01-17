@@ -12,16 +12,34 @@ import org.apache.logging.log4j.Logger;
 import java.sql.Connection;
 import java.sql.SQLException;
 
+/**
+ * The Class TransactionManager.
+ */
 public class TransactionManager {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The connection. */
     protected Connection connection = ConnectionPool.getInstance().takeConnection();
 
+    /**
+     * Instantiates a new transaction manager.
+     *
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public TransactionManager() throws ConnectionPoolException {
 
     }
 
+    /**
+     * Begin transaction.
+     *
+     * @param dao the dao
+     * @param daos the daos
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public void beginTransaction(AbstractDao dao, AbstractDao... daos) throws ConnectionPoolException {
-        logger.log(Level.INFO, "Start method beginTransaction");
         try {
             connection.setAutoCommit(false);
         } catch (SQLException e) {
@@ -34,8 +52,13 @@ public class TransactionManager {
         logger.log(Level.INFO, "Finish method beginTransaction");
     }
 
+    /**
+     * Begin.
+     *
+     * @param dao the dao
+     * @throws TransactionException the transaction exception
+     */
     public void begin(AbstractDao dao) throws TransactionException {
-        logger.log(Level.INFO, "Start method beginTransactionWithoutCommit");
         try {
             if (!connection.getAutoCommit()) {
                 connection.setAutoCommit(true);
@@ -47,8 +70,10 @@ public class TransactionManager {
         logger.log(Level.INFO, "Finish method beginTransactionWithoutCommit");
     }
 
+    /**
+     * End transaction.
+     */
     public void endTransaction() {
-        logger.log(Level.INFO, "Start method endTransaction");
         try {
             connection.close();
         } catch (SQLException e) {
@@ -57,8 +82,12 @@ public class TransactionManager {
         logger.log(Level.INFO, "Finish method endTransaction");
     }
 
+    /**
+     * Commit.
+     *
+     * @throws ConnectionPoolException the connection pool exception
+     */
     public void commit() throws ConnectionPoolException {
-        logger.log(Level.INFO, "Start method commit");
         try {
             connection.commit();
         } catch (SQLException e) {
@@ -67,8 +96,10 @@ public class TransactionManager {
         logger.log(Level.INFO, "Finish method commit");
     }
 
+    /**
+     * Rollback.
+     */
     public void rollback() {
-        logger.log(Level.INFO, "Start method rollback");
         try {
             connection.rollback();
         } catch (SQLException e) {

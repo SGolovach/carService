@@ -16,11 +16,23 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class ViewAllOrderCommand.
+ */
 public class ViewAllOrderCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
+    
+    /** The Constant SESSION_ALL_ORDER_LIST. */
     private static final String SESSION_ALL_ORDER_LIST = "viewOrderList";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         SelectorFactory factory = SelectorFactory.getInstance();

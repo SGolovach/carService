@@ -16,11 +16,23 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class InvoiceUserCommand.
+ */
 public class InvoiceUserCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SESSION_INVOICE. */
     private static final String SESSION_INVOICE = "invoiceList";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         SelectorFactory factory = SelectorFactory.getInstance();

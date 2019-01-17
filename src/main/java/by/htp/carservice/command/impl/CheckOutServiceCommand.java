@@ -19,21 +19,53 @@ import java.time.LocalDateTime;
 import java.time.format.DateTimeFormatter;
 import java.util.List;
 
+/**
+ * The Class CheckOutServiceCommand.
+ */
 public class CheckOutServiceCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_SERVICE_ID. */
     private static final String PARAM_SERVICE_ID = "serviceId";
+    
+    /** The Constant PARAM_DESCRIPTION. */
     private static final String PARAM_DESCRIPTION = "description";
+    
+    /** The Constant PARAM_TIME_REGISTER. */
     private static final String PARAM_TIME_REGISTER = "timeregister";
+    
+    /** The Constant PARAM_DEPARTMENT_ID. */
     private static final String PARAM_DEPARTMENT_ID = "departmentId";
+    
+    /** The Constant PARAM_CAR_ID. */
     private static final String PARAM_CAR_ID = "carId";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
+    
+    /** The Constant SESSION_CAR_LIST. */
     private static final String SESSION_CAR_LIST = "carListForOrder";
+    
+    /** The Constant SESSION_DEPARTMENT. */
     private static final String SESSION_DEPARTMENT = "department";
+    
+    /** The Constant STATUS_ORDER_NEW. */
     private static final String STATUS_ORDER_NEW = "new";
+    
+    /** The Constant PATTERN_DATE. */
     private static final String PATTERN_DATE = "yyyy-MM-dd HH:mm";
+    
+    /** The Constant REPLACE_DATE. */
     private static final String REPLACE_DATE = "T";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();

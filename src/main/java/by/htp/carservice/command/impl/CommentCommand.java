@@ -14,10 +14,20 @@ import javax.servlet.http.HttpServletRequest;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class CommentCommand.
+ */
 public class CommentCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SESSION_COMMENT. */
     private static final String SESSION_COMMENT = "commentList";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         SelectorFactory factory = SelectorFactory.getInstance();

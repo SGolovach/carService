@@ -13,13 +13,27 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The Class CreateServiceCommand.
+ */
 public class CreateServiceCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_NAME_DEPARTMENT. */
     private static final String PARAM_NAME_DEPARTMENT = "namedepartment";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
 
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {

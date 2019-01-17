@@ -123,7 +123,7 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish save entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -132,7 +132,6 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
      */
     @Override
     public boolean update(Invoice entity) throws DaoException {
-        logger.log(Level.INFO, "Start update entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -147,7 +146,7 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish update entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -156,7 +155,6 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
      */
     @Override
     public boolean delete(Invoice entity) throws DaoException {
-        logger.log(Level.INFO, "Start delete entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -168,7 +166,7 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish delete entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -177,7 +175,6 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
      */
     @Override
     public Invoice take(long id) throws DaoException {
-        logger.log(Level.INFO, "Start take entity by id: " + id);
         Invoice invoice = new Invoice();
         PreparedStatement statement = null;
         try {
@@ -204,7 +201,6 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
      */
     @Override
     public List<Invoice> takeAll() throws DaoException {
-        logger.log(Level.INFO, "Start takeAll");
         List<Invoice> listInvoice = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -232,7 +228,6 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
      */
     @Override
     public int countRecord() throws DaoException {
-        logger.log(Level.INFO, "Start countRecord");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -255,7 +250,6 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
      */
     @Override
     public int countRecordById(long id) throws DaoException {
-        logger.log(Level.INFO, "Start countRecordById");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -279,7 +273,6 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
      */
     @Override
     public List<Invoice> checkAllRecord(int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkAllRecord");
         List<Invoice> listInvoice = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -309,7 +302,6 @@ public class InvoiceDao extends AbstractDao<Invoice> implements DaoInvoice {
      */
     @Override
     public List<Invoice> checkRecordById(long id, int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkRecordById");
         List<Invoice> listInvoice = new ArrayList<>();
         PreparedStatement statement = null;
         try {

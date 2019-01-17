@@ -16,12 +16,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The Class CarTransactionImpl.
+ */
 public class CarTransactionImpl implements TransactionCar {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#saveTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean saveTransaction(Car entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method saveTransaction entity:" + entity);
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -40,13 +47,15 @@ public class CarTransactionImpl implements TransactionCar {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method saveTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#updateTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean updateTransaction(Car entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method updateTransaction entity:" + entity);
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -65,13 +74,15 @@ public class CarTransactionImpl implements TransactionCar {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method updateTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#deleteTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean deleteTransaction(Car entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method deleteTransaction entity:" + entity);
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -90,13 +101,15 @@ public class CarTransactionImpl implements TransactionCar {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method deleteTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeTransaction(long)
+     */
     @Override
     public Car takeTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeTransaction entity by id:" + id);
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         Car car;
         TransactionManager transaction;
@@ -117,9 +130,11 @@ public class CarTransactionImpl implements TransactionCar {
         return car;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeAllQuery()
+     */
     @Override
     public List<Car> takeAllQuery() throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAll");
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         List<Car> carList;
         TransactionManager transaction;
@@ -140,9 +155,11 @@ public class CarTransactionImpl implements TransactionCar {
         return carList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordTransaction()
+     */
     @Override
     public int countRecordTransaction() throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordTransaction");
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         int result;
         TransactionManager transaction;
@@ -163,9 +180,11 @@ public class CarTransactionImpl implements TransactionCar {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordByIdTransaction(long)
+     */
     @Override
     public int countRecordByIdTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordByIdTransaction");
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         int result;
         TransactionManager transaction;
@@ -186,9 +205,11 @@ public class CarTransactionImpl implements TransactionCar {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkAllRecordTransaction(int, int)
+     */
     @Override
     public List<Car> checkAllRecordTransaction(int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkAllRecordTransaction");
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         List<Car> carList;
         TransactionManager transaction;
@@ -209,9 +230,11 @@ public class CarTransactionImpl implements TransactionCar {
         return carList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkRecordByIdTransaction(long, int, int)
+     */
     @Override
     public List<Car> checkRecordByIdTransaction(long id, int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkRecordByIdTransaction");
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         List<Car> carList;
         TransactionManager transaction;
@@ -232,9 +255,11 @@ public class CarTransactionImpl implements TransactionCar {
         return carList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.TransactionCar#takeAllByUserIdTransaction(long)
+     */
     @Override
     public List<Car> takeAllByUserIdTransaction(long userId) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAllByUserIdTransaction");
         DaoCar carDao = DaoFactory.getInstance().getCarDao();
         List<Car> carList;
         TransactionManager transaction;

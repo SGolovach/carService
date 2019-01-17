@@ -10,9 +10,17 @@ import by.htp.carservice.selector.PaginationDataSelector;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class CommentPaginateSelector.
+ */
 public class CommentPaginateSelector implements PaginationDataSelector<Comment> {
+    
+    /** The pagination. */
     private final PaginationData pagination = PaginationDataFactory.getInstance().getCommentPagination();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.PaginationDataSelector#paginate(java.util.Map)
+     */
     @Override
     public List<Comment> paginate(Map<String, String> requestParam) throws SelectorException {
         List<Comment> commentList;
@@ -24,6 +32,9 @@ public class CommentPaginateSelector implements PaginationDataSelector<Comment> 
         return commentList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.PaginationDataSelector#paginateById(java.util.Map, long)
+     */
     @Override
     public List<Comment> paginateById(Map<String, String> requestParam, long id) throws SelectorException {
         List<Comment> commentList;

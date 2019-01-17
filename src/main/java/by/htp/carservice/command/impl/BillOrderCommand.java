@@ -14,15 +14,35 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.math.BigDecimal;
 
+/**
+ * The Class BillOrderCommand.
+ */
 public class BillOrderCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_NUMBER_INVOICE. */
     private static final String PARAM_NUMBER_INVOICE = "numberInvoice";
+    
+    /** The Constant PARAM_COST. */
     private static final String PARAM_COST = "cost";
+    
+    /** The Constant PARAM_ORDER_ID. */
     private static final String PARAM_ORDER_ID = "orderId";
+    
+    /** The Constant SESSION_ORDER_ID. */
     private static final String SESSION_ORDER_ID = "idOrder";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();

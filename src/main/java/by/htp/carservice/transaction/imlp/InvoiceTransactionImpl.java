@@ -16,12 +16,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The Class InvoiceTransactionImpl.
+ */
 public class InvoiceTransactionImpl implements TransactionInvoice {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#saveTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean saveTransaction(Invoice entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method saveTransaction entity:" + entity);
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -40,13 +47,15 @@ public class InvoiceTransactionImpl implements TransactionInvoice {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method saveTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#updateTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean updateTransaction(Invoice entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method updateTransaction entity:" + entity);
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -65,13 +74,15 @@ public class InvoiceTransactionImpl implements TransactionInvoice {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method updateTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#deleteTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean deleteTransaction(Invoice entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method deleteTransaction entity:" + entity);
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -90,13 +101,15 @@ public class InvoiceTransactionImpl implements TransactionInvoice {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method deleteTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeTransaction(long)
+     */
     @Override
     public Invoice takeTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeTransaction entity by id:" + id);
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         Invoice invoice;
         TransactionManager transaction;
@@ -117,9 +130,11 @@ public class InvoiceTransactionImpl implements TransactionInvoice {
         return invoice;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeAllQuery()
+     */
     @Override
     public List<Invoice> takeAllQuery() throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAll");
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         List<Invoice> invoiceList;
         TransactionManager transaction;
@@ -140,9 +155,11 @@ public class InvoiceTransactionImpl implements TransactionInvoice {
         return invoiceList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordTransaction()
+     */
     @Override
     public int countRecordTransaction() throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordTransaction");
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         int result;
         TransactionManager transaction;
@@ -163,9 +180,11 @@ public class InvoiceTransactionImpl implements TransactionInvoice {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordByIdTransaction(long)
+     */
     @Override
     public int countRecordByIdTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordByIdTransaction by id:" + id);
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         int result;
         TransactionManager transaction;
@@ -186,9 +205,11 @@ public class InvoiceTransactionImpl implements TransactionInvoice {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkAllRecordTransaction(int, int)
+     */
     @Override
     public List<Invoice> checkAllRecordTransaction(int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAll");
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         List<Invoice> invoiceList;
         TransactionManager transaction;
@@ -209,9 +230,11 @@ public class InvoiceTransactionImpl implements TransactionInvoice {
         return invoiceList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkRecordByIdTransaction(long, int, int)
+     */
     @Override
     public List<Invoice> checkRecordByIdTransaction(long id, int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkRecordByIdTransaction");
         DaoInvoice invoiceDao = DaoFactory.getInstance().getInvoiceDao();
         List<Invoice> invoiceList;
         TransactionManager transaction;

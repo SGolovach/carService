@@ -13,17 +13,39 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The Class EditUserDetailCommand.
+ */
 public class EditUserDetailCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_NAME. */
     private static final String PARAM_NAME = "name";
+    
+    /** The Constant PARAM_PHONE. */
     private static final String PARAM_PHONE = "phone";
+    
+    /** The Constant PARAM_EMAIL. */
     private static final String PARAM_EMAIL = "email";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
+    
+    /** The Constant SESSION_USER_DETAIL. */
     private static final String SESSION_USER_DETAIL = "userDetail";
+    
+    /** The Constant PARAM_ID_USER_DETAIL. */
     private static final String PARAM_ID_USER_DETAIL = "idUserDetail";
 
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         SelectorFactory factory = SelectorFactory.getInstance();

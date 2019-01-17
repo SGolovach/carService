@@ -10,9 +10,17 @@ import by.htp.carservice.selector.PaginationDataSelector;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class InvoicePaginateSelector.
+ */
 public class InvoicePaginateSelector implements PaginationDataSelector<Invoice> {
+    
+    /** The pagination. */
     private final PaginationData pagination = PaginationDataFactory.getInstance().getInvoicePagination();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.PaginationDataSelector#paginate(java.util.Map)
+     */
     @Override
     public List<Invoice> paginate(Map<String, String> requestParam) throws SelectorException {
         List<Invoice> invoiceList;
@@ -24,6 +32,9 @@ public class InvoicePaginateSelector implements PaginationDataSelector<Invoice> 
         return invoiceList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.PaginationDataSelector#paginateById(java.util.Map, long)
+     */
     @Override
     public List<Invoice> paginateById(Map<String, String> requestParam, long id) throws SelectorException {
         List<Invoice> invoiceList;

@@ -219,7 +219,6 @@ public class ConnectionPool {
      * @throws SelectorException the command exception
      */
     public void closeConnectionPool() throws SelectorException {
-        logger.log(Level.INFO,"Start closeConnectionPool");
         try {
             closeConnectionQueue(availableConnections);
         } catch (ConnectionPoolException e) {

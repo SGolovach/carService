@@ -8,6 +8,13 @@ import by.htp.carservice.exception.DaoException;
  */
 public interface DaoOrder extends BaseDao<Order> {
 
+    /**
+     * Update status.
+     *
+     * @param orderId the order id
+     * @return true, if successful
+     * @throws DaoException the dao exception
+     */
     boolean updateStatus(long orderId) throws DaoException;
 
 }

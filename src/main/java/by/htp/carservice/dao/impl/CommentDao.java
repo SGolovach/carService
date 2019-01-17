@@ -95,7 +95,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
      */
     @Override
     public boolean save(Comment entity) throws DaoException {
-        logger.log(Level.INFO, "Start save entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -113,7 +112,7 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish save entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -122,7 +121,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
      */
     @Override
     public boolean update(Comment entity) throws DaoException {
-        logger.log(Level.INFO, "Start update entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -136,7 +134,7 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish update entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -145,7 +143,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
      */
     @Override
     public boolean delete(Comment entity) throws DaoException {
-        logger.log(Level.INFO, "Start delete entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -157,7 +154,7 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish delete entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -166,7 +163,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
      */
     @Override
     public Comment take(long id) throws DaoException {
-        logger.log(Level.INFO, "Start take entity by id: " + id);
         Comment comment = new Comment();
         PreparedStatement statement = null;
         try {
@@ -183,7 +179,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish take entity: " + comment);
         return comment;
     }
 
@@ -192,7 +187,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
      */
     @Override
     public List<Comment> takeAll() throws DaoException {
-        logger.log(Level.INFO, "Start takeAll");
         List<Comment> listComment = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -219,7 +213,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
      */
     @Override
     public int countRecord() throws DaoException {
-        logger.log(Level.INFO, "Start countRecord");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -242,7 +235,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
      */
     @Override
     public int countRecordById(long id) throws DaoException {
-        logger.log(Level.INFO, "Start countRecordById");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -266,7 +258,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
      */
     @Override
     public List<Comment> checkAllRecord(int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkAllRecord");
         List<Comment> listComment = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -295,7 +286,6 @@ public class CommentDao extends AbstractDao<Comment> implements DaoComment {
      */
     @Override
     public List<Comment> checkRecordById(long id, int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkRecordById");
         List<Comment> listComment = new ArrayList<>();
         PreparedStatement statement = null;
         try {

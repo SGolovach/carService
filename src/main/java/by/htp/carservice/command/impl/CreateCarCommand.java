@@ -13,16 +13,38 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The Class CreateCarCommand.
+ */
 public class CreateCarCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_BRAND. */
     private static final String PARAM_BRAND = "brand";
+    
+    /** The Constant PARAM_MODEL. */
     private static final String PARAM_MODEL = "model";
+    
+    /** The Constant PARAM_YEAR. */
     private static final String PARAM_YEAR = "year";
+    
+    /** The Constant PARAM_CODE_VIN. */
     private static final String PARAM_CODE_VIN = "codeVIN";
+    
+    /** The Constant PARAM_FUEL. */
     private static final String PARAM_FUEL = "fuel";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {

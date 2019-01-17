@@ -30,7 +30,12 @@ class DbResourceManager {
         bundle = ResourceBundle.getBundle("dbMySQL", Locale.ENGLISH);
     }
 
+    /**
+     * The Class DbResourceManagerHolder.
+     */
     private static class DbResourceManagerHolder {
+        
+        /** The Constant INSTANCE. */
         private static final DbResourceManager INSTANCE = new DbResourceManager();
     }
 

@@ -130,7 +130,6 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      */
     @Override
     public boolean save(Order entity) throws DaoException {
-        logger.log(Level.INFO, "Start save entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -152,7 +151,7 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish save entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -161,7 +160,6 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      */
     @Override
     public boolean update(Order entity) throws DaoException {
-        logger.log(Level.INFO, "Start update entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -179,7 +177,7 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish update entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -188,7 +186,6 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      */
     @Override
     public boolean delete(Order entity) throws DaoException {
-        logger.log(Level.INFO, "Start delete entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -200,7 +197,7 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish delete entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -209,7 +206,6 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      */
     @Override
     public Order take(long id) throws DaoException {
-        logger.log(Level.INFO, "Start take entity by id: " + id);
         Order order = new Order();
         PreparedStatement statement = null;
         try {
@@ -239,7 +235,6 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      */
     @Override
     public List<Order> takeAll() throws DaoException {
-        logger.log(Level.INFO, "Start takeAll");
         List<Order> listOrder = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -270,7 +265,6 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      */
     @Override
     public int countRecord() throws DaoException {
-        logger.log(Level.INFO, "Start countRecord");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -293,7 +287,6 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      */
     @Override
     public int countRecordById(long id) throws DaoException {
-        logger.log(Level.INFO, "Start countRecordById");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -317,7 +310,6 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      */
     @Override
     public List<Order> checkAllRecord(int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkAllRecord");
         List<Order> listOrder = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -350,7 +342,6 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
      */
     @Override
     public List<Order> checkRecordById(long id, int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkRecordById");
         List<Order> listOrder = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -379,9 +370,11 @@ public class OrderDao extends AbstractDao<Order> implements DaoOrder {
         return listOrder;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.dao.DaoOrder#updateStatus(long)
+     */
     @Override
     public boolean updateStatus(long orderId) throws DaoException {
-        logger.log(Level.INFO, "Start updateStatus entity  orderId = " + orderId);
         PreparedStatement statement = null;
         int flagResult;
         try {

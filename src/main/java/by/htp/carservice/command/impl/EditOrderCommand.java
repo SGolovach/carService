@@ -16,14 +16,32 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class EditOrderCommand.
+ */
 public class EditOrderCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_ORDER_ID. */
     private static final String PARAM_ORDER_ID = "idOrder";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
+    
+    /** The Constant SESSION_ORDER_LIST. */
     private static final String SESSION_ORDER_LIST = "orderList";
+    
+    /** The Constant PARAM_DELETE. */
     private static final String PARAM_DELETE = "delete";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         SelectorFactory factory = SelectorFactory.getInstance();

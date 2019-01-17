@@ -16,12 +16,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The Class OrderTransactionImpl.
+ */
 public class OrderTransactionImpl implements TransactionOrder {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#saveTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean saveTransaction(Order entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method saveTransaction entity:" + entity);
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -40,13 +47,15 @@ public class OrderTransactionImpl implements TransactionOrder {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method saveTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#updateTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean updateTransaction(Order entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method updateTransaction entity:" + entity);
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -65,13 +74,15 @@ public class OrderTransactionImpl implements TransactionOrder {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method updateTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#deleteTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean deleteTransaction(Order entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method deleteTransaction entity:" + entity);
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -90,13 +101,15 @@ public class OrderTransactionImpl implements TransactionOrder {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method deleteTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeTransaction(long)
+     */
     @Override
     public Order takeTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeTransaction entity by id:" + id);
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         Order order;
         TransactionManager transaction;
@@ -117,9 +130,11 @@ public class OrderTransactionImpl implements TransactionOrder {
         return order;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeAllQuery()
+     */
     @Override
     public List<Order> takeAllQuery() throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAll");
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         List<Order> orderList;
         TransactionManager transaction;
@@ -140,9 +155,11 @@ public class OrderTransactionImpl implements TransactionOrder {
         return orderList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordTransaction()
+     */
     @Override
     public int countRecordTransaction() throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordTransaction");
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         int result;
         TransactionManager transaction;
@@ -163,9 +180,11 @@ public class OrderTransactionImpl implements TransactionOrder {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordByIdTransaction(long)
+     */
     @Override
     public int countRecordByIdTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordByIdTransaction");
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         int result;
         TransactionManager transaction;
@@ -186,9 +205,11 @@ public class OrderTransactionImpl implements TransactionOrder {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkAllRecordTransaction(int, int)
+     */
     @Override
     public List<Order> checkAllRecordTransaction(int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkAllRecordTransaction");
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         List<Order> orderList;
         TransactionManager transaction;
@@ -209,9 +230,11 @@ public class OrderTransactionImpl implements TransactionOrder {
         return orderList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkRecordByIdTransaction(long, int, int)
+     */
     @Override
     public List<Order> checkRecordByIdTransaction(long id, int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkRecordByIdTransaction");
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         List<Order> orderList;
         TransactionManager transaction;
@@ -232,9 +255,11 @@ public class OrderTransactionImpl implements TransactionOrder {
         return orderList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.TransactionOrder#updateStatusTransaction(long)
+     */
     @Override
     public boolean updateStatusTransaction(long orderId) throws ServiceException {
-        logger.log(Level.INFO, "Start method updateStatusTransaction entity orderId = " + orderId);
         DaoOrder orderDao = DaoFactory.getInstance().getOrderDao();
         boolean flagResult;
         TransactionManager transaction;

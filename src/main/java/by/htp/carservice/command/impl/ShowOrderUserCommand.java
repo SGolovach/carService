@@ -14,13 +14,29 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The Class ShowOrderUserCommand.
+ */
 public class ShowOrderUserCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SESSION_CAR_MODEL. */
     private static final String SESSION_CAR_MODEL = "carModel";
+    
+    /** The Constant SESSION_ORDER_USER. */
     private static final String SESSION_ORDER_USER = "orderUser";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
+    
+    /** The Constant PARAM_ORDER_ID. */
     private static final String PARAM_ORDER_ID = "orderId";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         SelectorFactory factory = SelectorFactory.getInstance();

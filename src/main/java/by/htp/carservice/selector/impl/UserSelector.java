@@ -9,10 +9,18 @@ import by.htp.carservice.transaction.TransactionUser;
 
 import java.util.List;
 
+/**
+ * The Class UserSelector.
+ */
 public class UserSelector implements SelectorUser {
+    
+    /** The transaction user. */
     private final TransactionUser transactionUser =
             TransactionFactory.getInstance().getTransactionUser();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#save(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean save(User entity) throws SelectorException {
         boolean flagResult;
@@ -24,6 +32,9 @@ public class UserSelector implements SelectorUser {
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#update(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean update(User entity) throws SelectorException {
         boolean flagResult;
@@ -35,6 +46,9 @@ public class UserSelector implements SelectorUser {
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#delete(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean delete(User entity) throws SelectorException {
         boolean flagResult;
@@ -46,6 +60,9 @@ public class UserSelector implements SelectorUser {
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#take(long)
+     */
     @Override
     public User take(long id) throws SelectorException {
         User user;
@@ -57,6 +74,9 @@ public class UserSelector implements SelectorUser {
         return user;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#takeAll()
+     */
     @Override
     public List<User> takeAll() throws SelectorException {
         List<User> listUser;
@@ -68,6 +88,9 @@ public class UserSelector implements SelectorUser {
         return listUser;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#countRecord()
+     */
     @Override
     public int countRecord() throws SelectorException {
         int result;
@@ -79,6 +102,9 @@ public class UserSelector implements SelectorUser {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#countRecordById(long)
+     */
     @Override
     public int countRecordById(long id) throws SelectorException {
         int result;
@@ -90,6 +116,9 @@ public class UserSelector implements SelectorUser {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#checkAllRecord(int, int)
+     */
     @Override
     public List<User> checkAllRecord(int limit, int offset) throws SelectorException {
         List<User> listUser;
@@ -101,6 +130,9 @@ public class UserSelector implements SelectorUser {
         return listUser;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#checkRecordById(long, int, int)
+     */
     @Override
     public List<User> checkRecordById(long id, int limit, int offset) throws SelectorException {
         List<User> listUser;
@@ -112,6 +144,9 @@ public class UserSelector implements SelectorUser {
         return listUser;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.SelectorUser#checkLogin(java.lang.String, java.lang.String)
+     */
     @Override
     public List<User> checkLogin(String login, String password) throws SelectorException {
         List<User> listUser;
@@ -123,6 +158,9 @@ public class UserSelector implements SelectorUser {
         return listUser;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.SelectorUser#existLogin(java.lang.String)
+     */
     @Override
     public boolean existLogin(String login) throws SelectorException {
         boolean flagResult;

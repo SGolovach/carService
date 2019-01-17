@@ -1,28 +1,22 @@
 package by.htp.carservice.util;
 
 import org.apache.commons.codec.digest.DigestUtils;
-import org.apache.logging.log4j.Level;
-import org.apache.logging.log4j.LogManager;
-import org.apache.logging.log4j.Logger;
 
 /**
  * The Class PasswordHash.
  */
 public class PasswordHash {
-    
-    /** The logger. */
-    private static Logger logger = LogManager.getLogger();
-    
     /** The Constant SALT. */
     private static final String SALT = "random";
     
     /**
-     * Gets the hash P ass.
+     * Gets the hash Pass.
      *
      * @param password the password
-     * @return the hash P ass
+     *
+     * @return the hash Pass
      */
-    public String getHashPAss(String password){
+    public String getHashPass(String password){
         String resultHash = DigestUtils.sha256Hex(password+SALT);
         return resultHash;
     }

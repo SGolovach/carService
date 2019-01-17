@@ -9,10 +9,18 @@ import by.htp.carservice.transaction.TransactionOrder;
 
 import java.util.List;
 
+/**
+ * The Class OrderSelector.
+ */
 public class OrderSelector implements SelectorOrder {
+    
+    /** The transaction order. */
     private final TransactionOrder transactionOrder =
             TransactionFactory.getInstance().getTransactionOrder();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#save(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean save(Order entity) throws SelectorException {
         boolean flagResult;
@@ -24,6 +32,9 @@ public class OrderSelector implements SelectorOrder {
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#update(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean update(Order entity) throws SelectorException {
         boolean flagResult;
@@ -35,6 +46,9 @@ public class OrderSelector implements SelectorOrder {
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#delete(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean delete(Order entity) throws SelectorException {
         boolean flagResult;
@@ -46,6 +60,9 @@ public class OrderSelector implements SelectorOrder {
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#take(long)
+     */
     @Override
     public Order take(long id) throws SelectorException {
         Order order;
@@ -57,6 +74,9 @@ public class OrderSelector implements SelectorOrder {
         return order;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#takeAll()
+     */
     @Override
     public List<Order> takeAll() throws SelectorException {
         List<Order> listOrder;
@@ -68,6 +88,9 @@ public class OrderSelector implements SelectorOrder {
         return listOrder;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#countRecord()
+     */
     @Override
     public int countRecord() throws SelectorException {
         int result;
@@ -79,6 +102,9 @@ public class OrderSelector implements SelectorOrder {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#countRecordById(long)
+     */
     @Override
     public int countRecordById(long id) throws SelectorException {
         int result;
@@ -90,6 +116,9 @@ public class OrderSelector implements SelectorOrder {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#checkAllRecord(int, int)
+     */
     @Override
     public List<Order> checkAllRecord(int limit, int offset) throws SelectorException {
         List<Order> listOrder;
@@ -101,6 +130,9 @@ public class OrderSelector implements SelectorOrder {
         return listOrder;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.Selector#checkRecordById(long, int, int)
+     */
     @Override
     public List<Order> checkRecordById(long id, int limit, int offset) throws SelectorException {
         List<Order> listOrder;
@@ -112,6 +144,9 @@ public class OrderSelector implements SelectorOrder {
         return listOrder;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.SelectorOrder#updateStatus(long)
+     */
     @Override
     public boolean updateStatus(long orderId) throws SelectorException {
         boolean flagResult;

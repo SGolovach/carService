@@ -13,15 +13,35 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The Class EditLoginPasswordCommand.
+ */
 public class EditLoginPasswordCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_LOGIN. */
     private static final String PARAM_LOGIN = "login";
+    
+    /** The Constant PARAM_NEW_PASS. */
     private static final String PARAM_NEW_PASS = "newpassword";
+    
+    /** The Constant PARAM_OLD_PASS. */
     private static final String PARAM_OLD_PASS = "oldpassword";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
+    
+    /** The Constant SESSION_ROLE_ID. */
     private static final String SESSION_ROLE_ID = "roleId";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         SelectorFactory factory = SelectorFactory.getInstance();
@@ -41,7 +61,7 @@ public class EditLoginPasswordCommand implements Command {
             if (passwordCleanOld == null) {
                 return NamePage.EDIT_LOGIN_PASSWORD_PAGE.getRedirectPage();
             }
-            String checkPasswordOld = hash.getHashPAss(passwordCleanOld);
+            String checkPasswordOld = hash.getHashPass(passwordCleanOld);
             User userCheckPassword;
             try {
                 userCheckPassword = factory.getUserSelector().take(userId);
@@ -63,7 +83,7 @@ public class EditLoginPasswordCommand implements Command {
             boolean validPassword = factory.getValidationData().validatePassword(passwordClean);
             if (validLogin && validPassword) {
                 long roleId = (Long) session.getAttribute(SESSION_ROLE_ID);
-                String password = hash.getHashPAss(passwordClean);
+                String password = hash.getHashPass(passwordClean);
                 User userUpdate = new User();
                 userUpdate.setRoleId(roleId);
                 userUpdate.setLogin(login);

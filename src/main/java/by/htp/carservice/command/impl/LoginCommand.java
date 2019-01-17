@@ -14,16 +14,38 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.util.List;
 
+/**
+ * The Class LoginCommand.
+ */
 public class LoginCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_LOGIN. */
     private static final String PARAM_LOGIN = "login";
+    
+    /** The Constant PARAM_PASS. */
     private static final String PARAM_PASS = "password";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
+    
+    /** The Constant SESSION_USER_NAME. */
     private static final String SESSION_USER_NAME = "userName";
+    
+    /** The Constant SESSION_ROLE_ID. */
     private static final String SESSION_ROLE_ID = "roleId";
+    
+    /** The Constant SESSION_INACTIVE_INTERVAL. */
     private static final int SESSION_INACTIVE_INTERVAL = 120;
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         if (request.getMethod().equalsIgnoreCase(METHOD_POST)) {
@@ -37,7 +59,7 @@ public class LoginCommand implements Command {
                 HttpSession session = request.getSession();
                 User user;
                 List<User> users;
-                String password = hash.getHashPAss(passwordClean);
+                String password = hash.getHashPass(passwordClean);
                 try {
                     users = factory.getUserSelector().checkLogin(login, password);
                 } catch (SelectorException e) {

@@ -16,12 +16,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The Class DepartmentTransactionImpl.
+ */
 public class DepartmentTransactionImpl implements TransactionDepartment {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#saveTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean saveTransaction(Department entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method saveTransaction entity:" + entity);
         DaoDepartment departmentDao = DaoFactory.getInstance().getDepartmentDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -40,13 +47,15 @@ public class DepartmentTransactionImpl implements TransactionDepartment {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method saveTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#updateTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean updateTransaction(Department entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method updateTransaction entity:" + entity);
         DaoDepartment departmentDao = DaoFactory.getInstance().getDepartmentDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -65,13 +74,15 @@ public class DepartmentTransactionImpl implements TransactionDepartment {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method updateTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#deleteTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean deleteTransaction(Department entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method deleteTransaction entity:" + entity);
         DaoDepartment departmentDao = DaoFactory.getInstance().getDepartmentDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -90,13 +101,15 @@ public class DepartmentTransactionImpl implements TransactionDepartment {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method deleteTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeTransaction(long)
+     */
     @Override
     public Department takeTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeTransaction entity by id:" + id);
         DaoDepartment departmentDao = DaoFactory.getInstance().getDepartmentDao();
         Department department;
         TransactionManager transaction;
@@ -113,13 +126,15 @@ public class DepartmentTransactionImpl implements TransactionDepartment {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method takeTransaction result:" + department);
+        logger.log(Level.INFO, "Result:" + department);
         return department;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeAllQuery()
+     */
     @Override
     public List<Department> takeAllQuery() throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAll");
         DaoDepartment departmentDao = DaoFactory.getInstance().getDepartmentDao();
         List<Department> departmentList;
         TransactionManager transaction;
@@ -140,9 +155,11 @@ public class DepartmentTransactionImpl implements TransactionDepartment {
         return departmentList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordTransaction()
+     */
     @Override
     public int countRecordTransaction() throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordTransaction");
         DaoDepartment departmentDao = DaoFactory.getInstance().getDepartmentDao();
         int result;
         TransactionManager transaction;
@@ -163,9 +180,11 @@ public class DepartmentTransactionImpl implements TransactionDepartment {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordByIdTransaction(long)
+     */
     @Override
     public int countRecordByIdTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordByIdTransaction");
         DaoDepartment departmentDao = DaoFactory.getInstance().getDepartmentDao();
         int result;
         TransactionManager transaction;
@@ -186,9 +205,11 @@ public class DepartmentTransactionImpl implements TransactionDepartment {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkAllRecordTransaction(int, int)
+     */
     @Override
     public List<Department> checkAllRecordTransaction(int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkAllRecordTransaction");
         DaoDepartment departmentDao = DaoFactory.getInstance().getDepartmentDao();
         List<Department> departmentList;
         TransactionManager transaction;
@@ -209,9 +230,11 @@ public class DepartmentTransactionImpl implements TransactionDepartment {
         return departmentList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkRecordByIdTransaction(long, int, int)
+     */
     @Override
     public List<Department> checkRecordByIdTransaction(long id, int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkRecordByIdTransaction");
         DaoDepartment departmentDao = DaoFactory.getInstance().getDepartmentDao();
         List<Department> departmentList;
         TransactionManager transaction;

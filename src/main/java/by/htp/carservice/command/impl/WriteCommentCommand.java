@@ -13,12 +13,26 @@ import org.apache.logging.log4j.Logger;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 
+/**
+ * The Class WriteCommentCommand.
+ */
 public class WriteCommentCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_DESCRIPTION. */
     private static final String PARAM_DESCRIPTION = "description";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         HttpSession session = request.getSession();

@@ -16,16 +16,36 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class EditServiceCommand.
+ */
 public class EditServiceCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SESSION_DEPARTMENT_LIST. */
     private static final String SESSION_DEPARTMENT_LIST = "departmentList";
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_UPDATE. */
     private static final String PARAM_UPDATE = "update";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
+    
+    /** The Constant PARAM_ID_DEPARTMENT. */
     private static final String PARAM_ID_DEPARTMENT = "idDepartment";
+    
+    /** The Constant PARAM_NAME_DEPARTMENT. */
     private static final String PARAM_NAME_DEPARTMENT = "namedepartment";
 
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         SelectorFactory factory = SelectorFactory.getInstance();

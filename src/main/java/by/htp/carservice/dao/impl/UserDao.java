@@ -110,7 +110,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public boolean save(User entity) throws DaoException {
-        logger.log(Level.INFO, "Start save entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -129,7 +128,7 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish save entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -138,7 +137,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public boolean update(User entity) throws DaoException {
-        logger.log(Level.INFO, "Start update entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -153,7 +151,7 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish update entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -162,7 +160,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public boolean delete(User entity) throws DaoException {
-        logger.log(Level.INFO, "Start delete entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -174,7 +171,7 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish delete entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -183,7 +180,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public User take(long id) throws DaoException {
-        logger.log(Level.INFO, "Start take entity by id: " + id);
         User user = new User();
         PreparedStatement statement = null;
         try {
@@ -210,7 +206,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public List<User> takeAll() throws DaoException {
-        logger.log(Level.INFO, "Start takeAll");
         List<User> listUser = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -238,7 +233,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public int countRecord() throws DaoException {
-        logger.log(Level.INFO, "Start countRecord");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -261,7 +255,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public int countRecordById(long id) throws DaoException {
-        logger.log(Level.INFO, "Start countRecordById");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -285,7 +278,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public List<User> checkAllRecord(int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkAllRecord");
         List<User> listUser = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -315,7 +307,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public List<User> checkRecordById(long id, int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkRecordById");
         List<User> listUser = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -346,7 +337,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public List<User> checkLogin(String login, String password) throws DaoException {
-        logger.log(Level.INFO, "Start checkLogin");
         List<User> listUser = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -376,7 +366,6 @@ public class UserDao extends AbstractDao<User> implements DaoUser {
      */
     @Override
     public boolean existLogin(String login) throws DaoException {
-        logger.log(Level.INFO, "Start existLogin by login: " + login);
         boolean result;
         PreparedStatement statement = null;
         try {

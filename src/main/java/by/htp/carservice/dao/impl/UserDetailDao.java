@@ -110,7 +110,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public boolean save(UserDetail entity) throws DaoException {
-        logger.log(Level.INFO, "Start save entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -130,7 +129,7 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish save entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -139,7 +138,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public boolean update(UserDetail entity) throws DaoException {
-        logger.log(Level.INFO, "Start update entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -155,7 +153,7 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish update entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -164,7 +162,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public boolean delete(UserDetail entity) throws DaoException {
-        logger.log(Level.INFO, "Start delete entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -176,7 +173,7 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish delete entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -185,7 +182,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public UserDetail take(long id) throws DaoException {
-        logger.log(Level.INFO, "Start take entity by id: " + id);
         UserDetail userDetail = new UserDetail();
         PreparedStatement statement = null;
         try {
@@ -213,7 +209,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public List<UserDetail> takeAll() throws DaoException {
-        logger.log(Level.INFO, "Start takeAll");
         List<UserDetail> listUserDetail = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -242,7 +237,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public int countRecord() throws DaoException {
-        logger.log(Level.INFO, "Start countRecord");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -265,7 +259,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public int countRecordById(long id) throws DaoException {
-        logger.log(Level.INFO, "Start countRecordById");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -289,7 +282,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public List<UserDetail> checkAllRecord(int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkAllRecord");
         List<UserDetail> listUserDetail = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -320,7 +312,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public List<UserDetail> checkRecordById(long id, int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkAllRecord");
         List<UserDetail> listUserDetail = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -352,7 +343,6 @@ public class UserDetailDao extends AbstractDao<UserDetail> implements DaoUserDet
      */
     @Override
     public boolean checkRecord(long userId) throws DaoException {
-        logger.log(Level.INFO, "Start checkRecord by userId: " + userId);
         boolean result;
         PreparedStatement statement = null;
         try {

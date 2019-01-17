@@ -16,16 +16,38 @@ import javax.servlet.http.HttpSession;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class EditCommentCommand.
+ */
 public class EditCommentCommand implements Command {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant SESSION_COMMENT_LIST. */
     private static final String SESSION_COMMENT_LIST = "commentList";
+    
+    /** The Constant METHOD_POST. */
     private static final String METHOD_POST = "post";
+    
+    /** The Constant PARAM_DESCRIPTION. */
     private static final String PARAM_DESCRIPTION = "description";
+    
+    /** The Constant PARAM_ID_COMMENT. */
     private static final String PARAM_ID_COMMENT = "idComment";
+    
+    /** The Constant PARAM_UPDATE. */
     private static final String PARAM_UPDATE = "update";
+    
+    /** The Constant PARAM_DELETE. */
     private static final String PARAM_DELETE = "delete";
+    
+    /** The Constant SESSION_USER. */
     private static final String SESSION_USER = "user";
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.command.Command#execute(javax.servlet.http.HttpServletRequest)
+     */
     @Override
     public String execute(HttpServletRequest request) {
         SelectorFactory factory = SelectorFactory.getInstance();

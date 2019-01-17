@@ -16,12 +16,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The Class RoleTransactionImpl.
+ */
 public class RoleTransactionImpl implements TransactionRole {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#saveTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean saveTransaction(Role entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method saveTransaction entity:" + entity);
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -40,13 +47,15 @@ public class RoleTransactionImpl implements TransactionRole {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method saveTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#updateTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean updateTransaction(Role entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method updateTransaction entity:" + entity);
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -65,13 +74,15 @@ public class RoleTransactionImpl implements TransactionRole {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method updateTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#deleteTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean deleteTransaction(Role entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method deleteTransaction entity:" + entity);
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -90,13 +101,15 @@ public class RoleTransactionImpl implements TransactionRole {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method deleteTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeTransaction(long)
+     */
     @Override
     public Role takeTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeTransaction entity by id:" + id);
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         Role role;
         TransactionManager transaction;
@@ -117,9 +130,11 @@ public class RoleTransactionImpl implements TransactionRole {
         return role;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeAllQuery()
+     */
     @Override
     public List<Role> takeAllQuery() throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAll");
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         List<Role> roleList;
         TransactionManager transaction;
@@ -140,9 +155,11 @@ public class RoleTransactionImpl implements TransactionRole {
         return roleList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordTransaction()
+     */
     @Override
     public int countRecordTransaction() throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordTransaction");
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         int result;
         TransactionManager transaction;
@@ -163,9 +180,11 @@ public class RoleTransactionImpl implements TransactionRole {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordByIdTransaction(long)
+     */
     @Override
     public int countRecordByIdTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordByIdTransaction " + id);
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         int result;
         TransactionManager transaction;
@@ -186,9 +205,11 @@ public class RoleTransactionImpl implements TransactionRole {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkAllRecordTransaction(int, int)
+     */
     @Override
     public List<Role> checkAllRecordTransaction(int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkAllRecordTransaction");
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         List<Role> roleList;
         TransactionManager transaction;
@@ -209,9 +230,11 @@ public class RoleTransactionImpl implements TransactionRole {
         return roleList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkRecordByIdTransaction(long, int, int)
+     */
     @Override
     public List<Role> checkRecordByIdTransaction(long id, int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkRecordByIdTransaction");
         DaoRole roleDao = DaoFactory.getInstance().getRoleDao();
         List<Role> roleList;
         TransactionManager transaction;

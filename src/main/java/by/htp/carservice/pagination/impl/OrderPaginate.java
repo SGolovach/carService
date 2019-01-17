@@ -12,23 +12,48 @@ import org.apache.logging.log4j.Logger;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class OrderPaginate.
+ */
 public class OrderPaginate implements PaginationData<Order> {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
+    
+    /** The Constant PARAM_CHECK_ILLUSTRATE. */
     private static final String PARAM_CHECK_ILLUSTRATE = "checkIllustreta";
+    
+    /** The Constant PARAM_CURRENT_PAGE. */
     private static final String PARAM_CURRENT_PAGE = "currentPage";
+    
+    /** The Constant SESSION_CHECK_ILLUSTRATE. */
     private static final String SESSION_CHECK_ILLUSTRATE = "checkIllustretaSession";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_ORDER. */
     private static final String SESSION_COUNT_PAGE_EDIT_ORDER = "countPageSessionEditOrder";
+    
+    /** The Constant SESSION_COUNT_PAGE_EDIT_ALL_ORDER. */
     private static final String SESSION_COUNT_PAGE_EDIT_ALL_ORDER = "countPageSessionEditAllOrder";
+    
+    /** The Constant STANDARD_CHECK_ILLUSTRATE. */
     private static final int STANDARD_CHECK_ILLUSTRATE = 10;
+    
+    /** The Constant MINUS_CURRENT_PAGE. */
     private static final int MINUS_CURRENT_PAGE = 1;
+    
+    /** The Constant CHECK_DATA. */
     private static final String CHECK_DATA = "0";
+    
+    /** The transaction order. */
     private final TransactionOrder transactionOrder =
             TransactionFactory.getInstance().getTransactionOrder();
 
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.pagination.PaginationData#paginate(java.util.Map)
+     */
     @Override
     public List<Order> paginate(Map<String, String> requestParam) throws ServiceException {
-        logger.log(Level.INFO, "Start method paginate class OrderPaginate");
         int checkIllustreta = Integer.parseInt(checkData(requestParam.get(PARAM_CHECK_ILLUSTRATE)));
         int currentPage = Integer.parseInt(checkData(requestParam.get(PARAM_CURRENT_PAGE)));
         int checkIllustretaSession = Integer.parseInt(checkData(requestParam.get(SESSION_CHECK_ILLUSTRATE)));
@@ -62,9 +87,11 @@ public class OrderPaginate implements PaginationData<Order> {
         return orderList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.pagination.PaginationData#paginateById(java.util.Map, long)
+     */
     @Override
     public List<Order> paginateById(Map<String, String> requestParam, long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method paginate class OrderPaginate");
         int checkIllustreta = Integer.parseInt(checkData(requestParam.get(PARAM_CHECK_ILLUSTRATE)));
         int currentPage = Integer.parseInt(checkData(requestParam.get(PARAM_CURRENT_PAGE)));
         int checkIllustretaSession = Integer.parseInt(checkData(requestParam.get(SESSION_CHECK_ILLUSTRATE)));
@@ -98,6 +125,12 @@ public class OrderPaginate implements PaginationData<Order> {
         return orderList;
     }
 
+    /**
+     * Check data.
+     *
+     * @param data the data
+     * @return the string
+     */
     private String checkData(String data) {
         if (data == null) {
             data = CHECK_DATA;

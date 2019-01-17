@@ -16,12 +16,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The Class UserTransactionImpl.
+ */
 public class UserTransactionImpl implements TransactionUser {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#saveTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean saveTransaction(User entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method saveTransaction entity:" + entity);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -40,13 +47,15 @@ public class UserTransactionImpl implements TransactionUser {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method saveTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#updateTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean updateTransaction(User entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method updateTransaction entity:" + entity);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -65,13 +74,15 @@ public class UserTransactionImpl implements TransactionUser {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method updateTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#deleteTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean deleteTransaction(User entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method deleteTransaction entity:" + entity);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -90,13 +101,15 @@ public class UserTransactionImpl implements TransactionUser {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method deleteTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeTransaction(long)
+     */
     @Override
     public User takeTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeTransaction entity by id:" + id);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         User user;
         TransactionManager transaction;
@@ -117,9 +130,11 @@ public class UserTransactionImpl implements TransactionUser {
         return user;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeAllQuery()
+     */
     @Override
     public List<User> takeAllQuery() throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAll");
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         List<User> userList;
         TransactionManager transaction;
@@ -140,9 +155,11 @@ public class UserTransactionImpl implements TransactionUser {
         return userList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordTransaction()
+     */
     @Override
     public int countRecordTransaction() throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordTransaction");
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         int result;
         TransactionManager transaction;
@@ -163,9 +180,11 @@ public class UserTransactionImpl implements TransactionUser {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordByIdTransaction(long)
+     */
     @Override
     public int countRecordByIdTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordByIdTransaction " + id);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         int result;
         TransactionManager transaction;
@@ -186,9 +205,11 @@ public class UserTransactionImpl implements TransactionUser {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkAllRecordTransaction(int, int)
+     */
     @Override
     public List<User> checkAllRecordTransaction(int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkAllRecordTransaction");
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         List<User> userList;
         TransactionManager transaction;
@@ -209,9 +230,11 @@ public class UserTransactionImpl implements TransactionUser {
         return userList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkRecordByIdTransaction(long, int, int)
+     */
     @Override
     public List<User> checkRecordByIdTransaction(long id, int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkRecordByIdTransaction");
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         List<User> userList;
         TransactionManager transaction;
@@ -232,9 +255,11 @@ public class UserTransactionImpl implements TransactionUser {
         return userList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.TransactionUser#checkLoginTransaction(java.lang.String, java.lang.String)
+     */
     @Override
     public List<User> checkLoginTransaction(String login, String password) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAll");
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         List<User> userList;
         TransactionManager transaction;
@@ -255,9 +280,11 @@ public class UserTransactionImpl implements TransactionUser {
         return userList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.TransactionUser#existLoginTransaction(java.lang.String)
+     */
     @Override
     public boolean existLoginTransaction(String login) throws ServiceException {
-        logger.log(Level.INFO, "Start method existLoginTransaction login:" + login);
         DaoUser userDao = DaoFactory.getInstance().getUserDao();
         boolean flagResult;
         TransactionManager transaction;

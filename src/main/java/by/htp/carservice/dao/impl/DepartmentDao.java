@@ -78,7 +78,6 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
      */
     @Override
     public boolean save(Department entity) throws DaoException {
-        logger.log(Level.INFO, "Start save entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -95,7 +94,7 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish save entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -104,7 +103,6 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
      */
     @Override
     public boolean update(Department entity) throws DaoException {
-        logger.log(Level.INFO, "Start update entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -117,7 +115,7 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish update entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -126,7 +124,6 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
      */
     @Override
     public boolean delete(Department entity) throws DaoException {
-        logger.log(Level.INFO, "Start delete entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -138,7 +135,7 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish delete entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -147,7 +144,6 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
      */
     @Override
     public Department take(long id) throws DaoException {
-        logger.log(Level.INFO, "Start take entity by id: " + id);
         Department department = new Department();
         PreparedStatement statement = null;
         try {
@@ -172,7 +168,6 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
      */
     @Override
     public List<Department> takeAll() throws DaoException {
-        logger.log(Level.INFO, "Start takeAll");
         List<Department> listDepartment = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -198,7 +193,6 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
      */
     @Override
     public int countRecord() throws DaoException {
-        logger.log(Level.INFO, "Start countRecord");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -229,7 +223,6 @@ public class DepartmentDao extends AbstractDao<Department> implements DaoDepartm
      */
     @Override
     public List<Department> checkAllRecord(int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkAllRecord");
         List<Department> listDepartment = new ArrayList<>();
         PreparedStatement statement = null;
         try {

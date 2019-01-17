@@ -16,12 +16,19 @@ import org.apache.logging.log4j.Logger;
 
 import java.util.List;
 
+/**
+ * The Class CommentTransactionImpl.
+ */
 public class CommentTransactionImpl implements TransactionComment {
+    
+    /** The logger. */
     private static Logger logger = LogManager.getLogger();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#saveTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean saveTransaction(Comment entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method saveTransaction entity:" + entity);
         DaoComment commentDao = DaoFactory.getInstance().getCommentDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -40,13 +47,15 @@ public class CommentTransactionImpl implements TransactionComment {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method saveTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#updateTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean updateTransaction(Comment entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method updateTransaction entity:" + entity);
         DaoComment commentDao = DaoFactory.getInstance().getCommentDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -65,13 +74,15 @@ public class CommentTransactionImpl implements TransactionComment {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method updateTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#deleteTransaction(by.htp.carservice.entity.Entity)
+     */
     @Override
     public boolean deleteTransaction(Comment entity) throws ServiceException {
-        logger.log(Level.INFO, "Start method deleteTransaction entity:" + entity);
         DaoComment commentDao = DaoFactory.getInstance().getCommentDao();
         boolean flagResult;
         TransactionManager transaction;
@@ -90,13 +101,15 @@ public class CommentTransactionImpl implements TransactionComment {
         } finally {
             transaction.endTransaction();
         }
-        logger.log(Level.INFO, "Finish method deleteTransaction result:" + flagResult);
+        logger.log(Level.INFO, "Result:" + flagResult);
         return flagResult;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeTransaction(long)
+     */
     @Override
     public Comment takeTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method takeTransaction entity by id:" + id);
         DaoComment commentDao = DaoFactory.getInstance().getCommentDao();
         Comment comment;
         TransactionManager transaction;
@@ -117,9 +130,11 @@ public class CommentTransactionImpl implements TransactionComment {
         return comment;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#takeAllQuery()
+     */
     @Override
     public List<Comment> takeAllQuery() throws ServiceException {
-        logger.log(Level.INFO, "Start method takeAll");
         DaoComment commentDao = DaoFactory.getInstance().getCommentDao();
         List<Comment> commentList;
         TransactionManager transaction;
@@ -140,9 +155,11 @@ public class CommentTransactionImpl implements TransactionComment {
         return commentList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordTransaction()
+     */
     @Override
     public int countRecordTransaction() throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordTransaction");
         DaoComment commentDao = DaoFactory.getInstance().getCommentDao();
         int result;
         TransactionManager transaction;
@@ -163,9 +180,11 @@ public class CommentTransactionImpl implements TransactionComment {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#countRecordByIdTransaction(long)
+     */
     @Override
     public int countRecordByIdTransaction(long id) throws ServiceException {
-        logger.log(Level.INFO, "Start method countRecordByIdTransaction");
         DaoComment commentDao = DaoFactory.getInstance().getCommentDao();
         int result;
         TransactionManager transaction;
@@ -186,9 +205,11 @@ public class CommentTransactionImpl implements TransactionComment {
         return result;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkAllRecordTransaction(int, int)
+     */
     @Override
     public List<Comment> checkAllRecordTransaction(int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkAllRecordTransaction");
         DaoComment commentDao = DaoFactory.getInstance().getCommentDao();
         List<Comment> commentList;
         TransactionManager transaction;
@@ -209,9 +230,11 @@ public class CommentTransactionImpl implements TransactionComment {
         return commentList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.transaction.Transaction#checkRecordByIdTransaction(long, int, int)
+     */
     @Override
     public List<Comment> checkRecordByIdTransaction(long id, int limit, int offset) throws ServiceException {
-        logger.log(Level.INFO, "Start method checkRecordByIdTransaction");
         DaoComment commentDao = DaoFactory.getInstance().getCommentDao();
         List<Comment> commentList;
         TransactionManager transaction;

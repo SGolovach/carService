@@ -143,6 +143,7 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         } finally {
             close(statement);
         }
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -168,6 +169,7 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         } finally {
             close(statement);
         }
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -187,6 +189,7 @@ public class CarDao extends AbstractDao<Car> implements DaoCar {
         } finally {
             close(statement);
         }
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 

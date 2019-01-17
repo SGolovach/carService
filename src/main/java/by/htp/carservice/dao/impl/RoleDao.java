@@ -75,7 +75,6 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
      */
     @Override
     public boolean save(Role entity) throws DaoException {
-        logger.log(Level.INFO, "Start save entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -92,7 +91,7 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish save entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -101,7 +100,6 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
      */
     @Override
     public boolean update(Role entity) throws DaoException {
-        logger.log(Level.INFO, "Start update entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -114,7 +112,7 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish update entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -123,7 +121,6 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
      */
     @Override
     public boolean delete(Role entity) throws DaoException {
-        logger.log(Level.INFO, "Start delete entity: " + entity);
         PreparedStatement statement = null;
         int flagResult;
         try {
@@ -135,7 +132,7 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
         } finally {
             close(statement);
         }
-        logger.log(Level.INFO, "Finish delete entity, result: " + (flagResult >= 1));
+        logger.log(Level.INFO, "Result: " + (flagResult >= 1));
         return (flagResult >= 1);
     }
 
@@ -144,7 +141,6 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
      */
     @Override
     public Role take(long id) throws DaoException {
-        logger.log(Level.INFO, "Start take entity by id: " + id);
         Role role = new Role();
         PreparedStatement statement = null;
         try {
@@ -169,7 +165,6 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
      */
     @Override
     public List<Role> takeAll() throws DaoException {
-        logger.log(Level.INFO, "Start takeAll");
         List<Role> listRole = new ArrayList<>();
         PreparedStatement statement = null;
         try {
@@ -195,7 +190,6 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
      */
     @Override
     public int countRecord() throws DaoException {
-        logger.log(Level.INFO, "Start countRecord");
         PreparedStatement statement = null;
         int resultCount = 0;
         try {
@@ -226,7 +220,6 @@ public class RoleDao extends AbstractDao<Role> implements DaoRole {
      */
     @Override
     public List<Role> checkAllRecord(int limit, int offset) throws DaoException {
-        logger.log(Level.INFO, "Start checkAllRecord");
         List<Role> listRole = new ArrayList<>();
         PreparedStatement statement = null;
         try {

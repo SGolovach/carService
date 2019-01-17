@@ -10,9 +10,17 @@ import by.htp.carservice.selector.PaginationDataSelector;
 import java.util.List;
 import java.util.Map;
 
+/**
+ * The Class UserPaginateSelector.
+ */
 public class UserPaginateSelector implements PaginationDataSelector<User> {
+    
+    /** The pagination. */
     private final PaginationData pagination = PaginationDataFactory.getInstance().getUserPagination();
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.PaginationDataSelector#paginate(java.util.Map)
+     */
     @Override
     public List<User> paginate(Map<String, String> requestParam) throws SelectorException {
         List<User> userList;
@@ -24,6 +32,9 @@ public class UserPaginateSelector implements PaginationDataSelector<User> {
         return userList;
     }
 
+    /* (non-Javadoc)
+     * @see by.htp.carservice.selector.PaginationDataSelector#paginateById(java.util.Map, long)
+     */
     @Override
     public List<User> paginateById(Map<String, String> requestParam, long id) throws SelectorException {
         List<User> userList;
