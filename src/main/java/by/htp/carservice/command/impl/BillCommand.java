@@ -43,7 +43,7 @@ public class BillCommand implements Command {
         HttpSession session = request.getSession();
         RequestSpliter requestSpliter = new RequestSpliter();
         User user = (User) session.getAttribute(SESSION_USER);
-        if (user == null) {
+        if (user==null) {
             return NamePage.SESSION_USER_INVALIDATE_PAGE.getForwardPage();
         }
         Map<String, String> resultSplit = requestSpliter.splitRequest(request);

@@ -126,7 +126,7 @@ ENGINE = InnoDB;
 CREATE TABLE IF NOT EXISTS `carservice`.`Invoices` (
   `idInvoice` BIGINT(4) NOT NULL AUTO_INCREMENT,
   `numberInvoice` BIGINT(4) NULL,
-  `cost` DECIMAL(6,4) NULL,
+  `cost` DECIMAL(8,2) NULL,
   `Orders_id` BIGINT(4) NOT NULL,
   PRIMARY KEY (`idInvoice`),
   INDEX `fk_Invoices_Orders1_idx` (`Orders_id` ASC),
@@ -170,8 +170,8 @@ COMMIT;
 -- -----------------------------------------------------
 START TRANSACTION;
 USE `carservice`;
-INSERT INTO `carservice`.`Users` (`idUsers`, `login`, `password`, `Roles_id`) VALUES (Default, 'admin', '79584cf9c4b7118dd5feb956c3c00e363e04183d6a2a66a99fc3b7064541c395', 1);
-INSERT INTO `carservice`.`Users` (`idUsers`, `login`, `password`, `Roles_id`) VALUES (Default, 'user', 'ba0b45476aa7c884f6de17ceb824aab6e87a7a99ecb0abe71ae358427e4c0bc9', 2);
+INSERT INTO `carservice`.`Users` (`idUsers`, `login`, `password`, `Roles_id`) VALUES (Default, 'admin', 'de3741539c32d367f6556addbdca97dfca2002317fbb03c00ac308e2703a8ab3', 1);
+INSERT INTO `carservice`.`Users` (`idUsers`, `login`, `password`, `Roles_id`) VALUES (Default, 'user', 'de3741539c32d367f6556addbdca97dfca2002317fbb03c00ac308e2703a8ab3', 2);
 
 COMMIT;
 

@@ -14,5 +14,7 @@
     <br/>
     <input type="submit" value="<fmt:message key="submit.signup"/>"/>
 </form>
+
 </body>
+<%@include file="include/footer.jsp"%>
 </html>

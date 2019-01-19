@@ -14,6 +14,6 @@
     <br/>
     <input type="submit" value="<fmt:message key="submit.createcar"/>"/>
 </form>
-
 </body>
+<%@include file="include/footer.jsp"%>
 </html>

@@ -249,6 +249,7 @@ public class ConnectionPool {
                 connection = queue.take();
                 ((ProxyConnection) connection).realClose();
             } catch (InterruptedException e) {
+                Thread.currentThread().interrupt();
                 throw new ConnectionPoolException("Can not take connection in queue", e);
             } catch (SQLException e) {
                 throw new ConnectionPoolException("Can not close connection", e);

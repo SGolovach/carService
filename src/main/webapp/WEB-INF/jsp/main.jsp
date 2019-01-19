@@ -4,6 +4,6 @@
 </head>
 <body>
 <%@include file="include/menuBar.jsp"%>
-
 </body>
+<%@include file="include/footer.jsp"%>
 </html>
